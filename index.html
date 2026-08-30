@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Control de la piscina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#eceff0; --card:#ffffff; --ink:#1b3a4b; --muted:#5d7d87;
+    --line:#d6dee0; --ok:#2e7d32; --warn:#c0392b; --amber:#8a5a1c; --flow:#1565c0;
+    --sans:'Barlow',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.45;
+       padding:0 0 calc(76px + env(safe-area-inset-bottom,0px))}
+  .wrap{max-width:480px;margin:0 auto;padding:0 16px}
+  header{padding:22px 0 14px;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  h1{font-size:26px;font-weight:700;letter-spacing:-.01em;margin:0;line-height:1.1}
+  .sub{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:nowrap}
+  section{margin:0 0 20px}
+  .shead{display:flex;align-items:baseline;gap:10px;margin:0 0 9px}
+  .shead h2{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0;white-space:nowrap}
+  .shead .rule{flex:1;height:1px;background:var(--line)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:15px}
+
+  .alarm{background:#fdecea;border:1px solid var(--warn);border-radius:10px;padding:14px;margin:0 0 20px;font-size:14.5px;line-height:1.45}
+  .alarm b{display:block;color:var(--warn);font-weight:700;margin-bottom:5px}
+  .alarm.soft{background:#fcf4e6;border-color:var(--amber)}
+  .alarm.soft b{color:var(--amber)}
+  .alarm button{margin-top:11px;width:100%;padding:11px;border:1px solid currentColor;background:none;
+    color:var(--warn);border-radius:8px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer}
+  .locked{opacity:.45;pointer-events:none}
+
+  .status{border-left:4px solid var(--muted)}
+  .status.ok{border-left-color:var(--ok)}
+  .status.bad{border-left-color:var(--warn)}
+  .readout{display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap}
+  .metric .k{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .metric .v{font-family:var(--mono);font-size:34px;font-weight:600;line-height:1;letter-spacing:-.02em}
+  .metric .v.off{color:var(--warn)}
+  .metric .v.none{color:var(--line)}
+  .metric .u{font-family:var(--mono);font-size:12px;color:var(--muted);margin-left:3px}
+  .when{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:12px}
+  .todo{margin:13px 0 0;padding:0;list-style:none}
+  .todo li{display:flex;gap:9px;padding:9px 0;border-top:1px solid var(--line);font-size:14.5px;line-height:1.4}
+  .todo li .dot{flex:0 0 7px;height:7px;border-radius:50%;background:var(--warn);margin-top:7px}
+  .todo li.info .dot{background:var(--amber)}
+  .todo li.good .dot{background:var(--ok)}
+  .todo b{font-weight:600}
+
+  .scale .lab{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 7px}
+  .scale .lab .n{font-size:14px;font-weight:600}
+  .scale .lab .hint{font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .strip{display:flex;gap:3px}
+  .chip{flex:1;border:0;padding:0;cursor:pointer;border-radius:5px;background:none;
+    display:flex;flex-direction:column;align-items:center;font-family:var(--mono);font-size:11px;font-weight:500}
+  .chip .sw{width:100%;height:38px;border-radius:5px;border:1px solid rgba(0,0,0,.13)}
+  .chip .n{padding:5px 0 0;color:var(--muted)}
+  .chip[aria-pressed="true"] .sw{outline:3px solid var(--ink);outline-offset:2px}
+  .chip[aria-pressed="true"] .n{color:var(--ink);font-weight:600}
+  .band{display:flex;gap:3px;margin-top:5px;font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .band span{flex:1;text-align:center}
+  .band span.in{color:var(--ok);font-weight:600}
+
+  .row{display:flex;gap:10px;margin-top:16px}
+  .row.tight{margin-top:10px}
+  .field{flex:1}
+  .field label{display:block;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+  input[type=text],input[type=number],select{width:100%;font-family:var(--mono);font-size:17px;padding:11px 12px;
+    border:1px solid var(--line);border-radius:8px;background:#fbfcfc;color:var(--ink);-webkit-appearance:none;appearance:none}
+  select{background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+    background-position:calc(100% - 17px) 50%,calc(100% - 12px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:32px}
+  input:focus,select:focus{outline:2px solid var(--ink);outline-offset:1px}
+
+  details{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+  summary{font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:'+ ';font-family:var(--mono)}
+  details[open] summary::before{content:'\2212 '}
+
+  .btn{width:100%;margin-top:16px;padding:14px;border:0;border-radius:8px;background:var(--ink);color:#fff;
+    font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:none;color:var(--ink);border:1px solid var(--line);margin-top:9px}
+  .btn.danger{color:var(--warn);border-color:var(--warn)}
+
+  .quick{display:flex;align-items:center;gap:10px;padding:12px 0;border-top:1px solid var(--line)}
+  .quick:first-child{border-top:0;padding-top:0}
+  .quick .qn{flex:1;font-size:14.5px;font-weight:500;line-height:1.25}
+  .quick .qn small{display:block;font-weight:400;font-size:12px;color:var(--muted)}
+  .stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fbfcfc}
+  .stepper button{width:34px;height:36px;border:0;background:none;font-size:18px;color:var(--ink);cursor:pointer;line-height:1}
+  .stepper .num{font-family:var(--mono);font-size:15px;min-width:38px;text-align:center;font-weight:600}
+  .quick .add{height:36px;padding:0 13px;border:0;border-radius:8px;background:var(--ink);color:#fff;
+    font-family:var(--sans);font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap}
+
+  .task{display:flex;align-items:center;gap:11px;padding:11px 0;border-top:1px solid var(--line)}
+  .task:first-child{border-top:0;padding-top:2px}
+  .task .name{flex:1;font-size:14.5px;font-weight:500;line-height:1.25}
+  .task .name small{display:block;font-weight:400;font-size:12px;color:var(--muted)}
+  .task .ago{font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
+  .task .ago.due{color:var(--warn);font-weight:600}
+  .task .tick{flex:0 0 auto;width:38px;height:38px;border-radius:8px;border:1px solid var(--line);
+    background:#fbfcfc;font-size:16px;line-height:1;cursor:pointer;color:var(--ok)}
+  .task .tick.undo{color:var(--muted)}
+
+  .calc-out{font-family:var(--mono);font-size:32px;font-weight:600;margin-top:16px;line-height:1.15}
+  .calc-out small{display:block;font-size:13px;color:var(--muted);font-weight:400;margin-top:6px;font-family:var(--sans);line-height:1.45}
+  .note{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.45}
+  .big{font-family:var(--mono);font-size:30px;font-weight:600;line-height:1}
+  .big.off{color:var(--warn)}
+  .big small{font-size:13px;color:var(--muted);font-weight:400;margin-left:4px}
+
+  svg.spark{width:100%;height:90px;display:block}
+  .hist{margin:0;padding:0;list-style:none;font-family:var(--mono);font-size:12.5px}
+  .hist li{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line);color:var(--muted)}
+  .hist li .d{flex:0 0 58px}
+  .hist li .val{color:var(--ink)}
+  .hist li .val.off{color:var(--warn);font-weight:600}
+  .hist li .del{margin-left:auto;border:0;background:none;color:var(--muted);font-size:17px;cursor:pointer;padding:2px 5px;line-height:1}
+  .hist li .conf{margin-left:auto;display:flex;gap:7px}
+  .hist li .conf button{border:1px solid var(--line);background:#fbfcfc;border-radius:6px;font-family:var(--sans);
+    font-size:12px;font-weight:600;padding:4px 9px;cursor:pointer}
+  .hist li .conf .yes{color:var(--warn);border-color:var(--warn)}
+  .empty{font-size:14px;color:var(--muted);line-height:1.5}
+  .prod{display:flex;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+  .prod:first-child{border-top:0;padding-top:2px}
+  .prod .pn{flex:1;font-size:14.5px;font-weight:600;line-height:1.25;cursor:pointer}
+  .prod .pn small{display:block;font-weight:400;font-size:11.5px;color:var(--muted);margin-top:2px}
+  .prod .pv{font-family:var(--mono);font-size:14px;font-weight:600;white-space:nowrap;color:var(--flow)}
+  .prod .pdel{border:0;background:none;color:var(--muted);font-size:19px;cursor:pointer;padding:2px 4px;line-height:1}
+  .prod.act{background:#eef6ee;border-radius:8px;padding-left:9px;padding-right:9px;margin:4px 0}
+  .prod.act .pv{color:var(--ok)}
+  .badge{display:inline-block;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--ok);border:1px solid var(--ok);border-radius:4px;padding:1px 5px;margin-left:7px}
+  textarea{width:100%;height:130px;font-family:var(--mono);font-size:11px;padding:11px;
+    border:1px solid var(--line);border-radius:8px;background:#fbfcfc;color:var(--ink);margin-top:11px}
+
+  .acts .agroup+.agroup{margin-top:13px}
+  .acts .glab{font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+  .acts .arow{display:flex;flex-wrap:wrap;gap:7px}
+  .act{border:1px solid var(--line);background:#fbfcfc;border-radius:20px;padding:8px 14px;
+    font-family:var(--sans);font-size:13.5px;font-weight:600;color:var(--muted);cursor:pointer}
+  .act[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+  .modebar{display:flex;gap:9px;margin-top:14px}
+  .modebar div{flex:1;background:#f4f7f7;border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+  .modebar .k{font-size:9.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  .modebar .v{font-family:var(--mono);font-size:13.5px;font-weight:600;margin-top:3px;line-height:1.25}
+  .modebar .vsub{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.3}
+  .vgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+  .vcell{border:1px solid var(--line);border-radius:9px;padding:10px 11px;background:#fbfcfc}
+  .vcell .vn{font-size:12.5px;font-weight:700;color:var(--flow);line-height:1.2}
+  .vcell .vs{font-family:var(--mono);font-size:15px;font-weight:600;margin-top:5px}
+  .vcell.a{background:#eef6ee;border-color:#b6d6b8}
+  .vcell.a .vs{color:var(--ok)}
+  .vcell.c{background:#fbeceb;border-color:#e8bdb8}
+  .vcell.c .vs{color:var(--warn)}
+  .vcell.x .vn{color:var(--muted)}
+  .vcell.x .vs{color:var(--muted)}
+
+  .plan{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px;overflow-x:auto}
+  .plan svg{display:block;width:100%;height:auto}
+  .plan.zoom svg{width:900px;max-width:none}
+  .planbar{display:flex;justify-content:space-between;align-items:center;margin-top:9px;padding:0 4px}
+  .planbar span{font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .planbar button{border:1px solid var(--line);background:#fbfcfc;border-radius:7px;padding:6px 12px;
+    font-family:var(--sans);font-size:12.5px;font-weight:600;color:var(--ink);cursor:pointer}
+  .steps{margin:0;padding:0 0 0 17px;font-size:13.5px;line-height:1.5}
+  .steps li{margin:4px 0}
+  .warnline{color:var(--warn);font-weight:600;font-size:13px;margin-top:10px;line-height:1.4}
+
+  .tabs{position:fixed;left:0;right:0;bottom:0;background:rgba(252,253,253,.97);
+    border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:8;backdrop-filter:blur(8px)}
+  .tabs .inner{max-width:480px;margin:0 auto;display:flex}
+  .tab{flex:1;border:0;background:none;padding:9px 2px 10px;cursor:pointer;color:var(--muted);
+    display:flex;flex-direction:column;align-items:center;gap:3px;font-family:var(--sans);font-size:11px;font-weight:600}
+  .tab svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .tab[aria-selected="true"]{color:var(--ink)}
+  .tab[aria-selected="true"] svg{stroke-width:2.1}
+  .panel{display:none}
+  .panel.on{display:block}
+
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(88px + env(safe-area-inset-bottom,0px));
+    background:var(--ink);color:#fff;padding:11px 16px;border-radius:8px;font-size:14px;opacity:0;
+    pointer-events:none;transition:opacity .25s ease;z-index:9;display:flex;align-items:center;gap:14px;max-width:90vw}
+  .toast.on{opacity:1;pointer-events:auto}
+  .toast button{background:none;border:0;color:#8fd6ff;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;padding:0}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>Control de la piscina</h1><span class="sub" id="volTag">24 m&sup3;</span></header>
+  <div id="alarm"></div>
+  <div id="app">
+
+  <div class="panel on" id="p-agua" role="tabpanel">
+    <section>
+      <div class="shead"><h2>Cómo está el agua</h2><div class="rule"></div></div>
+      <div class="card status" id="status"><p class="empty">Cargando…</p></div>
+    </section>
+    <section>
+      <div class="shead"><h2>Apuntar medición</h2><div class="rule"></div></div>
+      <div class="card">
+        <div class="scale">
+          <div class="lab"><span class="n">pH</span><span class="hint">rojo fenol · toca el color</span></div>
+          <div class="strip" id="phStrip"></div><div class="band" id="phBand"></div>
+        </div>
+        <div class="scale" style="margin-top:20px">
+          <div class="lab"><span class="n">Cloro libre</span><span class="hint">ppm · toca el color</span></div>
+          <div class="strip" id="clStrip"></div><div class="band" id="clBand"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="bar">Manómetro (bar)</label>
+            <input type="number" id="bar" step="0.1" min="0" max="4" inputmode="decimal" placeholder="1,0"></div>
+          <div class="field"><label for="temp">Agua (°C)</label>
+            <input type="number" id="temp" step="1" min="0" max="45" inputmode="numeric" placeholder="26"></div>
+        </div>
+        <details>
+          <summary>Alcalinidad y estabilizante (una vez al mes)</summary>
+          <div class="row">
+            <div class="field"><label for="ta">Alcalinidad (ppm)</label>
+              <input type="number" id="ta" step="10" min="0" max="400" inputmode="numeric" placeholder="120"></div>
+            <div class="field"><label for="cya">Estabilizante (ppm)</label>
+              <input type="number" id="cya" step="5" min="0" max="300" inputmode="numeric" placeholder="40"></div>
+          </div>
+          <p class="note">El estabilizante medido pone a cero la estimación calculada.</p>
+        </details>
+        <button class="btn" id="save">Guardar medición</button>
+      </div>
+    </section>
+    <section>
+      <div class="shead"><h2>Apuntes rápidos</h2><div class="rule"></div></div>
+      <div class="card">
+        <div class="quick">
+          <div class="qn">Agua repuesta<small id="cmHint">en centímetros de nivel</small></div>
+          <div class="stepper"><button type="button" id="cmDown" aria-label="Menos">−</button>
+            <span class="num" id="cmN">3</span><button type="button" id="cmUp" aria-label="Más">+</button></div>
+          <button class="add" id="cmAdd">Apuntar</button>
+        </div>
+        <div class="quick">
+          <div class="qn">Pastillas al flotador<small id="paHint">de 200 g, 10 en 1</small></div>
+          <div class="stepper"><button type="button" id="paDown" aria-label="Menos">−</button>
+            <span class="num" id="paN">2</span><button type="button" id="paUp" aria-label="Más">+</button></div>
+          <button class="add" id="paAdd">Apuntar</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="panel" id="p-croquis" role="tabpanel">
+    <section>
+      <div class="shead"><h2>Qué vas a hacer</h2><div class="rule"></div></div>
+      <div class="card">
+        <div class="acts" id="acts"></div>
+        <div class="modebar"><div><div class="k">Selectora</div><div class="v" id="mSel">—</div></div>
+          <div><div class="k">Bomba</div><div class="v" id="mBomba">—</div><div class="vsub" id="mBombaSub"></div></div></div>
+        <div class="vgrid" id="vgrid"></div>
+      </div>
+    </section>
+    <section>
+      <div class="shead"><h2>El circuito</h2><div class="rule"></div></div>
+      <div class="plan" id="plan"></div>
+      <div class="planbar"><span id="planHint">Se ve pequeño, amplíalo</span>
+        <button type="button" id="planZoom">Ampliar</button></div>
+    </section>
+    <section>
+      <div class="shead"><h2>Paso a paso</h2><div class="rule"></div></div>
+      <div class="card" id="stepsBox"></div>
+    </section>
+    <section>
+      <div class="shead"><h2>Reglas de oro</h2><div class="rule"></div></div>
+      <div class="card"><ol class="steps">
+        <li>Nunca gires la selectora con la bomba en marcha. Parar, mover, arrancar.</li>
+        <li>Nunca arranques contra el circuito cerrado.</li>
+        <li>La tapa del prefiltro, siempre media vuelta primero.</li>
+        <li>Al terminar: VACIADO, CALLE y COCHERA cerradas y selectora en FILTRACIÓN.</li>
+      </ol></div>
+    </section>
+  </div>
+
+  <div class="panel" id="p-tareas" role="tabpanel">
+    <section><div class="shead"><h2>Tareas</h2><div class="rule"></div></div><div class="card" id="tasks"></div></section>
+    <section>
+      <div class="shead"><h2>Mis productos</h2><div class="rule"></div></div>
+      <div class="card">
+        <div id="prodList"></div>
+        <details id="pForm">
+          <summary>Añadir un producto</summary>
+          <div class="row tight"><div class="field"><label for="pName">Nombre</label>
+            <input type="text" id="pName" maxlength="40" placeholder="pH- Tamar"></div></div>
+          <div class="row tight"><div class="field"><label for="pKind">Qué es</label>
+            <select id="pKind"><option value="dosis">Líquido o polvo, con dosis en la etiqueta</option>
+              <option value="pastilla">Pastilla para el flotador</option></select></div></div>
+          <div id="pDosis">
+            <div class="row tight">
+              <div class="field" style="flex:1.1"><label for="pAmt">Cantidad</label>
+                <input type="number" id="pAmt" step="any" min="0" inputmode="decimal" placeholder="1"></div>
+              <div class="field"><label for="pUnit">Unidad</label>
+                <select id="pUnit"><option value="mL">mL</option><option value="L" selected>L</option>
+                  <option value="g">g</option><option value="kg">kg</option></select></div>
+            </div>
+            <div class="row tight"><div class="field"><label for="pPer">Por cada … m&sup3;</label>
+              <input type="number" id="pPer" step="any" min="0.1" inputmode="decimal" value="100"></div></div>
+          </div>
+          <div id="pPast" style="display:none">
+            <div class="row tight">
+              <div class="field"><label for="pPeso">Peso (g)</label>
+                <input type="number" id="pPeso" step="10" min="1" max="1000" inputmode="numeric" value="200"></div>
+              <div class="field"><label for="pPct">% del compuesto</label>
+                <input type="number" id="pPct" step="1" min="0" max="100" inputmode="numeric" value="80"></div>
+            </div>
+            <div class="row tight"><div class="field"><label for="pQuim">Qué cloro lleva</label>
+              <select id="pQuim"><option value="tri">Tricloro (ácido tricloroisocianúrico)</option>
+                <option value="di">Dicloro (dicloroisocianurato sódico)</option>
+                <option value="no">Sin estabilizante (hipoclorito, oxígeno activo)</option></select></div></div>
+            <p class="note">Es el <b>porcentaje del compuesto</b>, no el "cloro disponible". En la etiqueta suele venir como
+              "ácido tricloroisocianúrico 80%". El cloro disponible es otro número, más alto, y no vale aquí.</p>
+          </div>
+          <button class="btn" id="pAdd">Guardar producto</button>
+        </details>
+      </div>
+    </section>
+    <section>
+      <div class="shead"><h2>Calcular una dosis</h2><div class="rule"></div></div>
+      <div class="card">
+        <div class="row" style="margin-top:0" id="dProdRow">
+          <div class="field"><label for="dProd">Producto</label>
+            <select id="dProd"></select></div>
+        </div>
+        <p class="note" style="margin:2px 0 6px" id="dHint">Copia lo que ponga la etiqueta, sea en la unidad que sea.</p>
+        <div class="row tight">
+          <div class="field" style="flex:1.1"><label for="dAmt">Cantidad</label>
+            <input type="number" id="dAmt" step="any" min="0" inputmode="decimal" value="1"></div>
+          <div class="field"><label for="dUnit">Unidad</label>
+            <select id="dUnit"><option value="mL">mL</option><option value="L" selected>L</option>
+              <option value="g">g</option><option value="kg">kg</option></select></div>
+        </div>
+        <div class="row tight"><div class="field"><label for="dPer">Por cada … m&sup3;</label>
+          <input type="number" id="dPer" step="any" min="0.1" inputmode="decimal" value="100"></div></div>
+        <div class="calc-out" id="calcOut"></div>
+      </div>
+    </section>
+    <section><div class="shead"><h2>Estabilizante</h2><div class="rule"></div></div><div class="card" id="cyaBox"></div></section>
+    <section><div class="shead"><h2>Consumo de agua</h2><div class="rule"></div></div><div class="card" id="lossBox"></div></section>
+  </div>
+
+  <div class="panel" id="p-datos" role="tabpanel">
+    <section>
+      <div class="shead"><h2>Tu piscina</h2><div class="rule"></div></div>
+      <div class="card">
+        <div class="row" style="margin-top:0">
+          <div class="field"><label for="cVol">Volumen (m&sup3;)</label>
+            <input type="number" id="cVol" step="0.5" min="1" max="500" inputmode="decimal"></div>
+          <div class="field"><label for="cSup">Superficie (m&sup2;)</label>
+            <input type="number" id="cSup" step="0.5" min="1" max="500" inputmode="decimal"></div>
+        </div>
+        <div class="row tight">
+          <div class="field"><label for="cBar">Presión filtro limpio (bar)</label>
+            <input type="number" id="cBar" step="0.1" min="0.2" max="3" inputmode="decimal"></div>
+          <div class="field"><label for="cCau">Caudal bomba (m&sup3;/h)</label>
+            <input type="number" id="cCau" step="0.5" min="1" max="100" inputmode="decimal"></div>
+        </div>
+        <button class="btn" id="cSave">Guardar</button>
+        <p class="note" id="cDerived"></p>
+      </div>
+    </section>
+    <section><div class="shead"><h2>Historial</h2><div class="rule"></div></div><div class="card" id="hist"></div></section>
+    <section>
+      <div class="shead"><h2>Copia de seguridad</h2><div class="rule"></div></div>
+      <div class="card">
+        <p class="note" style="margin-top:0" id="whereTxt"></p>
+        <textarea id="backup" spellcheck="false" aria-label="Copia de seguridad"></textarea>
+        <button class="btn ghost" id="copy">Copiar la copia</button>
+        <button class="btn ghost" id="restore">Restaurar lo que haya en el cuadro</button>
+        <p class="note">Pega ese texto en una nota o mándatelo por WhatsApp. Con él se recupera todo.</p>
+      </div>
+    </section>
+    <section><div class="shead"><h2>Borrar</h2><div class="rule"></div></div>
+      <div class="card"><button class="btn ghost danger" id="reset" style="margin-top:0">Borrar todos los datos</button></div></section>
+  </div>
+  </div>
+</div>
+
+<nav class="tabs"><div class="inner">
+  <button class="tab" id="t-agua" aria-selected="true" data-p="agua">
+    <svg viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 10.5A6 6 0 0 1 6 13.5C6 9.5 12 3 12 3z"/></svg>Agua</button>
+  <button class="tab" id="t-croquis" aria-selected="false" data-p="croquis">
+    <svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8.5 6H14v12H8.5M15.5 12H14"/></svg>Croquis</button>
+  <button class="tab" id="t-tareas" aria-selected="false" data-p="tareas">
+    <svg viewBox="0 0 24 24"><path d="M4 7l2 2 3.5-3.5M4 17l2 2 3.5-3.5M13 7.5h7M13 17.5h7"/></svg>Tareas</button>
+  <button class="tab" id="t-datos" aria-selected="false" data-p="datos">
+    <svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 19v-6M12.5 19V8M17 19v-9"/></svg>Datos</button>
+</div></nav>
+<div class="toast" id="toast"><span id="toastMsg"></span></div>
+
+<script>
+const KEY='piscina-registro';
+const CYA_G_TAB=89;                       // supuesto por defecto: pastilla de 200 g al 80% de tricloro
+const CYA_FACTOR={tri:0.555, di:0.50, no:0};   // fraccion de acido cianurico de cada compuesto
+const DEF={vol:24,sup:21,barLimpio:1.0,caudal:12};
+
+const PH=[{v:6.8,c:'#f2df6e'},{v:7.0,c:'#f3c85f'},{v:7.2,c:'#efa85c'},{v:7.4,c:'#e8815f'},
+          {v:7.6,c:'#d95f68'},{v:7.8,c:'#c04a6d'},{v:8.0,c:'#a13a68'},{v:8.2,c:'#7f2f5c'}];
+const CL=[{v:0,c:'#fbfbf0'},{v:0.5,c:'#fbf3c2'},{v:1,c:'#f9e58a'},{v:1.5,c:'#f7d456'},
+          {v:2,c:'#f2bd3a'},{v:3,c:'#e79c31'},{v:5,c:'#d97a2c'}];
+const PH_OK=[7.2,7.6], CL_OK=[1,2], TA_OK=[100,150];
+
+const TASKS=[
+  {id:'lavado',   n:'Lavado del filtro',          s:'con la llave CALLE abierta',       d:14},
+  {id:'prefiltro',n:'Cesto del prefiltro',        s:'se vacia por VACIADO y CALLE',      d:7},
+  {id:'cepillar', n:'Cepillar playa y escalones', s:'es donde empieza el verdín',       d:7},
+  {id:'fondo',    n:'Pasar el limpiafondos',      s:'',                                 d:7},
+  {id:'nivel',    n:'Mirar el nivel del skimmer', s:'a 2/3 - 3/4 de la boca',           d:2},
+  {id:'arena',    n:'Cambiar la arena',           s:'cada 4-6 años',                    d:1825, rare:true}
+];
+
+const VALVES=[
+  {id:'impulsion',   x:770, y:215, n:'IMPULSIÓN',    lp:'below'},
+  {id:'skimmer',     x:345, y:505, n:'SKIMMER',      lp:'above'},
+  {id:'limpiafondos',x:345, y:600, n:'LIMPIAFONDOS', lp:'below'},
+  {id:'sumidero',    x:345, y:695, n:'SUMIDERO',     lp:'below'},
+  {id:'cortefondo',  x:650, y:648, n:'CORTE FONDO',  lp:'left'},
+  {id:'vaciado',     x:650, y:790, n:'VACIADO',      lp:'right'},
+  {id:'cochera',     x:600, y:992, n:'COCHERA',      lp:'left'},
+  {id:'calle',       x:880, y:992, n:'CALLE',        lp:'right'}
+];
+const PIPES={
+  skim:'M255 505 H540 V600', limp:'M255 600 H540', t1a:'M540 600 H650', t1b:'M650 600 H760',
+  sum:'M255 695 H650', cf:'M650 695 V600', bom:'M920 600 H1010', filt:'M1170 600 H1290',
+  imp:'M1090 530 V215 H170 V450', vac:'M650 695 V880', des:'M1090 670 V880',
+  t3l:'M650 880 H760', t3r:'M760 880 H1090', t4:'M760 880 V945',
+  coch:'M760 945 H600 V1030', calle:'M760 945 H880 V1030'
+};
+const BOXES=[
+  {x:80,y:450,w:175,h:300,t:'PISCINA',s:'',f:'#d2e8f0'},
+  {x:760,y:540,w:160,h:120,t:'BOMBA',s:'+ prefiltro',f:'#e4e4e4'},
+  {x:1010,y:530,w:160,h:140,t:'SELECTORA',s:'6 vías',f:'#ffecc8'},
+  {x:1290,y:530,w:150,h:140,t:'FILTRO',s:'de arena',f:'#eee8d6'},
+  {x:465,y:1050,w:270,h:100,t:'COCHERA',s:'(atomizador)',f:'#dff0df'},
+  {x:745,y:1050,w:270,h:100,t:'CALLE',s:'(lavado + vaciado)',f:'#dff0df'}
+];
+/* 1 abierta · 0 cerrada · 2 no se toca */
+const ACTIONS=[
+ {id:'filtracion',n:'Filtración',sel:'FILTRACIÓN',bomba:'en marcha',dyn:'normal',
+  v:{impulsion:1,skimmer:1,limpiafondos:0,sumidero:1,cortefondo:1,vaciado:0,calle:0,cochera:0},
+  flow:['skim','t1a','sum','cf','t1b','bom','filt','imp'],
+  steps:['Es la posición de todos los días.','Aspira por el skimmer y por el sumidero de fondo a la vez.',
+         'De vez en cuando comprueba que VACIADO, CALLE y COCHERA siguen cerradas.'],warn:''},
+ {id:'limpiafondos',n:'Limpiafondos',sel:'FILTRACIÓN',bomba:'solo mientras aspiras',
+  v:{impulsion:1,skimmer:0,limpiafondos:1,sumidero:2,cortefondo:0,vaciado:0,calle:0,cochera:0},
+  flow:['limp','t1a','t1b','bom','filt','imp'],
+  steps:['Bomba parada para cambiar las llaves.','Cierra SKIMMER y CORTE FONDO: toda la fuerza va a la barredera.',
+         'Abre LIMPIAFONDOS. Purga la manguera de aire antes de conectarla.','Arranca y pasa el fondo despacio.',
+         'Al terminar, vuelve a dejarlo en Filtración.'],
+  warn:'Con CORTE FONDO cerrada, el SUMIDERO queda aislado: da igual cómo esté.'},
+ {id:'lavado',n:'Lavado',sel:'LAVADO',bomba:'1-3 min',
+  v:{impulsion:1,skimmer:1,limpiafondos:0,sumidero:1,cortefondo:1,vaciado:0,calle:1,cochera:0},
+  flow:['skim','t1a','sum','cf','t1b','bom','filt','des','t3r','t4','calle'],
+  steps:['Bomba parada.','Aspiración normal: SKIMMER, SUMIDERO y CORTE FONDO abiertas.','Abre CALLE.',
+         'Selectora en LAVADO. Arranca 1-3 min, hasta que el visor salga limpio.','Para y pasa a Enjuague.'],
+  warn:'Nunca arranques en LAVADO con CALLE cerrada.'},
+ {id:'enjuague',n:'Enjuague',sel:'ENJUAGUE',bomba:'20-40 s',
+  v:{impulsion:1,skimmer:1,limpiafondos:0,sumidero:1,cortefondo:1,vaciado:0,calle:1,cochera:0},
+  flow:['skim','t1a','sum','cf','t1b','bom','filt','des','t3r','t4','calle'],
+  steps:['Va siempre justo detrás del lavado. Las llaves no se tocan.','Bomba parada. Selectora en ENJUAGUE.',
+         'Arranca 20-40 s: asienta la arena y evita que se cuele al vaso.',
+         'Para, selectora en FILTRACIÓN y cierra CALLE.','Repón el nivel: se han ido 2-3 cm.'],warn:''},
+ {id:'prefiltro',n:'Prefiltro',sel:'dejala en FILTRACION',bomba:'parada y sin corriente',
+  v:{impulsion:0,skimmer:0,limpiafondos:0,sumidero:0,cortefondo:1,vaciado:1,calle:1,cochera:0},
+  flow:['t1b','cf','vac','t3l','t4','calle'],
+  steps:['Bomba parada y corriente cortada en el cuadro.',
+         'Cierra las cuatro que dan a la piscina: SKIMMER, LIMPIAFONDOS, SUMIDERO e IMPULSION. La que aisla la piscina es SUMIDERO.',
+         'CORTE FONDO se queda ABIERTA: es por donde va a caer el agua de la bomba al desague.',
+         'Afloja la tapa del prefiltro media vuelta. Si sale chorro, una llave sigue abierta: para y revisa antes de seguir.',
+         'Con la tapa floja para que entre aire, abre VACIADO y CALLE. El vaso baja solo hasta la altura del tubo.',
+         'CIERRA VACIADO y CALLE antes de quitar la tapa del todo.',
+         'Saca el cesto, vacialo y enjuagalo. Grasa de silicona en la junta si esta reseca.',
+         'Cesto dentro y tapa a mano. No hace falta llenar el vaso: al estar la bomba por debajo del nivel del agua se llena sola.',
+         'Reabre en orden: IMPULSION, SKIMMER, SUMIDERO. Da corriente y comprueba que ceba.'],
+  warn:'El paso 6 no es opcional. Con la tapa fuera y VACIADO abierta, si alguien toca SUMIDERO se te va la piscina por la calle.'},
+
+ {id:'vcalle',n:'Vaciar a la calle',sel:'da igual: no pasa por ella',bomba:'parada · por gravedad',
+  v:{impulsion:0,skimmer:0,limpiafondos:0,sumidero:1,cortefondo:0,vaciado:1,calle:1,cochera:0},
+  flow:['sum','vac','t3l','t4','calle'],
+  steps:['Bomba parada. Esto va por gravedad, sin bomba.','Cierra SKIMMER, IMPULSIÓN y CORTE FONDO.',
+         'Abre SUMIDERO, VACIADO y CALLE.','El agua baja sola. Vigílalo.','Al terminar: cierra VACIADO y CALLE.'],
+  warn:'Si dejas VACIADO abierta, la piscina se sigue vaciando sola y sin ruido.'},
+ {id:'vcochera',n:'Vaciar a la cochera',sel:'da igual: no pasa por ella',bomba:'parada · por gravedad',
+  v:{impulsion:0,skimmer:0,limpiafondos:0,sumidero:1,cortefondo:0,vaciado:1,calle:0,cochera:1},
+  flow:['sum','vac','t3l','t4','coch'],
+  steps:['Igual que vaciar a la calle, pero el destino es el atomizador.','Bomba parada.',
+         'Cierra SKIMMER, IMPULSIÓN y CORTE FONDO.','Abre SUMIDERO, VACIADO y COCHERA. CALLE cerrada.',
+         'Al terminar: cierra VACIADO y COCHERA.'],
+  warn:'No mandes a la cochera agua recién clorada de choque si vas a regar con ella.'},
+
+ {id:'invierno',n:'Invierno',g:'temp',sel:'FILTRACIÓN',bomba:'1-3 h al día',dyn:'invierno',
+  v:{impulsion:1,skimmer:1,limpiafondos:0,sumidero:1,cortefondo:1,vaciado:0,calle:0,cochera:0},
+  flow:['skim','t1a','sum','cf','t1b','bom','filt','imp'],
+  steps:['Mantenerla llena y filtrando poco. Las llaves son las mismas que en Filtración: no se toca nada.',
+         'Tu bomba da una vuelta completa a los {vol} m3 en unas {vuelta} h: ese es el suelo. Por debajo de 10 °C con 1-2 h al día basta; entre 10 y 15 °C, 2-3 h.',
+         'Cloro más flojo, sobre 1 ppm. El pH igual que en verano: 7,2-7,6. Mídelo cada 2 o 3 semanas.',
+         'Quita las hojas cada semana. Las que se pudren en el fondo manchan el gresite y cuesta sacarlas.',
+         'Cepilla playa y escalones de vez en cuando aunque no se vea nada.',
+         'En primavera solo tendrás que subir horas de filtración y ajustar. Sin sustos.'],
+  warn:'Heladas: si anuncian noche bajo cero, deja la bomba en marcha de madrugada. El agua en movimiento no se congela; parada, te puede reventar una tubería o la bomba.'},
+
+ {id:'invernaje',n:'Invernaje',g:'temp',sel:'CERRADA',bomba:'parada y vaciada',
+  v:{impulsion:0,skimmer:0,limpiafondos:0,sumidero:0,cortefondo:0,vaciado:0,calle:0,cochera:0},
+  flow:[],
+  steps:['Esto es cerrarla del todo. Solo si vas a dejarla parada meses; con lo que haces ahora no te hace falta.',
+         'Antes de nada deja el agua fina: pH 7,2-7,6, cloración fuerte y filtra 24-48 h seguidas.',
+         'Echa el producto de invernaje y deja circular unas horas.',
+         'Baja el nivel unos 10 cm por debajo de la boca del skimmer. Usa Vaciar a la calle, poco rato y vigilando.',
+         'Cierra TODAS las llaves. Con el cuarto por debajo del nivel del agua esto no es opcional.',
+         'Vacía la bomba por su tapón de purga y el filtro por el suyo. Saca el cesto del prefiltro y guárdalo seco.',
+         'Selectora en CERRADA, o entre dos posiciones, para no dejar la junta apretada todo el invierno.',
+         'Boyas o gomaespuma dentro de los skimmers, para que si hiela el hielo no los raje.'],
+  warn:'La piscina NO se vacía en invierno. Vacía, el vaso puede levantarse o agrietarse con el empuje del terreno.'},
+
+ {id:'arranque',n:'Arranque',g:'temp',sel:'FILTRACIÓN',bomba:'seguida, 24-48 h',
+  v:{impulsion:1,skimmer:1,limpiafondos:0,sumidero:1,cortefondo:1,vaciado:0,calle:0,cochera:0},
+  flow:['skim','t1a','sum','cf','t1b','bom','filt','imp'],
+  steps:['Sube el nivel hasta los 2/3 de la boca del skimmer.',
+         'Cesto del prefiltro dentro, junta engrasada, tapa a mano. Llena el vaso de agua antes de arrancar.',
+         'Abre en orden: IMPULSIÓN, SKIMMER, CORTE FONDO. Da corriente y comprueba que ceba.',
+         'Lava y enjuaga el filtro antes de nada: la arena lleva meses parada y suelta lo que quedó dentro.',
+         'Filtra seguido 24-48 h. Anota la presión con el filtro ya limpio y actualízala en Datos.',
+         'Ajusta el pH primero. Luego cloración de choque, y al día siguiente el alguicida.',
+         'Cepilla paredes, playa y escalones. Mide la alcalinidad: después del invierno suele estar movida.'],
+  warn:'Si el agua está verde, el floculante va el último. Primero cloro de choque y cepillar, o solo conseguirás atascar la arena.'}
+];
+
+let state={readings:[],refills:[],tablets:[],tasks:{},taskLog:[],cyaBase:null,cfg:Object.assign({},DEF),products:[],tabletId:null};
+let sel={ph:null,cl:null}, cmVal=3, paVal=2, curAct='filtracion';
+let backend='mem', mode='ok', readConfirmed=false, diag='';
+
+const $=id=>document.getElementById(id);
+const days=ts=>Math.floor((Date.now()-ts)/86400000);
+const nf=v=>String(v).replace('.',',');
+const cfg=()=>Object.assign({},DEF,state.cfg||{});
+const volL=()=>cfg().vol*1000;
+const litPerCm=()=>cfg().sup*10;
+const barAlert=()=>Math.round((cfg().barLimpio+0.4)*10)/10;
+function agoTxt(ts){if(ts==null)return 'sin apuntar';const d=days(ts);return d===0?'hoy':d===1?'ayer':'hace '+d+' d';}
+function fdate(ts){const d=new Date(ts);return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0');}
+function fnum(v,dec){return (Math.round(v*Math.pow(10,dec))/Math.pow(10,dec)).toLocaleString('es-ES');}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+/* horas de filtracion: el suelo es dar una vuelta completa al agua */
+function vueltaH(){return cfg().vol/cfg().caudal;}
+function lastTemp(maxDias){
+  const r=state.readings.find(x=>x.temp!=null);
+  if(!r)return null;
+  if(maxDias!=null&&days(r.t)>maxDias)return null;   // dato viejo: mejor no afirmar nada
+  return r.temp;
+}
+function cmPorLavado(){ return (cfg().caudal*(2.5/60)*1000)/litPerCm(); }  // 2 min lavado + 30 s enjuague
+function tok(x){ return String(x).replace(/\{vol\}/g,nf(cfg().vol)).replace(/\{vuelta\}/g,fnum(vueltaH(),1)); }
+function horasFiltrado(t){
+  if(t<10)return '1-2 h'; if(t<15)return '2-3 h'; if(t<18)return '3-4 h';
+  if(t<23)return '4-5 h'; if(t<27)return '6-8 h'; if(t<31)return '8-12 h'; return '12-14 h';
+}
+
+let toastTimer=null;
+function toast(msg,actionLabel,action){
+  const t=$('toast');$('toastMsg').textContent=msg;
+  const old=t.querySelector('button');if(old)old.remove();
+  if(actionLabel){const b=document.createElement('button');b.textContent=actionLabel;
+    b.onclick=()=>{action();t.classList.remove('on')};t.appendChild(b);}
+  t.classList.add('on');clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('on'),actionLabel?5200:2300);
+}
+
+/* ================= ALMACENAMIENTO ================= */
+function hasClaude(){try{return !!(window.storage&&typeof window.storage.get==='function'&&typeof window.storage.set==='function');}catch(e){return false;}}
+function hasLocal(){try{const k='__p'+Date.now();window.localStorage.setItem(k,'1');window.localStorage.removeItem(k);return true;}catch(e){return false;}}
+async function attempt(name,variants){
+  if(!window.storage||typeof window.storage[name]!=='function')return {ok:false};
+  for(const a of variants){try{return {ok:true,val:await window.storage[name].apply(window.storage,a)};}catch(e){}}
+  return {ok:false};
+}
+const rawGet=()=>attempt('get',[[KEY,false],[KEY]]);
+const rawSet=v=>attempt('set',[[KEY,v,false],[KEY,v]]);
+const rawList=()=>attempt('list',[['piscina-',false],['piscina-'],['',false],[]]);
+function whereLabel(){return backend==='claude'?'la conversación de Claude':backend==='local'?'este navegador':'solo la memoria: al cerrar se pierde';}
+function fragile(){return backend==='local'&&!/^https?:$/.test(location.protocol);}
+
+async function load(){
+  if(hasClaude())backend='claude'; else if(hasLocal())backend='local'; else backend='mem';
+  if(backend==='mem'){mode='ok';readConfirmed=true;diag='sin sitio donde guardar';return;}
+  if(backend==='local'){
+    try{const v=window.localStorage.getItem(KEY);if(v)Object.assign(state,JSON.parse(v));}catch(e){}
+    mode='ok';readConfirmed=true;diag='navegador ('+location.protocol+')';return;
+  }
+  const g=await rawGet();
+  if(g.ok){
+    if(g.val&&g.val.value){try{Object.assign(state,JSON.parse(g.val.value));}catch(e){}}
+    mode='ok';readConfirmed=true;diag='leído';return;
+  }
+  const l=await rawList();
+  if(l.ok){
+    const keys=(l.val&&l.val.keys)||[];
+    const found=Array.isArray(keys)&&keys.some(k=>(typeof k==='string'?k:(k&&k.key))===KEY);
+    if(found){mode='blocked';readConfirmed=false;diag='hay datos y no se leen';}
+    else{mode='ok';readConfirmed=true;diag='vacío, primera vez';}
+    return;
+  }
+  mode='unknown';readConfirmed=false;diag='sin comprobar';
+}
+async function save(){
+  if(backend==='mem'){refreshBackup();return true;}
+  if(mode==='blocked'){toast('No se guarda hasta poder leer lo guardado');return false;}
+  if(backend==='local'){
+    try{window.localStorage.setItem(KEY,JSON.stringify(state));refreshBackup();return true;}
+    catch(e){toast('El navegador no deja guardar. Usa la copia de seguridad');return false;}
+  }
+  if(!readConfirmed){
+    const g=await rawGet();
+    if(g.ok&&g.val&&g.val.value){
+      try{const prev=JSON.parse(g.val.value);
+        if((prev.readings||[]).length||(prev.refills||[]).length){
+          Object.assign(state,prev);readConfirmed=true;mode='ok';diag='recuperado';
+          renderAlarm();renderCfg();renderAll();toast('He recuperado tu historial. Vuelve a apuntarlo');return false;}
+      }catch(e){}
+    }
+    readConfirmed=true;
+  }
+  const s=await rawSet(JSON.stringify(state));
+  if(!s.ok){mode='blocked';renderAlarm();toast('No se ha podido guardar');return false;}
+  if(mode!=='ok'){mode='ok';renderAlarm();}
+  refreshBackup();return true;
+}
+function renderAlarm(){
+  const a=$('alarm');$('app').classList.remove('locked');
+  const tag='<div style="font-family:var(--mono);font-size:10.5px;opacity:.65;margin-top:9px">estado: '+diag+'</div>';
+  if(mode==='blocked'){
+    a.innerHTML='<div class="alarm"><b>No se puede leer lo que tienes guardado</b>Hay datos guardados pero no se han podido cargar. '+
+      'No apuntes nada ahora: se escribiría encima. Cierra y vuelve a abrir la conversación.'+
+      '<button type="button" id="retry">Volver a intentarlo</button>'+tag+'</div>';
+    $('app').classList.add('locked');
+    $('retry').onclick=async()=>{await load();renderAlarm();if(mode!=='blocked'){renderCfg();renderAll();toast('Cargado');}};return;
+  }
+  if(backend==='mem'){a.innerHTML='<div class="alarm soft"><b>Aquí no puede guardar nada</b>Este navegador no deja guardar datos. '+
+    'Puedes usarla igual, pero al cerrar se pierde. Copia el texto de la pestaña Datos.'+tag+'</div>';return;}
+  if(fragile()){a.innerHTML='<div class="alarm soft"><b>Guarda, pero no te fíes del todo</b>Al abrir el archivo descargado, '+
+    'Chrome guarda los datos aparte y puede tirarlos al limpiar. Cada pocas semanas cópiate el texto de la pestaña Datos.'+tag+'</div>';return;}
+  if(mode==='unknown'){a.innerHTML='<div class="alarm soft"><b>Úsala con normalidad</b>No he podido comprobar si ya tenías algo guardado. '+
+    'Antes del primer apunte lo vuelvo a mirar, así que no se te va a borrar nada.'+tag+'</div>';return;}
+  a.innerHTML='';
+}
+
+/* ---------- tiras ---------- */
+function buildStrip(el,bandEl,data,ok,which){
+  el.innerHTML='';bandEl.innerHTML='';
+  data.forEach(o=>{
+    const b=document.createElement('button');
+    b.className='chip';b.type='button';b.setAttribute('aria-pressed','false');
+    b.setAttribute('aria-label',(which==='ph'?'pH ':'Cloro ')+o.v);
+    b.innerHTML='<span class="sw" style="background:'+o.c+'"></span><span class="n">'+nf(o.v)+'</span>';
+    b.onclick=()=>{sel[which]=sel[which]===o.v?null:o.v;
+      [...el.children].forEach((c,i)=>c.setAttribute('aria-pressed',data[i].v===sel[which]?'true':'false'));};
+    el.appendChild(b);
+    const s=document.createElement('span');
+    if(o.v>=ok[0]&&o.v<=ok[1]){s.textContent='ok';s.className='in';}
+    bandEl.appendChild(s);
+  });
+}
+
+/* ================= CROQUIS INTERACTIVO ================= */
+function renderPlan(){
+  const A=ACTIONS.find(a=>a.id===curAct)||ACTIONS[0];
+  const on=new Set(A.flow);
+  let s='<svg viewBox="55 150 1420 1035" xmlns="http://www.w3.org/2000/svg" role="img" '+
+        'aria-label="Croquis del circuito para '+esc(A.n)+'">'+
+    '<style>.pl{fill:none;stroke:#9aa3a8;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}'+
+    '.pl.on{stroke:#1565c0;stroke-width:13}'+
+    '.bx{stroke:#1b3a4b;stroke-width:5}'+
+    '.bt{font:700 30px Barlow,sans-serif;fill:#1b3a4b;text-anchor:middle}'+
+    '.bs{font:400 22px Barlow,sans-serif;fill:#1b3a4b;text-anchor:middle}'+
+    '.vn{font:700 25px Barlow,sans-serif;fill:#1565c0}'+
+    '.vx{font:700 25px Barlow,sans-serif;fill:#9aa3a8}'+
+    '.tn{font:700 19px monospace;fill:#9aa3a8}</style>';
+  for(const k in PIPES) s+='<path class="pl'+(on.has(k)?' on':'')+'" d="'+PIPES[k]+'"/>';
+  BOXES.forEach(b=>{
+    s+='<rect x="'+b.x+'" y="'+b.y+'" width="'+b.w+'" height="'+b.h+'" rx="14" fill="'+b.f+'" class="bx"/>';
+    if(b.s)s+='<text class="bt" x="'+(b.x+b.w/2)+'" y="'+(b.y+b.h/2-4)+'">'+b.t+'</text>'+
+              '<text class="bs" x="'+(b.x+b.w/2)+'" y="'+(b.y+b.h/2+26)+'">'+b.s+'</text>';
+    else s+='<text class="bt" x="'+(b.x+b.w/2)+'" y="'+(b.y+b.h/2+10)+'">'+b.t+'</text>';
+  });
+  s+='<text class="tn" x="690" y="585">T1</text><text class="tn" x="600" y="732">T2</text>'+
+     '<text class="tn" x="775" y="866">T3</text><text class="tn" x="694" y="975">T4</text>'+
+     '<text class="bs" style="font-weight:700" x="630" y="188">IMPULSIÓN — vuelta a la piscina</text>';
+  VALVES.forEach(v=>{
+    const st=A.v[v.id];
+    const col=st===1?'#2e7d32':st===0?'#c0392b':'#9aa3a8';
+    s+='<circle cx="'+v.x+'" cy="'+v.y+'" r="17" fill="#fff" stroke="'+col+'" stroke-width="7"/>';
+    if(st===2)s+='<line x1="'+(v.x-8)+'" y1="'+(v.y-8)+'" x2="'+(v.x+8)+'" y2="'+(v.y+8)+'" stroke="#9aa3a8" stroke-width="4"/>';
+    const c=st===2?'vx':'vn';
+    if(v.lp==='right')s+='<text class="'+c+'" x="'+(v.x+27)+'" y="'+(v.y+8)+'">'+v.n+'</text>';
+    else if(v.lp==='left')s+='<text class="'+c+'" text-anchor="end" x="'+(v.x-27)+'" y="'+(v.y+8)+'">'+v.n+'</text>';
+    else if(v.lp==='above')s+='<text class="'+c+'" text-anchor="middle" x="'+v.x+'" y="'+(v.y-27)+'">'+v.n+'</text>';
+    else s+='<text class="'+c+'" text-anchor="middle" x="'+v.x+'" y="'+(v.y+42)+'">'+v.n+'</text>';
+  });
+  $('plan').innerHTML=s+'</svg>';
+
+  $('mSel').textContent=A.sel;
+  let bT=A.bomba, bS='';
+  if(A.dyn){
+    const t=lastTemp(21);
+    if(t!=null&&(A.dyn==='normal'||t<18)){
+      bT=horasFiltrado(t)+' al día';
+      bS='agua a '+nf(t)+' °C · una vuelta al agua = '+fnum(vueltaH(),1)+' h';
+    }else if(A.dyn==='invierno'){ bS='con el agua entre 5 y 15 °C · una vuelta = '+fnum(vueltaH(),1)+' h'; }
+    else { bT='temperatura ÷ 2'; bS='apunta la temperatura del agua y sale sola'; }
+  }
+  $('mBomba').textContent=bT;
+  $('mBombaSub').textContent=bS;
+  $('vgrid').innerHTML=VALVES.map(v=>{
+    const st=A.v[v.id], cls=st===1?'a':st===0?'c':'x';
+    const txt=st===1?'ABRIR':st===0?'CERRAR':'no se toca';
+    return '<div class="vcell '+cls+'"><div class="vn">'+v.n+'</div><div class="vs">'+txt+'</div></div>';
+  }).join('');
+  $('stepsBox').innerHTML='<ol class="steps">'+A.steps.map(t=>'<li>'+tok(t)+'</li>').join('')+'</ol>'+
+    (A.warn?'<p class="warnline">'+tok(A.warn)+'</p>':'');
+}
+function renderActs(){
+  const groups=[['dia','Día a día'],['temp','Temporada']];
+  $('acts').innerHTML=groups.map(function(gr){
+    const list=ACTIONS.filter(a=>(a.g||'dia')===gr[0]);
+    if(!list.length)return '';
+    return '<div class="agroup"><div class="glab">'+gr[1]+'</div><div class="arow">'+
+      list.map(a=>'<button class="act" type="button" data-a="'+a.id+'" aria-pressed="'+
+        (a.id===curAct)+'">'+a.n+'</button>').join('')+'</div></div>';
+  }).join('');
+  $('acts').querySelectorAll('.act').forEach(b=>b.onclick=()=>{curAct=b.dataset.a;renderActs();renderPlan();});
+}
+
+/* ---------- estabilizante ---------- */
+function tabletProd(){return (state.products||[]).find(x=>x.id===state.tabletId&&x.kind==='pastilla')||null;}
+function cyaPerTab(){
+  const t=tabletProd();
+  const g = t ? t.peso*(t.pct/100)*(CYA_FACTOR[t.quim]||0) : CYA_G_TAB;
+  return g*1000/volL();
+}
+function tabletDesc(){
+  const t=tabletProd();
+  if(!t)return 'suponiendo pastillas de 200 g al 80% de tricloro';
+  return 'según tu '+t.n+': '+t.peso+' g al '+t.pct+'% de '+(t.quim==='tri'?'tricloro':t.quim==='di'?'dicloro':'cloro sin estabilizante');
+}
+function cyaEstimate(){
+  const ev=[];let base=0,from=0;
+  if(state.cyaBase){base=state.cyaBase.v;from=state.cyaBase.t;}
+  state.tablets.forEach(o=>{if(o.t>from)ev.push({t:o.t,k:'tab',n:o.n})});
+  state.refills.forEach(o=>{if(o.t>from)ev.push({t:o.t,k:'ref',cm:o.cm})});
+  ev.sort((a,b)=>a.t-b.t);
+  let v=base;
+  ev.forEach(e=>{if(e.k==='tab')v+=e.n*cyaPerTab();else v*=Math.max(0,1-(e.cm*litPerCm())/volL());});
+  return {v:Math.round(v),measured:!!state.cyaBase,tabs:state.tablets.length};
+}
+function renderCya(){
+  const box=$('cyaBox'),e=cyaEstimate();
+  if(!e.measured&&!e.tabs){
+    box.innerHTML='<p class="empty">Apunta las pastillas que echas al flotador y aquí verás cuánto estabilizante se acumula. '+
+      'Cada pastilla deja unas '+fnum(cyaPerTab(),1)+' ppm en tus '+nf(cfg().vol)+' m&sup3; ('+tabletDesc()+'), y eso no se evapora nunca.</p>';return;
+  }
+  const v=e.v,off=v>75;let txt,cls;
+  if(v<20){txt='Bajo. El sol te va a comer el cloro enseguida. Normal al empezar la temporada.';cls='info';}
+  else if(v<=50){txt='En su sitio. Aquí es donde el cloro rinde y aguanta el sol.';cls='good';}
+  else if(v<=75){txt='Alto. Vigílalo y no subas más: aprovecha para renovar agua en el próximo lavado.';cls='info';}
+  else{
+    const litros=Math.round(volL()*(1-40/v)),cm=Math.round(litros/litPerCm());
+    txt='<b>Demasiado alto: el cloro pierde fuerza aunque el test lo marque bien.</b> Es la razón típica de "echo cloro y el agua sigue verde". '+
+      'No hay producto que lo quite: solo se baja renovando agua. Para dejarlo en 40 tendrías que cambiar unos <b>'+
+      litros.toLocaleString('es-ES')+' litros</b> (bajar el nivel unos '+cm+' cm y volver a llenar). Sácala por COCHERA al atomizador.';
+    cls='';
+  }
+  box.innerHTML='<div class="big'+(off?' off':'')+'">'+v+'<small>ppm '+(e.measured?'(desde tu última medida)':'estimado')+'</small></div>'+
+    '<ul class="todo"><li class="'+cls+'"><span class="dot"></span><span>'+txt+'</span></li></ul>'+
+    '<p class="note">Objetivo 30-50 ppm. Calculado '+tabletDesc()+'. Confírmalo con una tira una vez al mes '+
+    'y apúntalo arriba: a partir de ahí cuenta desde tu medida.</p>';
+}
+
+/* ---------- consumo ---------- */
+function renderLoss(){
+  const box=$('lossBox'),win=30*86400000,now=Date.now();
+  const refs=state.refills.filter(r=>now-r.t<=win);
+  if(refs.length<2){box.innerHTML='<p class="empty">Apunta los centímetros que repones y aquí te dirá si pierdes más agua de la cuenta.</p>';return;}
+  const totalCm=refs.reduce((a,r)=>a+r.cm,0);
+  const first=Math.min(...refs.map(r=>r.t));
+  const span=Math.max(1,Math.round((now-first)/86400000));
+  const lavados=state.taskLog.filter(l=>l.id==='lavado'&&now-l.t<=win&&l.t>=first).length;
+  const cmLav=lavados*cmPorLavado();
+  const rate=Math.max(0,totalCm-cmLav)/span;
+  const t=lastTemp(30), frio=t!=null&&t<16;
+  const lim=frio?1.0:2.0, aviso=frio?0.5:1.2;      // en invierno se evapora mucho menos
+  const alto=rate>lim;let txt;
+  if(alto)txt='<b>Estás perdiendo más agua de lo normal.</b> Antes de pensar en una fuga, comprueba que <b>VACIADO y CALLE están bien cerradas</b>: '+
+    'con el cuarto por debajo del nivel del agua, una llave medio abierta vacía la piscina sola y sin ruido. Si están bien, haz la prueba del cubo 48 h.';
+  else if(rate>aviso)txt='Algo por encima de lo típico'+(frio?' para el agua fría que tienes.':', pero puede ser calor fuerte y mucho baño.')+' Míralo otra vez la semana que viene.';
+  else txt=frio?'Dentro de lo normal. Con el agua fría se evapora muy poco, del orden de 0,1 a 0,3 cm al día.'
+               :'Dentro de lo normal. En verano se evapora entre 0,5 y 1 cm al día.'+(t!=null?' Con el agua a '+nf(t)+' °C, cuadra.':'');
+  box.innerHTML='<div class="big'+(alto?' off':'')+'">'+rate.toFixed(1).replace('.',',')+'<small>cm al día · '+Math.round(rate*litPerCm())+' L</small></div>'+
+    '<ul class="todo"><li class="'+(alto?'':'good')+'"><span class="dot"></span><span>'+txt+'</span></li></ul>'+
+    '<p class="note">'+totalCm+' cm repuestos en '+span+' días'+
+    (lavados?', menos '+fnum(cmLav,1)+' cm que se llevaron '+lavados+' lavado'+(lavados>1?'s':'')+' de filtro':'')+'.</p>';
+}
+
+/* ---------- estado ---------- */
+function renderStatus(){
+  const box=$('status'),r=state.readings[0];
+  if(!r){box.className='card status';
+    box.innerHTML='<p class="empty">Todavía no hay ninguna medición. Haz el test del agua y marca el pH y el cloro aquí abajo.</p>';return;}
+  const phOff=r.ph!=null&&(r.ph<PH_OK[0]||r.ph>PH_OK[1]);
+  const clOff=r.cl!=null&&(r.cl<CL_OK[0]||r.cl>CL_OK[1]);
+  const barOff=r.bar!=null&&r.bar>=barAlert();
+  const m=(k,v,u,off)=>'<div class="metric"><div class="k">'+k+'</div><div class="v '+
+    (v==null?'none':off?'off':'')+'">'+(v==null?'—':nf(v))+(v!=null&&u?'<span class="u">'+u+'</span>':'')+'</div></div>';
+  let html='<div class="readout">'+m('pH',r.ph,'',phOff)+m('Cloro',r.cl,'ppm',clOff)+m('Presión',r.bar,'bar',barOff)+
+    '</div><div class="when">Medido '+agoTxt(r.t)+' · '+fdate(r.t)+'</div>';
+  const dPh=Math.round(cfg().vol*6.25/5)*5;
+  const bicar=Math.round(16.8*cfg().vol/25)*25;      // g de bicarbonato por cada 10 ppm de alcalinidad
+  const cy=cyaEstimate();
+  const todo=[];
+  if(r.ph!=null&&r.ph>PH_OK[1])todo.push(['<b>pH alto.</b> Empieza con ~'+dPh+' mL de pH- líquido corriente; si el tuyo es concentrado, la mitad. '+
+    'Bomba en marcha, circula 3-4 h y vuelve a medir antes de echar más. Nunca en el skimmer.','']);
+  if(r.ph!=null&&r.ph<PH_OK[0])todo.push(['<b>pH bajo.</b> Empieza con ~'+dPh+' mL de pH+ líquido, circula 3-4 h y vuelve a medir. '+
+    'Con pastillas de tricloro el pH baja solo, así que esto te pasará a menudo.','']);
+  if(r.cl!=null&&r.cl<CL_OK[0]){
+    if(cy.v>75)todo.push(['<b>Cloro bajo con el estabilizante alto ('+cy.v+' ppm).</b> No eches más pastillas: subirías más el estabilizante y el cloro seguiría sin morder. '+
+      'Renueva agua, y mientras tanto desinfecta con hipoclorito líquido, que no lleva estabilizante.','']);
+    else todo.push(['<b>Cloro bajo.</b> Mira el flotador y repón pastillas. Ajusta el pH primero: a pH 8 solo una cuarta parte del cloro está en la forma que desinfecta, contra la mitad a pH 7,5.','']);
+  }
+  if(r.cl!=null&&r.cl>3)todo.push(['<b>Cloro muy alto.</b> No os bañéis hasta que baje de 3 ppm. Saca el flotador y sigue filtrando: al sol baja solo en un día o dos.','']);
+  if(barOff)todo.push(['<b>Toca lavar el filtro</b>: '+nf(r.bar)+' bar contra '+nf(cfg().barLimpio)+' con el filtro limpio. Tienes el paso a paso en la pestaña Croquis.','']);
+  const ta=(state.readings.find(x=>x.ta!=null)||{});
+  if(ta.ta!=null){
+    if(ta.ta<TA_OK[0])todo.push(['<b>Alcalinidad baja</b> ('+ta.ta+' ppm). Por eso el pH no para quieto. Se sube con bicarbonato sódico o incrementador de alcalinidad: '+
+      'unos <b>'+bicar+' g por cada 10 ppm</b> que quieras subir, repartido y con la bomba en marcha. Remide a las 6 h.','']);
+    else if(ta.ta>TA_OK[1])todo.push(['<b>Alcalinidad alta</b> ('+ta.ta+' ppm). El pH tirará hacia arriba y costará bajarlo. Se baja con el mismo pH-, '+
+      'pero echándolo despacio en un solo punto y con la bomba parada. Va lento: repítelo en varios días.','']);
+    if(days(ta.t)>40)todo.push(['Hace '+days(ta.t)+' días de la última alcalinidad. Toca medirla.','info']);
+  }else todo.push(['No has medido nunca la <b>alcalinidad</b>. Fuera de 100-150 ppm el pH no para quieto, por mucho pH- que eches.','info']);
+  if(cy.v>75)todo.push(['<b>Estabilizante por las nubes</b> ('+cy.v+' ppm). Mira la pestaña Tareas: hay que renovar agua.','']);
+  if(days(r.t)>=4)todo.push(['Hace '+days(r.t)+' días de la última medición. En temporada, 2 o 3 veces por semana.','info']);
+  if(r.temp!=null)todo.push(['Con el agua a '+nf(r.temp)+' °C, filtra <b>'+horasFiltrado(r.temp)+'</b> al día'+
+    (r.temp<15?'. Con el agua fría las algas casi no crecen: basta con que no se quede parada.'
+              :', mejor entre las 11 y las 19.')+
+    ' Una vuelta completa a tus '+nf(cfg().vol)+' m³ son '+fnum(vueltaH(),1)+' h.','info']);
+  if(!todo.length)todo.push(['Agua en rango. No hay que echar nada.','good']);
+  box.innerHTML=html+'<ul class="todo">'+todo.map(t=>'<li class="'+t[1]+'"><span class="dot"></span><span>'+t[0]+'</span></li>').join('')+'</ul>';
+  box.className='card status '+((phOff||clOff||barOff||cy.v>75)?'bad':'ok');
+}
+
+/* ---------- tareas ---------- */
+function renderTasks(){
+  $('tasks').innerHTML=TASKS.map(t=>{
+    const ts=state.tasks[t.id]??null, done0=ts!=null&&days(ts)===0;
+    const due=ts==null?!t.rare:days(ts)>=t.d;
+    return '<div class="task"><div class="name">'+t.n+(t.s?'<small>'+t.s+'</small>':'')+'</div>'+
+      '<div class="ago'+(due?' due':'')+'">'+agoTxt(ts)+'</div>'+
+      '<button class="tick'+(done0?' undo':'')+'" data-t="'+t.id+'" data-u="'+(done0?1:0)+'" '+
+      'aria-label="'+(done0?'Deshacer':'Marcar hecho hoy')+': '+t.n+'">'+(done0?'↺':'✓')+'</button></div>';
+  }).join('');
+  $('tasks').querySelectorAll('.tick').forEach(b=>{
+    b.onclick=async()=>{
+      const id=b.dataset.t;
+      if(b.dataset.u==='1'){
+        const prev=[...state.taskLog].filter(l=>l.id===id).sort((a,c)=>c.t-a.t)[1];
+        state.taskLog=state.taskLog.filter(l=>!(l.id===id&&days(l.t)===0));
+        if(prev)state.tasks[id]=prev.t;else delete state.tasks[id];
+        await save();renderTasks();renderLoss();toast('Deshecho');
+      }else{
+        const before=state.tasks[id]??null;
+        state.tasks[id]=Date.now();state.taskLog.push({t:Date.now(),id});
+        state.taskLog=state.taskLog.slice(-400);
+        await save();renderTasks();renderLoss();
+        toast('Hecho hoy','Deshacer',async()=>{
+          state.taskLog=state.taskLog.filter(l=>!(l.id===id&&days(l.t)===0));
+          if(before==null)delete state.tasks[id];else state.tasks[id]=before;
+          await save();renderTasks();renderLoss();});
+      }
+    };
+  });
+}
+
+/* ---------- historial ---------- */
+function renderHist(){
+  const box=$('hist'),rs=state.readings;
+  if(!rs.length){box.innerHTML='<p class="empty">Aquí saldrá la evolución del pH en cuanto guardes unas cuantas mediciones.</p>';return;}
+  const pts=rs.filter(r=>r.ph!=null).slice(0,20).reverse();
+  let svg='';
+  if(pts.length>1){
+    const W=340,H=90,P=9,lo=6.6,hi=8.4;
+    const t0=pts[0].t,t1=pts[pts.length-1].t,span=Math.max(1,t1-t0);
+    const x=t=>P+(t-t0)/span*(W-2*P), y=v=>P+(hi-v)/(hi-lo)*(H-2*P);
+    const d=pts.map((p,i)=>(i?'L':'M')+x(p.t).toFixed(1)+' '+y(p.ph).toFixed(1)).join(' ');
+    svg='<svg class="spark" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="Evolución del pH">'+
+      '<rect x="0" y="'+y(7.6).toFixed(1)+'" width="'+W+'" height="'+(y(7.2)-y(7.6)).toFixed(1)+'" fill="#2e7d32" opacity=".12"/>'+
+      '<path d="'+d+'" fill="none" stroke="#1b3a4b" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'+
+      pts.map(p=>'<circle cx="'+x(p.t).toFixed(1)+'" cy="'+y(p.ph).toFixed(1)+'" r="3.2" fill="'+
+        ((p.ph<7.2||p.ph>7.6)?'#c0392b':'#2e7d32')+'"/>').join('')+'</svg>'+
+      '<div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin:2px 0 12px;display:flex;justify-content:space-between">'+
+      '<span>'+fdate(t0)+'</span><span>franja verde = pH 7,2 - 7,6</span><span>'+fdate(t1)+'</span></div>';
+  }
+  box.innerHTML=svg+'<ul class="hist">'+rs.slice(0,20).map(r=>{
+    const off=r.ph!=null&&(r.ph<PH_OK[0]||r.ph>PH_OK[1]);
+    const offc=r.cl!=null&&(r.cl<CL_OK[0]||r.cl>CL_OK[1]);
+    return '<li data-t="'+r.t+'"><span class="d">'+fdate(r.t)+'</span>'+
+      '<span class="val'+(off?' off':'')+'">pH '+(r.ph==null?'—':nf(r.ph))+'</span>'+
+      '<span class="val'+(offc?' off':'')+'">Cl '+(r.cl==null?'—':nf(r.cl))+'</span>'+
+      '<span class="val">'+(r.bar==null?'':nf(r.bar)+' bar')+'</span>'+
+      '<button class="del" aria-label="Borrar esta medición">×</button></li>';}).join('')+'</ul>';
+  box.querySelectorAll('.del').forEach(b=>{
+    b.onclick=()=>{
+      const li=b.closest('li'),ts=Number(li.dataset.t);b.remove();
+      const c=document.createElement('span');c.className='conf';
+      c.innerHTML='<button class="yes">Borrar</button><button class="no">No</button>';li.appendChild(c);
+      c.querySelector('.yes').onclick=async()=>{state.readings=state.readings.filter(x=>x.t!==ts);
+        await save();renderStatus();renderHist();toast('Medición borrada');};
+      c.querySelector('.no').onclick=()=>renderHist();
+    };
+  });
+}
+
+/* ---------- ajustes ---------- */
+function renderCfg(){
+  const c=cfg();
+  $('cVol').value=c.vol;$('cSup').value=c.sup;$('cBar').value=c.barLimpio;$('cCau').value=c.caudal;
+  $('volTag').textContent=nf(c.vol)+' m³';
+  $('cmHint').textContent='1 cm = '+Math.round(litPerCm())+' litros';
+  const tp=tabletProd();
+  $('paHint').textContent=tp?tp.n+' · '+tp.peso+' g · '+fnum(cyaPerTab(),1)+' ppm cada una'
+                            :'sin apuntar cuáles: se supone 200 g al 80% de tricloro';
+  $('cDerived').innerHTML='Con estos datos: <b>1 cm de nivel = '+Math.round(litPerCm())+' L</b> · '+
+    'una vuelta completa al agua = <b>'+fnum(vueltaH(),1)+' h</b> · '+
+    'una pastilla deja <b>'+fnum(cyaPerTab(),1)+' ppm</b> de estabilizante · '+
+    'aviso de lavar el filtro a partir de <b>'+nf(barAlert())+' bar</b>.';
+}
+async function saveCfg(){
+  const v=parseFloat($('cVol').value), s=parseFloat($('cSup').value),
+        b=parseFloat($('cBar').value), q=parseFloat($('cCau').value);
+  if(!(v>0)||!(s>0)||!(b>0)||!(q>0)){toast('Revisa los números');return;}
+  state.cfg={vol:v,sup:s,barLimpio:b,caudal:q};
+  if(!await save())return;
+  renderCfg();renderAll();renderPlan();calc();toast('Guardado');
+}
+
+/* ---------- mis productos ---------- */
+function doseFor(pr){
+  const v=pr.amt*cfg().vol/pr.per, u=pr.unit;
+  if(u==='L'||u==='kg'){const sub=u==='L'?'mL':'g';
+    return v<1?fnum(v*1000,0)+' '+sub:fnum(v,2)+' '+u;}
+  return fnum(v,0)+' '+u;
+}
+function renderProds(){
+  fillProdSelect();
+  const box=$('prodList'), ps=state.products||[];
+  if(!ps.length){box.innerHTML='<p class="empty" style="margin:0 0 4px">Guarda aquí tus botes y tus pastillas y no tendrás que volver a leer la etiqueta. '+
+    'Con la pastilla apuntada, el estabilizante deja de ser una estimación mía.</p>';return;}
+  box.innerHTML=ps.map(pr=>{
+    if(pr.kind==='pastilla'){
+      const act=pr.id===state.tabletId;
+      const g=pr.peso*(pr.pct/100)*(CYA_FACTOR[pr.quim]||0);
+      return '<div class="prod'+(act?' act':'')+'" data-id="'+pr.id+'">'+
+        '<div class="pn">'+esc(pr.n)+(act?'<span class="badge">en uso</span>':'')+
+        '<small>'+pr.peso+' g · '+pr.pct+'% de '+(pr.quim==='tri'?'tricloro':pr.quim==='di'?'dicloro':'cloro sin estabilizante')+
+        ' · apuntado el '+fdate(pr.t)+'</small></div>'+
+        '<div class="pv">'+fnum(g*1000/volL(),1)+' ppm</div>'+
+        '<button class="pdel" aria-label="Borrar">×</button></div>';
+    }
+    return '<div class="prod" data-id="'+pr.id+'">'+
+      '<div class="pn">'+esc(pr.n)+'<small>etiqueta: '+nf(pr.amt)+' '+pr.unit+' por '+nf(pr.per)+' m³ · apuntado el '+fdate(pr.t)+'</small></div>'+
+      '<div class="pv">'+doseFor(pr)+'</div>'+
+      '<button class="pdel" aria-label="Borrar">×</button></div>';
+  }).join('')+'<p class="note">Toca un líquido para cargarlo abajo. Toca una pastilla para marcarla como la que usas. '+
+    'Si compras el mismo producto con otra concentración, vuelve a apuntarlo: la fecha te dice cuándo lo miraste.</p>';
+
+  box.querySelectorAll('.prod').forEach(el=>{
+    const pr=(state.products||[]).find(x=>x.id===el.dataset.id);
+    el.querySelector('.pn').onclick=async()=>{
+      if(pr.kind==='pastilla'){
+        state.tabletId = state.tabletId===pr.id?null:pr.id;
+        await save();renderProds();renderCya();renderStatus();renderCfg();
+        toast(state.tabletId?'Marcada como la que usas':'Desmarcada');
+      }else{
+        loadProd(pr.id);
+        $('calcOut').scrollIntoView({block:'center'});
+        toast('Cargado: '+pr.n);
+      }
+    };
+    el.querySelector('.pdel').onclick=async()=>{
+      state.products=(state.products||[]).filter(x=>x.id!==pr.id);
+      if(state.tabletId===pr.id)state.tabletId=null;
+      const bk=JSON.stringify(pr);
+      await save();renderProds();renderCya();renderStatus();renderCfg();
+      toast('Borrado','Deshacer',async()=>{state.products.push(JSON.parse(bk));await save();renderProds();renderCya();renderStatus();renderCfg();});
+    };
+  });
+}
+async function addProd(){
+  const n=$('pName').value.trim();
+  if(!n){toast('Ponle un nombre');return;}
+  const kind=$('pKind').value;
+  let pr={id:'p'+Date.now(),n:n,kind:kind,t:Date.now()};
+  if(kind==='dosis'){
+    const a=parseFloat($('pAmt').value), pe=parseFloat($('pPer').value);
+    if(!(a>0)||!(pe>0)){toast('Copia la cantidad y los m³ de la etiqueta');return;}
+    Object.assign(pr,{amt:a,unit:$('pUnit').value,per:pe});
+  }else{
+    const w=parseFloat($('pPeso').value), pc=parseFloat($('pPct').value);
+    if(!(w>0)||!(pc>=0)||pc>100){toast('Revisa el peso y el porcentaje');return;}
+    Object.assign(pr,{peso:w,pct:pc,quim:$('pQuim').value});
+  }
+  state.products=(state.products||[]).concat([pr]);
+  if(kind==='pastilla'&&!state.tabletId)state.tabletId=pr.id;
+  if(!await save())return;
+  $('pName').value='';$('pAmt').value='';$('pForm').open=false;
+  renderProds();renderCya();renderStatus();renderCfg();
+  toast('Guardado');
+}
+
+/* ---------- dosis ---------- */
+function fillProdSelect(){
+  const liq=(state.products||[]).filter(p=>p.kind==='dosis');
+  const cur=$('dProd').value;
+  $('dProd').innerHTML='<option value="">Escribir a mano</option>'+
+    liq.map(p=>'<option value="'+p.id+'">'+esc(p.n)+'</option>').join('');
+  if(liq.some(p=>p.id===cur))$('dProd').value=cur;
+  $('dProdRow').style.display=liq.length?'':'none';
+  $('dHint').textContent=liq.length
+    ? 'Elige uno de los tuyos, o "escribir a mano" para copiar una etiqueta nueva.'
+    : 'Copia lo que ponga la etiqueta. Si lo guardas arriba, la próxima vez lo eliges de una lista.';
+}
+function loadProd(id){
+  const pr=(state.products||[]).find(x=>x.id===id&&x.kind==='dosis');
+  if(!pr){calc();return;}
+  $('dProd').value=id;
+  $('dAmt').value=pr.amt;$('dUnit').value=pr.unit;$('dPer').value=pr.per;
+  calc();
+}
+function calc(){
+  const amt=parseFloat($('dAmt').value), per=parseFloat($('dPer').value), u=$('dUnit').value;
+  const pid=$('dProd').value;
+  const pr=pid?(state.products||[]).find(x=>x.id===pid):null;
+  if(!(amt>0)||!(per>0)){$('calcOut').innerHTML='—<small>Rellena la cantidad y los m³ que ponga el bote.</small>';return;}
+  const v=amt*cfg().vol/per;
+  let main='',extra='';
+  if(u==='L'||u==='kg'){
+    const sub=u==='L'?'mL':'g';
+    if(v<1){main=fnum(v*1000,0)+' '+sub;}
+    else{main=fnum(v,2)+' '+u;extra='son '+fnum(v*1000,0)+' '+sub;}
+  }else{
+    const up=u==='mL'?'L':'kg';
+    main=fnum(v,0)+' '+u;
+    if(v>=1000)extra='son '+fnum(v/1000,2)+' '+up;
+  }
+  $('calcOut').innerHTML=main+'<small>'+(pr?'de <b>'+esc(pr.n)+'</b> ':'')+'para tus '+nf(cfg().vol)+' m³'+
+    (extra?'. '+extra:'')+(pr?'. Etiqueta apuntada el '+fdate(pr.t)+'':'')+
+    '. Echa la mitad, deja circular 3-4 h y vuelve a medir antes de completar.</small>';
+}
+
+/* ---------- copia ---------- */
+function refreshBackup(){
+  const el=$('backup');if(el&&document.activeElement!==el)el.value=JSON.stringify(state);
+  const w=$('whereTxt');if(w)w.textContent='Ahora mismo se guarda en: '+whereLabel()+'.';
+}
+function copyBackup(){
+  const t=$('backup').value;
+  if(navigator.clipboard&&navigator.clipboard.writeText)
+    navigator.clipboard.writeText(t).then(()=>toast('Copiado'),()=>{$('backup').select();toast('Selecciónalo y cópialo a mano');});
+  else{$('backup').select();toast('Selecciónalo y cópialo a mano');}
+}
+async function restoreBackup(){
+  let d;try{d=JSON.parse($('backup').value);}catch(e){toast('Ese texto no vale como copia');return;}
+  if(!d||typeof d!=='object'||!Array.isArray(d.readings)){toast('Ese texto no vale como copia');return;}
+  const bk=JSON.stringify(state);
+  state={readings:d.readings||[],refills:d.refills||[],tablets:d.tablets||[],tasks:d.tasks||{},
+         taskLog:d.taskLog||[],cyaBase:d.cyaBase||null,cfg:Object.assign({},DEF,d.cfg||{}),
+         products:d.products||[],tabletId:d.tabletId||null};
+  readConfirmed=true;await save();renderCfg();renderAll();calc();
+  toast('Restaurado','Deshacer',async()=>{state=JSON.parse(bk);await save();renderCfg();renderAll();calc();});
+}
+
+/* ---------- acciones ---------- */
+async function saveReading(){
+  const num=id=>$(id).value===''?null:parseFloat($(id).value);
+  const bar=num('bar'),temp=num('temp'),ta=num('ta'),cya=num('cya');
+  if(sel.ph==null&&sel.cl==null&&bar==null&&temp==null&&ta==null&&cya==null){toast('Marca al menos un valor');return;}
+  const now=Date.now();
+  state.readings.unshift({t:now,ph:sel.ph,cl:sel.cl,bar,temp,ta});
+  state.readings=state.readings.slice(0,300);
+  if(cya!=null)state.cyaBase={t:now,v:cya};
+  if(!await save())return;
+  sel={ph:null,cl:null};
+  document.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed','false'));
+  ['bar','temp','ta','cya'].forEach(id=>$(id).value='');
+  renderStatus();renderHist();renderCya();renderPlan();toast('Medición guardada');
+}
+function renderAll(){renderStatus();renderTasks();renderHist();renderCya();renderLoss();renderProds();refreshBackup();}
+function showTab(n){['agua','croquis','tareas','datos'].forEach(x=>{
+  $('p-'+x).classList.toggle('on',x===n);$('t-'+x).setAttribute('aria-selected',x===n?'true':'false');});
+  window.scrollTo(0,0);}
+
+let resetArmed=false,resetTimer=null;
+(async function(){
+  buildStrip($('phStrip'),$('phBand'),PH,PH_OK,'ph');
+  buildStrip($('clStrip'),$('clBand'),CL,CL_OK,'cl');
+  document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>showTab(b.dataset.p));
+  $('save').onclick=saveReading;
+  const manual=()=>{$('dProd').value='';calc();};
+  ['dAmt','dPer'].forEach(i=>$(i).oninput=manual);
+  $('dUnit').onchange=manual;
+  $('dProd').onchange=()=>{const v=$('dProd').value; if(v)loadProd(v); else calc();};
+  $('cSave').onclick=saveCfg;
+  $('pAdd').onclick=addProd;
+  $('pKind').onchange=()=>{const t=$('pKind').value;
+    $('pDosis').style.display=t==='dosis'?'':'none';
+    $('pPast').style.display=t==='pastilla'?'':'none';};
+  const step=(dn,up,el,get,set,min,max)=>{
+    $(dn).onclick=()=>{set(Math.max(min,get()-1));$(el).textContent=get();};
+    $(up).onclick=()=>{set(Math.min(max,get()+1));$(el).textContent=get();};};
+  step('cmDown','cmUp','cmN',()=>cmVal,v=>cmVal=v,1,30);
+  step('paDown','paUp','paN',()=>paVal,v=>paVal=v,1,6);
+  $('cmAdd').onclick=async()=>{
+    state.refills.push({t:Date.now(),cm:cmVal});state.refills=state.refills.slice(-300);
+    if(!await save())return;renderLoss();renderCya();
+    toast(cmVal+' cm apuntados','Deshacer',async()=>{state.refills.pop();await save();renderLoss();renderCya();});};
+  $('paAdd').onclick=async()=>{
+    state.tablets.push({t:Date.now(),n:paVal});state.tablets=state.tablets.slice(-300);
+    if(!await save())return;renderCya();renderStatus();
+    toast(paVal+' pastillas apuntadas','Deshacer',async()=>{state.tablets.pop();await save();renderCya();renderStatus();});};
+  $('planZoom').onclick=()=>{
+    const z=$('plan').classList.toggle('zoom');
+    $('planZoom').textContent=z?'Ajustar':'Ampliar';
+    $('planHint').textContent=z?'Arrástralo de lado para moverte':'Se ve pequeño, amplíalo';};
+  $('copy').onclick=copyBackup;
+  $('restore').onclick=restoreBackup;
+  $('reset').onclick=async()=>{
+    if(!resetArmed){resetArmed=true;$('reset').textContent='Toca otra vez para borrarlo todo';
+      clearTimeout(resetTimer);resetTimer=setTimeout(()=>{resetArmed=false;$('reset').textContent='Borrar todos los datos';},4000);return;}
+    clearTimeout(resetTimer);resetArmed=false;$('reset').textContent='Borrar todos los datos';
+    const bk=JSON.stringify(state);
+    state={readings:[],refills:[],tablets:[],tasks:{},taskLog:[],cyaBase:null,cfg:Object.assign({},DEF),products:[],tabletId:null};
+    await save();renderCfg();renderAll();calc();
+    toast('Borrado','Deshacer',async()=>{state=JSON.parse(bk);await save();renderCfg();renderAll();calc();});};
+
+  await load();
+  if(!state.cfg)state.cfg=Object.assign({},DEF);
+  if(!Array.isArray(state.products))state.products=[];
+  renderAlarm();renderCfg();renderActs();renderPlan();renderAll();fillProdSelect();calc();
+})();
+</script>
+</body>
+</html>
