@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Control de la piscina</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMWIzYTRiIi8+PHBhdGggZD0iTTE1IDMzSDg1Vjg0TDU2IDcyVjY0SDQ2VjU0SDM2VjQ0SDE1WiIgZmlsbD0iIzdlYzVkZSIvPjxwYXRoIGQ9Ik0xNSAzM0g4NSIgc3Ryb2tlPSIjZDZlYmYyIiBzdHJva2Utd2lkdGg9IjMuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAD0UlEQVR4nO3bLVYbURzG4YTTXbATfBWiuroaySoqq9GtrUDVs4h6XPdABYccPibJfNy5c+ed51kAE/Hj5Q8k+10DLq+un5Z+DUz3+HC/X/o1LPICBLwNSwRe7YEi3rZacc/6EBHTZc64Z/nCQqaPOcK+KP0FxUxfc7RS7DtEyExRaq2LLLSYmapUQ5O+K4TMHKas9eiFFjNzmdLWqKDFzNzGNjY4aDFTy5jWBgUtZmob2lzvoMXMUoa01ytoMbO0vg2eDVrMtKJPi8X/9Q1LOhm0daY155o8GrSYadWpNp0cROkM2jrTumONfghazKxFV6tODqK8Cdo6szbvm7XQRBE0UQ5BOzdYq9ftWmiiCJooF7udc4P1e2nYQhNF0EQRNFH27meSWGiiCJoogiaKoIkiaKIImiiCJoqgiSJoogiaKIImiqCJImiiCJoogiaKoIkiaKIImiiCJoqgiSJoogiaKIImyqeaD/vz+2fNx9GQz1++VnmOhSaKoIkiaKIImiiCJkrVv3L8+vuv5uPYIAtNFEETRdBEETRRBE0UQRNF0EQRNFEETRRBE0XQRBE0UQRNFEETRdBEETRRqr7B/+72pubjevn2/cfSL4GCLDRRBE0UQRNF0EQRNFEETRRBE0XQRBE0UQRNFEETRdBEETRRBE0UQRNF0EQRNFGqfmKlRaU+ReOTL22w0EQRNFEETRRBE0XQRBE0UQRNFEETRdBEETRRBE0UQRNF0EQRNFEETRRBE0XQRNn8J1ZK8cmXNlhoogiaKIImiqCJImiiCJoogiaKoIkiaKIImiiCJoqgiSJoogi6MXe3N8XeubdF3j7aqNdRe0tpfxZ6Bax2fxZ6Raz2eRZ6pax2N0GvnLDfcnKEcI48s9CBtrzaFjrYFlfbQm/EVlbbQm9M+mpb6A1LXG1BExW2k4ODhHPEQtNprattoTlpbattoeltDat98fhwv1/6RbAurYb9+HC/d3IwWovniJODIlpZbQtNUUuv9sVu93x7VH8y8Wqu9kvDh5Avr66fqjwZZvAStBuaKIegnR2s1et2LTRRBE2UN0E7O1ib981aaKJ8CNpKsxZdrXYutKhp3bFGnRxEORq0laZVp9o8udCipjXnmnRyEOVs0FaaVvRpsddCi5ql9W2w98khapYypL1BN7SoqW1oc4N/KRQ1tYxpbdRfOUTN3MY2NvrPdqJmLlPaKhKlzyNSQomRLPKPFWvNVKUaKh6itWaI0mNY/F/f1pq+5mhl1visNV3mHL1qayrubav1k3uR80Dc27DE+dnEvSvwDC38/vQf3nEQOm2rwLIAAAAASUVORK5CYII=">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkNvbnRyb2wgZGUgbGEgcGlzY2luYSIsICJzaG9ydF9uYW1lIjogIlBpc2NpbmEiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiI2VjZWZmMCIsICJ0aGVtZV9jb2xvciI6ICIjMWIzYTRiIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBTUFBQUFEQUNBWUFBQUJTM0d3SEFBQUVLRWxFUVZSNG5PM2NLMWJkVUJpRzRSeFdaOEZNOEZXSTZ1cHFKS09vckVhM3RnSlZ6eURxY1owREZTek80bkl1dWV6c1pPZDduZ0dRaVAvTm53VENybHVaeTZ2cnA2WFBnZms4UHR6dmxqNkgxeFk5R2NOTzF5MGJSZlVERzNwT3FSMUR0WU1aZklhb0ZjTHNCekg0VERGM0NMUDljSU5QU1hPRlVQeUhHbnptVkRxRWk1SS96UEF6dDlJelZxUW1nODhTU215RHlSdkE4TE9VRXJNM0tRRER6OUttenVEb0FBdy9hekZsRmtjRllQaFptN0V6T1RnQXc4OWFqWm5OUVFFWWZ0WnU2SXoyRHNEdzA0b2hzOW9yQU1OUGEvck83TmtBREQrdDZqTzdSZjhVQWxwek1nQlhmMXAzYm9hUEJtRDQyWXBUcyt3V2lHZ0hBM0QxWjJ1T3piUU5RTFFQQWJqNnMxV0hadHNHSU5xYkFGejkyYnIzTTI0REVHMGZnS3MvS1Y3UHVnMUFOQUVRN2FMcjNQNlE1MlhtYlFDaUNZQm9BaUNhQUlpMjh3Qk1NaHVBYUFJZ21nQ0lKZ0NpQ1lCb0FpQ2FBSWdtQUtJSmdHZ0NJSm9BaUNZQW9nbUFhQUlnbWdDSUpnQ2lDWUJvQWlDYUFJZ21BS0lKZ0dnQ0lKb0FpQ1lBb24ycWZjQS92My9XUGlRTitmemxhOVhqMlFCRUV3RFJCRUEwQVJCTkFFU3IvaGJvMTk5L3RROEpSOWtBUkJNQTBRUkFOQUVRVFFCRUV3RFJCRUEwQVJCTkFFUVRBTkVFUURRQkVFMEFSQk1BMFFSQU5BRVFUUUJFcS81RjJOM3RUZTFERHZidCs0K2xUNEZLYkFDaUNZQm9BaUNhQUlnbUFLSUpnR2dDSUpvQWlDWUFvZ21BYUFJZ21nQ0lKZ0NpQ1lCb0FpQ2FBSWdtQUtJSmdHalZQNGxzUWNuUE5uMWV1VzQyQU5FRVFEUUJFRTBBUkJNQTBRUkFOQUVRVFFCRUV3RFJCRUEwQVJCTkFFUVRBTkVFUURRQkVFMEFSQk1BMFFSQU5KOUV6c3pubGV0bUF4Qk5BRVFUQU5FRVFEUUJFRTBBUkJNQTBRUkFOQUVRVFFCRUV3RFJCRUEwQVJCTkFFUVRBTkVFMEpDNzI1dWkzeGZnZzVnbXZZN0FSekxUMkFDTnN4V21zUUUyd2xZWXh3YllJRnVoUHh0Z3cyeUY4MnlBRUxiQ1lRSUlJNFMzM0FLRmNudjB6QVlnZWl2WUFPd2xiZ1ViZ0lOU3RvSU53RWxiM3dvMkFMMXRjU3ZZQUF5MnBhMWdBekJKNjF0QkFCVFJhZ2k3cnV1Nnk2dnJwNlZQaE8wWmMzdFVNNkxIaC91ZERjQnNXdGdLSG9LWjNab2ZtbTBBcWxyYlZyQUJXTVJhdHNKRjF6MC9EQ3gyQnNSYllpdTh6UHgrOEwwSklzbExBSjRCaUxZUHdHMFFLVjdQdWcxQXREY0IyQUpzM2ZzWnR3R0k5aUVBVzRDdE9qVGJOZ0RSRGdaZ0M3QTF4MmJhQmlEYTBRQnNBYmJpMUN5ZjNBQWlvSFhuWnRndEVOSE9CbUFMMEtvK3M5dHJBNGlBMXZTZDJkNjNRQ0tnRlVObWRkQXpnQWhZdTZFek92Z2hXQVNzMVpqWkhQVVdTQVNzemRpWkhQMGFWQVNzeFpSWm5QUjdBQkd3dEtrek9Qa1hZU0pnS1NWbXIrancrczhTMUZEeW9sdjBUeUZzQStaV2VzWm1HMWpiZ0pMbXVyak9mc1VXQWxQTWZWZFI3WlpGQ0F4UjYzYTYrajI3RURpbDluUGtvZyt0WXFEcmxuMTVzcnEzTnFMWXRyVzlLZndQekdJaWpUaVNMMElBQUFBQVNVVk9SSzVDWUlJPSIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIiwgInB1cnBvc2UiOiAiYW55In0sIHsic3JjIjogImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBZ0FBQUFJQUNBWUFBQUQwZU5UNkFBQU5oRWxFUVZSNG5PM2NMWm9iU1JhRzBTdy90UXZ2eEh5UVFlUEJ4Z1c5Q2tQandqMTBnRkZ6TDJLNDJlekJBMnJrbG0yVmZsS1JHVGZpTzJjRnFSQzRyMjVrMWNOQ1NXL2Z2Zi9lK3hrQVd2ajI5Y3RENzJmZ2Q3NlVUZ3g0Z0JjQ29RK0h2Z1BESHVBMm9tQjdEbmdEQmo1QVc0S2dQUWZhZ0lFUHNDOUJjRDhIdUpLaEQxQ0RHRmpIb2QzQTBBZW9UUXhjejBGZFlPZ0RqRWtNbk9kd1htSHdBOHhCQ0p6bVVJNFkrZ0J6RXdOL2N4Q0x3UStRUmdpRUI0REJENUF0T1FRaVA3akJEOEN4eEJDSStzQUdQd0RuSklWQXhBYzErQUc0UlVJSXZPbjlBRnN6L0FHNFZjTHNtTFp3RXI0OEFMWTM2elpndWc5bDhBT3doZGxDWUtvckFNTWZnSzNNTm1PbXFKblp2aFFBYXB0aEd6RDhCc0R3QjJCdk04eWVvUU5naGk4QWdER05Qb09HWEdHTWZ1Z0F6R1hFSzRIaE5nQ0dQd0RWakRpYmhncUFFUThZZ0F5anphZ2hWaGFqSFNvQTJVYTRFaWkvQVREOEFSak5DTE9yZEFDTWNJQUFjRXIxR1ZZMkFLb2ZIQUJjVW5tV2xReUF5Z2NHQUxlb090UEtCVURWZ3dLQXRTck90bElCVVBHQUFLQ0Zhak91VEFCVU94Z0FhSzNTckNzUkFKVU9CQUMyVkdYbWRRK0FLZ2NCQUh1cE1QdTZCa0NGQXdDQUhuclB3RzRCMFB1REEwQnZQV2RobHdBdy9BSGdSYStadUhzQUdQNEE4TE1lczNIWEFERDhBZUMwdldma2JnRmcrQVBBZVh2T3lsMEN3UEFIZ092c05UTzcveDhBQUdCL213ZUFYLzhBY0pzOVp1ZW1BV0Q0QThBNlc4L1F6UUxBOEFlQSsydzVTNzBEQUFDQk5na0F2LzRCb0kydFptcnpBREQ4QWFDdExXWnIwd0F3L0FGZ0c2MW5ySGNBQUNCUXN3RHc2eDhBdHRWeTFqWUpBTU1mQVBiUmF1YTZBZ0NBUUhjSGdGLy9BTEN2RnJQWEJnQUFBdDBWQUg3OUEwQWY5ODdnMVFGZytBTkFYL2ZNWWxjQUFCQm9WUUQ0OVE4QU5heWR5VFlBQUJEbzVnRHc2eDhBYWxrem0yMEFBQ0RRVFFIZzF6OEExSFRyakxZQkFJQkFWd2VBWC84QVVOc3RzOW9HQUFBQ1hSVUFmdjBEd0JpdW5kazJBQUFRU0FBQVFLQ0xBV0Q5RHdCanVXWjIyd0FBUUtDekFlRFhQd0NNNmRJTXR3RUFnRUFDQUFBQ3ZSb0ExdjhBTUxaenM5d0dBQUFDQ1FBQUNIUXlBS3ovQVdBT3I4MTBHd0FBQ0NRQUFDRFFid0ZnL1E4QWN6azEyMjBBQUNDUUFBQ0FRQUlBQUFMOUZBRHUvd0ZnVHIvT2VCc0FBQWdrQUFBZ2tBQUFnRUEvQXNEOVB3RE03WGpXMndBQVFDQUJBQUNCQkFBQUJCSUFBQkRvemJKNEFSQUFVaHhtdmcwQUFBUVNBQUFRU0FBQVFDQUJBQUNCQkFBQUJCSUFBQkJJQUFCQW9BZi9Bd0FBOHRnQUFFQWdBUUFBZ1FRQUFBUVNBQUFRU0FBQVFDQUJBQUNCQkFBQUJCSUFBQkJJQUFCQUlBRUFBSUVFQUFBRUVnQUFFRWdBQUVBZ0FRQUFnUVFBQUFRU0FBQVFTQUFBUUNBQkFBQ0JCQUFBQkJJQUFCQklBQUJBSUFFQUFJRUVBQUFFRWdBQUVFZ0FBRUFnQVFBQWdRUUFBQVFTQUFBUVNBQUFRQ0FCQUFDQkJBQUFCQklBQUJCSUFBQkFJQUVBQUlFRUFBQUVFZ0FBRUVnQUFFQWdBUUFBZ1FRQUFBUVNBQUFRU0FBQVFDQUJBQUNCQkFBQUJCSUFBQkJJQUFCQUlBRUFBSUVFQUFBRUVnQUFFRWdBQUVBZ0FRQUFnUVFBQUFRU0FBQVFTQUFBUUNBQkFBQ0JCQUFBQkJJQUFCQklBQUJBb01mZUR6Q2F2Lzc5Wis5SEFPQ0VmL3p4ejk2UE1CUWJBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FBQWozMmZvRFIvT3MvLyszOUNBQndOeHNBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FBQWdrQUFBZ2tBQUFna0FBQWdFQUNBQUFDQ1FBQUNDUUFBQ0NRQUFDQVFBSUFBQUlKQUFBSUpBQUFJSkFBQUlCQUFnQUFBZ2tBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFqMzJmb0RSUEg5ODZ2MEkzT0REcDgrOUh3R2dKQnNBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FBQWdrQUFBZ2tBQUFna0FBQWdFQUNBQUFDQ1FBQUNDUUFBQ0NRQUFDQVFBSUFBQUlKQUFBSUpBQUFJSkFBQUlCQUFnQUFBZ2tBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZzBHUHZCNEF0UFg5ODZ2MEl6WHo0OUxuM0l3QVRzUUVBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FBQWdrQUFBZ2tBQUFna0FBQWdFQUNBQUFDQ1FBQUNDUUFBQ0NRQUFDQVFBSUFBQUlKQUFBSUpBQUFJSkFBQUlCQUFnQUFBZ2tBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ1BmWitBT0E2engrZmVqOUNNeDgrZmU3OUNCRFBCZ0FBQWdrQUFBZ2tBQUFna0FBQWdFQUNBQUFDQ1FBQUNDUUFBQ0NRQUFDQVFBSUFBQUlKQUFBSUpBQUFJSkFBQUlCQUFnQUFBZ2tBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FBQWdrQUFBZ2tBQUFna0FBQWdFQUNBTmpkODhlbjVmbmpVKy9IZ0dpUHZSOEF5SFVjQVI4K2ZlNzRKSkRIQmdBb3dWWUE5bVVEQUpSaUt3RDdzQUVBeXJJVmdPMElBS0E4SVFEdHVRSUFodUY2QU5xeEFRQ0daQ3NBOTdFQkFJWm1Ld0RyMkFBQTA3QVZnT3NKQUdBNlFnQXVjd1VBVE12MUFMek9CZ0NJWUNzQVA3TUJBS0xZQ3NBTEd3QWdscTBBeVFRQUVFOElrTWdWQU1EL3VSNGdpUTBBd0FtMkFzek9CZ0RnREZzQlptVURBSEFsV3dGbUlnQUFiaVFFbUlFckFJQ1ZYQTh3TWhzQWdBWnNCUmlORFFCQVE3WUNqTUlHQUdBanRnSlVKZ0FBTmlZRXFNZ1ZBTUJPWEE5UWlRMEFRQWUyQXZSbUF3RFFrYTBBdmRnQUFCUmhLOENlYkFBQWlyRVZZQTgyQUFDRjJRcXdGUUVBTUFBaFFHdXVBQUFHNG5xQVZtd0FBQVpsSzhBOWJBQUFCbWNyd0JvMkFBQVRzUlhnV2dJQVlFSkNnRXRjQVFCTXpQVUFyN0VCQUFoaEs4QXhHd0NBTUxZQ0xNdXl2UG4yOWN0RDc0Y0FvQTliZ1V6ZnZuNTVjQVVBZ0JBSTVBb0FnQjljRCtTd0FRRGdKRnVCdWRrQUFIQ1dyY0NjYkFBQXVKcXR3RHdFQUFBM0V3TGpjd1VBd0dxdUI4YjFabGxlL2g2dzk0TUFNRFpiZ1RFY1pyNE5BQUJOMlFxTXdUc0FBR3pHVnFBdUFRREE1b1JBUGE0QUFOaU42NEU2Zm13QXZBZ0l3SjVzQmZaM1BPdHRBQURveWxhZ0QrOEFBRkNHcmNCK0JBQUE1UWlCN2YxMjcvLzIzZnZ2UFI0RUFNNjVkRDBnR003NzlWMC9Hd0FBaG1BcjBKYVhBQUVZaXBjRzI3QUJBR0JZdGdMcm5memJmKzhCQU1BOFR2MnZIeHNBQUFna0FBQWcwTWtBOEcrQkFXQU9yODEwR3dBQUNDUUFBQ0RRcXdIZ0dnQUF4blp1bHRzQUFFQWdBUUFBZ2M0R2dHc0FBQmpUcFJsdUF3QUFnUzRHZ0MwQUFJemxtdGx0QXdBQWdRUUFBQVM2S2dCY0F3REFHSzZkMlRZQUFCRG82Z0N3QlFDQTJtNloxVFlBQUJEb3BnQ3dCUUNBbW02ZDBUWUFBQkRvNWdDd0JRQ0FXdGJNWmhzQUFBaTBLZ0JzQVFDZ2hyVXoyUVlBQUFLdERnQmJBQURvNjU1WmZOY0dRQVFBUUIvM3ptQlhBQUFRNk80QXNBVUFnSDIxbUwwMkFBQVFxRWtBMkFJQXdENWF6ZHhtR3dBUkFBRGJhamxyWFFFQVFLQ21BV0FMQUFEYmFEMWptMjhBUkFBQXRMWEZiTjNrQ2tBRUFFQWJXODFVN3dBQVFLRE5Bc0FXQUFEdXMrVXMzWFFESUFJQVlKMnRaK2ptVndBaUFBQnVzOGZzOUE0QUFBVGFKUUJzQVFEZ09udk56TjAyQUNJQUFNN2JjMWJ1ZWdVZ0FnRGd0TDFuNU83dkFJZ0FBUGhaajluWTVTVkFFUUFBTDNyTnhHNS9CU0FDQUVqWGN4WjIvVE5BRVFCQXF0NHpzUHYvQWVoOUFBQ3d0d3F6cjNzQUxFdU5nd0NBUFZTWmVTVUNZRm5xSEFnQWJLWFNyQ3NUQU10UzYyQUFvS1ZxTTY1VUFDeEx2UU1DZ0h0Vm5HM2xBbUJaYWg0VUFLeFJkYWFWRElCbHFYdGdBSEN0eXJPc2JBQXNTKzJEQTRCenFzK3cwZ0d3TFBVUEVBQitOY0xzS3YrQXg5NitlLys5OXpNQXdHdEdHUHdINVRjQXgwWTZXQUN5akRhamhncUFaUm52Z0FHWTM0aXphYmdIUHVaS0FJQ2VSaHo4QjhOdEFJNk5mUEFBakczMEdUUjBBQ3pMK0Y4QUFPT1pZZllNL3dHT3VSSUFZRXN6RFA2RDRUY0F4MmI2WWdDb1piWVpNOVdIT1dZYkFFQUxzdzMrZ3lrLzFERWhBTUFhc3c3K2c2bXVBRTZaL1FzRW9MMkUyVEg5Qnp4bUd3REFPUW1EL3lEbWd4NFRBZ0FjU3hyOEIzRWYrSmdRQU1pV09QZ1BZai80TVNFQWtDVjU4Qi9FSDhBeElRQXdONFAvYnc3aUZXSUFZQTZHL21rTzVRSWhBREFtZy84OGgzTURNUUJRbTZGL1BRZTFraGdBcU1IUVg4ZWhOU0FHQVBabDZOL1BBVzVBRUFDMFplQzM1MEIzSUFnQWJtUGdiODhCZHlJS0FGNFk5bjA0OUtJRUFqQUxBNzZtL3dHQTE5MHd1cjAyVEFBQUFBQkpSVTVFcmtKZ2dnPT0iLCAic2l6ZXMiOiAiNTEyeDUxMiIsICJ0eXBlIjogImltYWdlL3BuZyIsICJwdXJwb3NlIjogImFueSJ9XX0=">
+<meta name="theme-color" content="#1b3a4b">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Piscina">
+<meta name="application-name" content="Piscina">
+<meta name="description" content="Control del agua y de la depuradora de la piscina.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -136,6 +145,10 @@
   .prod .pdel{border:0;background:none;color:var(--muted);font-size:19px;cursor:pointer;padding:2px 4px;line-height:1}
   .prod.act{background:#eef6ee;border-radius:8px;padding-left:9px;padding-right:9px;margin:4px 0}
   .prod.act .pv{color:var(--ok)}
+  .cloud{display:flex;align-items:center;gap:9px;font-size:13.5px;margin-bottom:4px}
+  .cloud .led{width:9px;height:9px;border-radius:50%;background:var(--muted);flex:0 0 auto}
+  .cloud .led.ok{background:var(--ok)} .cloud .led.pend{background:var(--amber)} .cloud .led.err{background:var(--warn)}
+  .cloud .txt{flex:1;line-height:1.35}
   .badge{display:inline-block;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.1em;
     text-transform:uppercase;color:var(--ok);border:1px solid var(--ok);border-radius:4px;padding:1px 5px;margin-left:7px}
   textarea{width:100%;height:130px;font-family:var(--mono);font-size:11px;padding:11px;
@@ -372,6 +385,25 @@
     </section>
     <section><div class="shead"><h2>Historial</h2><div class="rule"></div></div><div class="card" id="hist"></div></section>
     <section>
+      <div class="shead"><h2>Nube</h2><div class="rule"></div></div>
+      <div class="card">
+        <div class="cloud"><span class="led" id="cLed"></span><span class="txt" id="cTxt">Comprobando…</span></div>
+        <div id="cLogin" style="display:none">
+          <div class="row tight"><div class="field"><label for="cMail">Correo</label>
+            <input type="text" id="cMail" inputmode="email" autocomplete="username" placeholder="tu@correo.com"></div></div>
+          <div class="row tight"><div class="field"><label for="cPass">Contraseña</label>
+            <input type="password" id="cPass" autocomplete="current-password" placeholder="mínimo 6 caracteres"></div></div>
+          <button class="btn" id="cIn">Entrar</button>
+          <button class="btn ghost" id="cUp">Crear la cuenta la primera vez</button>
+        </div>
+        <div id="cSesion" style="display:none">
+          <button class="btn ghost" id="cSync">Sincronizar ahora</button>
+          <button class="btn ghost" id="cOut">Cerrar sesión</button>
+        </div>
+        <p class="note" id="cNota"></p>
+      </div>
+    </section>
+    <section>
       <div class="shead"><h2>Copia de seguridad</h2><div class="rule"></div></div>
       <div class="card">
         <p class="note" style="margin-top:0" id="whereTxt"></p>
@@ -576,6 +608,157 @@ function toast(msg,actionLabel,action){
   toastTimer=setTimeout(()=>t.classList.remove('on'),actionLabel?5200:2300);
 }
 
+/* ================= NUBE (Supabase) =================
+   El movil manda: lo local es la verdad y la nube es un espejo.
+   Al guardar se sube todo; al entrar se junta lo de los dos lados. */
+const SUPA={
+  url:'https://ezbzllaowdcouwtretdg.supabase.co',
+  key:'sb_publishable_JJZfWMU1LL8oXEgkmoZHvw_qv-SEYZh'
+};
+const SES_KEY='piscina-sesion';
+let ses=null;                     // {access_token, refresh_token, uid, email}
+let cloud={estado:'off', nota:''};// off | sin_sesion | ok | pendiente | error
+let pushTimer=null;
+
+function sesLoad(){try{const v=window.localStorage.getItem(SES_KEY);if(v)ses=JSON.parse(v);}catch(e){}}
+function sesSave(){try{ses?window.localStorage.setItem(SES_KEY,JSON.stringify(ses)):window.localStorage.removeItem(SES_KEY);}catch(e){}}
+
+async function authCall(path,body){
+  const r=await fetch(SUPA.url+'/auth/v1/'+path,{method:'POST',
+    headers:{'apikey':SUPA.key,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(j.error_description||j.msg||j.message||('error '+r.status));
+  return j;
+}
+function guardaSesion(j){
+  if(!j.access_token)throw new Error('Falta confirmar el correo antes de entrar');
+  ses={access_token:j.access_token,refresh_token:j.refresh_token,
+       uid:(j.user&&j.user.id)||(ses&&ses.uid),email:(j.user&&j.user.email)||(ses&&ses.email)};
+  sesSave();
+}
+async function entrar(email,pass){guardaSesion(await authCall('token?grant_type=password',{email,password:pass}));}
+async function registrar(email,pass){
+  const j=await authCall('signup',{email,password:pass});
+  if(j.access_token)guardaSesion(j);
+  else throw new Error('Cuenta creada. Confirma el correo que te ha llegado y luego entra.');
+}
+async function refrescar(){
+  if(!ses||!ses.refresh_token)return false;
+  try{guardaSesion(await authCall('token?grant_type=refresh_token',{refresh_token:ses.refresh_token}));return true;}
+  catch(e){ses=null;sesSave();return false;}
+}
+async function rest(metodo,ruta,cuerpo,prefer){
+  if(!ses)throw new Error('sin sesión');
+  const opts={method:metodo,headers:{'apikey':SUPA.key,'Authorization':'Bearer '+ses.access_token,
+    'Content-Type':'application/json'}};
+  if(prefer)opts.headers['Prefer']=prefer;
+  if(cuerpo!==undefined)opts.body=JSON.stringify(cuerpo);
+  let r=await fetch(SUPA.url+'/rest/v1/'+ruta,opts);
+  if(r.status===401&&await refrescar()){
+    opts.headers['Authorization']='Bearer '+ses.access_token;
+    r=await fetch(SUPA.url+'/rest/v1/'+ruta,opts);
+  }
+  if(!r.ok){const t=await r.text().catch(()=>'');throw new Error('HTTP '+r.status+' '+t.slice(0,120));}
+  return r.status===204?null:r.json().catch(()=>null);
+}
+
+/* --- traducir entre lo que usa la app y lo que hay en las tablas --- */
+const MAP={
+  mediciones:{
+    filas:()=>state.readings.map(r=>({usuario:ses.uid,id:r.t,medido_en:new Date(r.t).toISOString(),
+      ph:r.ph,cloro:r.cl,presion:r.bar,temperatura:r.temp,alcalinidad:r.ta})),
+    lee:f=>({t:Number(f.id),ph:f.ph==null?null:+f.ph,cl:f.cloro==null?null:+f.cloro,
+      bar:f.presion==null?null:+f.presion,temp:f.temperatura==null?null:+f.temperatura,
+      ta:f.alcalinidad==null?null:+f.alcalinidad})},
+  reposiciones:{
+    filas:()=>state.refills.map(r=>({usuario:ses.uid,id:r.t,repuesto_en:new Date(r.t).toISOString(),cm:r.cm})),
+    lee:f=>({t:Number(f.id),cm:+f.cm})},
+  pastillas:{
+    filas:()=>state.tablets.map(r=>({usuario:ses.uid,id:r.t,echadas_en:new Date(r.t).toISOString(),unidades:r.n})),
+    lee:f=>({t:Number(f.id),n:+f.unidades})},
+  tareas:{
+    filas:()=>state.taskLog.map(l=>({usuario:ses.uid,id:l.t,tarea:l.id,hecha_en:new Date(l.t).toISOString()})),
+    lee:f=>({t:Number(f.id),id:f.tarea})},
+  productos:{
+    filas:()=>(state.products||[]).map(p=>({usuario:ses.uid,id:p.id,nombre:p.n,tipo:p.kind,
+      cantidad:p.amt??null,unidad:p.unit??null,por_m3:p.per??null,
+      peso_g:p.peso??null,pct:p.pct??null,quimica:p.quim??null,apuntado_en:new Date(p.t).toISOString()})),
+    lee:f=>{const o={id:f.id,n:f.nombre,kind:f.tipo,t:new Date(f.apuntado_en).getTime()};
+      if(f.tipo==='dosis')Object.assign(o,{amt:+f.cantidad,unit:f.unidad,per:+f.por_m3});
+      else Object.assign(o,{peso:+f.peso_g,pct:+f.pct,quim:f.quimica});
+      return o;}}
+};
+const CLAVE={mediciones:'t',reposiciones:'t',pastillas:'t',tareas:'t',productos:'id'};
+const DESTINO={mediciones:'readings',reposiciones:'refills',pastillas:'tablets',tareas:'taskLog',productos:'products'};
+
+async function nubeBajar(){
+  for(const tabla in MAP){
+    const filas=await rest('GET',tabla+'?select=*',undefined)||[];
+    const remotas=filas.map(MAP[tabla].lee);
+    const campo=DESTINO[tabla], clave=CLAVE[tabla];
+    const vistos=new Set((state[campo]||[]).map(x=>String(x[clave])));
+    const nuevas=remotas.filter(x=>!vistos.has(String(x[clave])));   // union: no se pisa nada
+    state[campo]=(state[campo]||[]).concat(nuevas);
+  }
+  state.readings.sort((a,b)=>b.t-a.t);
+  state.refills.sort((a,b)=>a.t-b.t);
+  state.tablets.sort((a,b)=>a.t-b.t);
+  state.taskLog.sort((a,b)=>a.t-b.t);
+  state.tasks={};
+  state.taskLog.forEach(l=>{if(!state.tasks[l.id]||l.t>state.tasks[l.id])state.tasks[l.id]=l.t;});
+
+  const aj=(await rest('GET','ajustes?select=*',undefined)||[])[0];
+  if(aj){
+    const remotoNuevo=!state.cfgTS||new Date(aj.actualizado).getTime()>state.cfgTS;
+    if(remotoNuevo){
+      state.cfg={vol:+aj.volumen_m3,sup:+aj.superficie_m2,barLimpio:+aj.presion_limpia_bar,caudal:+aj.caudal_m3h};
+      state.tabletId=aj.pastilla_en_uso||null;
+      if(aj.estab_medido_ppm!=null)state.cyaBase={t:new Date(aj.estab_medido_en).getTime(),v:+aj.estab_medido_ppm};
+      state.cfgTS=new Date(aj.actualizado).getTime();
+    }
+  }
+}
+async function nubeSubir(){
+  for(const tabla in MAP){
+    const filas=MAP[tabla].filas();
+    if(filas.length)await rest('POST',tabla+'?on_conflict=usuario,id',filas,'resolution=merge-duplicates,return=minimal');
+    const ids=filas.map(f=>typeof f.id==='string'?'"'+f.id+'"':f.id);
+    await rest('DELETE',tabla+(ids.length?'?id=not.in.('+ids.join(',')+')':''),undefined,'return=minimal');
+  }
+  const c=cfg();
+  await rest('POST','ajustes?on_conflict=usuario',[{usuario:ses.uid,volumen_m3:c.vol,superficie_m2:c.sup,
+    presion_limpia_bar:c.barLimpio,caudal_m3h:c.caudal,pastilla_en_uso:state.tabletId||null,
+    estab_medido_ppm:state.cyaBase?state.cyaBase.v:null,
+    estab_medido_en:state.cyaBase?new Date(state.cyaBase.t).toISOString():null,
+    actualizado:new Date().toISOString()}],'resolution=merge-duplicates,return=minimal');
+}
+async function nubeSync(bajar){
+  if(!ses){cloud={estado:'sin_sesion',nota:''};renderCloud();return false;}
+  try{
+    if(bajar)await nubeBajar();
+    await nubeSubir();
+    cloud={estado:'ok',nota:'Última vez: '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'})};
+    renderCloud();return true;
+  }catch(e){
+    cloud={estado:/sesi|401/.test(e.message)?'sin_sesion':'pendiente',nota:String(e.message).slice(0,120)};
+    renderCloud();return false;
+  }
+}
+function nubeMasTarde(){ clearTimeout(pushTimer); pushTimer=setTimeout(()=>nubeSync(false),1200); }
+
+function renderCloud(){
+  const led=$('cLed'), txt=$('cTxt');
+  const dentro=!!ses;
+  $('cLogin').style.display=dentro?'none':'';
+  $('cSesion').style.display=dentro?'':'none';
+  if(!dentro){led.className='led';txt.textContent='Sin sesión. Los datos solo están en este teléfono.';
+    $('cNota').textContent='Entra con tu correo y se guardarán también en la nube, y podrás verlos desde otro sitio.';return;}
+  if(cloud.estado==='ok'){led.className='led ok';txt.textContent='Sincronizado como '+(ses.email||'ti');}
+  else if(cloud.estado==='pendiente'){led.className='led pend';txt.textContent='Pendiente de subir. Lo tienes guardado aquí.';}
+  else{led.className='led err';txt.textContent='Con problemas.';}
+  $('cNota').textContent=cloud.nota;
+}
+
 /* ================= ALMACENAMIENTO ================= */
 function hasClaude(){try{return !!(window.storage&&typeof window.storage.get==='function'&&typeof window.storage.set==='function');}catch(e){return false;}}
 function hasLocal(){try{const k='__p'+Date.now();window.localStorage.setItem(k,'1');window.localStorage.removeItem(k);return true;}catch(e){return false;}}
@@ -613,10 +796,10 @@ async function load(){
   mode='unknown';readConfirmed=false;diag='sin comprobar';
 }
 async function save(){
-  if(backend==='mem'){refreshBackup();return true;}
+  if(backend==='mem'){refreshBackup();nubeMasTarde();return true;}
   if(mode==='blocked'){toast('No se guarda hasta poder leer lo guardado');return false;}
   if(backend==='local'){
-    try{window.localStorage.setItem(KEY,JSON.stringify(state));refreshBackup();return true;}
+    try{window.localStorage.setItem(KEY,JSON.stringify(state));refreshBackup();nubeMasTarde();return true;}
     catch(e){toast('El navegador no deja guardar. Usa la copia de seguridad');return false;}
   }
   if(!readConfirmed){
@@ -633,7 +816,7 @@ async function save(){
   const s=await rawSet(JSON.stringify(state));
   if(!s.ok){mode='blocked';renderAlarm();toast('No se ha podido guardar');return false;}
   if(mode!=='ok'){mode='ok';renderAlarm();}
-  refreshBackup();return true;
+  refreshBackup();nubeMasTarde();return true;
 }
 function renderAlarm(){
   const a=$('alarm');$('app').classList.remove('locked');
@@ -945,7 +1128,7 @@ async function saveCfg(){
   const v=parseFloat($('cVol').value), s=parseFloat($('cSup').value),
         b=parseFloat($('cBar').value), q=parseFloat($('cCau').value);
   if(!(v>0)||!(s>0)||!(b>0)||!(q>0)){toast('Revisa los números');return;}
-  state.cfg={vol:v,sup:s,barLimpio:b,caudal:q};
+  state.cfg={vol:v,sup:s,barLimpio:b,caudal:q};state.cfgTS=Date.now();
   if(!await save())return;
   renderCfg();renderAll();renderPlan();calc();toast('Guardado');
 }
@@ -1118,6 +1301,25 @@ let resetArmed=false,resetTimer=null;
   $('dProd').onchange=()=>{const v=$('dProd').value; if(v)loadProd(v); else calc();};
   $('cSave').onclick=saveCfg;
   $('pAdd').onclick=addProd;
+  const conBoton=async(id,fn,txtOcupado)=>{const b=$(id);const orig=b.textContent;
+    b.disabled=true;b.textContent=txtOcupado;
+    try{await fn();}catch(e){toast(String(e.message).slice(0,90));}
+    b.disabled=false;b.textContent=orig;renderCloud();};
+  $('cIn').onclick=()=>conBoton('cIn',async()=>{
+    await entrar($('cMail').value.trim(),$('cPass').value);
+    $('cPass').value='';renderCloud();
+    if(await nubeSync(true)){renderCfg();renderAll();renderPlan();calc();toast('Sesión iniciada y datos juntados');}
+  },'Entrando…');
+  $('cUp').onclick=()=>conBoton('cUp',async()=>{
+    await registrar($('cMail').value.trim(),$('cPass').value);
+    $('cPass').value='';renderCloud();
+    if(await nubeSync(true)){renderCfg();renderAll();renderPlan();calc();toast('Cuenta creada');}
+  },'Creando…');
+  $('cSync').onclick=()=>conBoton('cSync',async()=>{
+    if(await nubeSync(true)){renderCfg();renderAll();renderPlan();calc();toast('Sincronizado');}
+    else toast('No se ha podido: '+cloud.nota.slice(0,60));
+  },'Sincronizando…');
+  $('cOut').onclick=async()=>{ses=null;sesSave();cloud={estado:'sin_sesion',nota:''};renderCloud();toast('Sesión cerrada');};
   $('pKind').onchange=()=>{const t=$('pKind').value;
     $('pDosis').style.display=t==='dosis'?'':'none';
     $('pPast').style.display=t==='pastilla'?'':'none';};
@@ -1153,6 +1355,8 @@ let resetArmed=false,resetTimer=null;
   if(!state.cfg)state.cfg=Object.assign({},DEF);
   if(!Array.isArray(state.products))state.products=[];
   renderAlarm();renderCfg();renderActs();renderPlan();renderAll();fillProdSelect();calc();
+  sesLoad();renderCloud();
+  if(ses&&await nubeSync(true)){renderCfg();renderAll();renderPlan();calc();}
 })();
 </script>
 </body>
