@@ -142,6 +142,13 @@
   .prod .pn{flex:1;font-size:14.5px;font-weight:600;line-height:1.25;cursor:pointer}
   .prod .pn small{display:block;font-weight:400;font-size:11.5px;color:var(--muted);margin-top:2px}
   .prod .pv{font-family:var(--mono);font-size:14px;font-weight:600;white-space:nowrap;color:var(--flow)}
+  .dosechip{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .dosechip button{flex:1;min-width:130px;border:1px solid var(--line);background:#fbfcfc;border-radius:9px;
+    padding:9px 11px;text-align:left;cursor:pointer;font-family:var(--sans)}
+  .dosechip button .dk{font-size:9.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  .dosechip button .dv{font-family:var(--mono);font-size:16px;font-weight:600;color:var(--ink);margin-top:3px}
+  .dosechip button[aria-pressed="true"]{border-color:var(--ink);background:#eef3f4}
+  .aviso{color:var(--warn);font-weight:600;font-size:13px;margin-top:11px;line-height:1.4}
   .prod .pdel{border:0;background:none;color:var(--muted);font-size:19px;cursor:pointer;padding:2px 4px;line-height:1}
   .prod.act{background:#eef6ee;border-radius:8px;padding-left:9px;padding-right:9px;margin:4px 0}
   .prod.act .pv{color:var(--ok)}
@@ -312,14 +319,22 @@
               <option value="pastilla">Pastilla para el flotador</option></select></div></div>
           <div id="pDosis">
             <div class="row tight">
-              <div class="field" style="flex:1.1"><label for="pAmt">Cantidad</label>
-                <input type="number" id="pAmt" step="any" min="0" inputmode="decimal" placeholder="1"></div>
               <div class="field"><label for="pUnit">Unidad</label>
                 <select id="pUnit"><option value="mL">mL</option><option value="L" selected>L</option>
                   <option value="g">g</option><option value="kg">kg</option></select></div>
+              <div class="field"><label for="pPer">Por cada … m&sup3;</label>
+                <input type="number" id="pPer" step="1" min="1" max="1000" inputmode="decimal" value="100"></div>
             </div>
-            <div class="row tight"><div class="field"><label for="pPer">Por cada … m&sup3;</label>
-              <input type="number" id="pPer" step="any" min="0.1" inputmode="decimal" value="100"></div></div>
+            <div class="row tight">
+              <div class="field"><label for="pAmt">Mantenimiento</label>
+                <input type="number" id="pAmt" step="any" min="0" inputmode="decimal" placeholder="1"></div>
+              <div class="field"><label for="pAmt2">Choque (opcional)</label>
+                <input type="number" id="pAmt2" step="any" min="0" inputmode="decimal" placeholder="2"></div>
+            </div>
+            <div class="row tight"><div class="field"><label for="pNota">Cómo se usa (opcional)</label>
+              <input type="text" id="pNota" maxlength="200" placeholder="Disolver en un cubo, dejar 6-8 h y aspirar"></div></div>
+            <p class="note">Las etiquetas suelen dar dos dosis: una semanal de mantenimiento y otra más fuerte de
+              recuperación o choque. Apunta las dos y las tendrás calculadas.</p>
           </div>
           <div id="pPast" style="display:none">
             <div class="row tight">
@@ -335,6 +350,7 @@
             <p class="note">Es el <b>porcentaje del compuesto</b>, no el "cloro disponible". En la etiqueta suele venir como
               "ácido tricloroisocianúrico 80%". El cloro disponible es otro número, más alto, y no vale aquí.</p>
           </div>
+          <div id="pAviso"></div>
           <button class="btn" id="pAdd">Guardar producto</button>
         </details>
       </div>
@@ -357,6 +373,7 @@
         <div class="row tight"><div class="field"><label for="dPer">Por cada … m&sup3;</label>
           <input type="number" id="dPer" step="any" min="0.1" inputmode="decimal" value="100"></div></div>
         <div class="calc-out" id="calcOut"></div>
+        <div id="dExtra"></div>
       </div>
     </section>
     <section><div class="shead"><h2>Estabilizante</h2><div class="rule"></div></div><div class="card" id="cyaBox"></div></section>
@@ -681,10 +698,11 @@ const MAP={
     lee:f=>({t:Number(f.id),id:f.tarea})},
   productos:{
     filas:()=>(state.products||[]).map(p=>({usuario:ses.uid,id:p.id,nombre:p.n,tipo:p.kind,
-      cantidad:p.amt??null,unidad:p.unit??null,por_m3:p.per??null,
+      cantidad:(p.amtM??p.amt)??null,cantidad_choque:p.amtR??null,nota:p.nota??null,unidad:p.unit??null,por_m3:p.per??null,
       peso_g:p.peso??null,pct:p.pct??null,quimica:p.quim??null,apuntado_en:new Date(p.t).toISOString()})),
     lee:f=>{const o={id:f.id,n:f.nombre,kind:f.tipo,t:new Date(f.apuntado_en).getTime()};
-      if(f.tipo==='dosis')Object.assign(o,{amt:+f.cantidad,unit:f.unidad,per:+f.por_m3});
+      if(f.tipo==='dosis')Object.assign(o,{amtM:+f.cantidad,amtR:f.cantidad_choque==null?null:+f.cantidad_choque,
+        nota:f.nota||null,unit:f.unidad,per:+f.por_m3});
       else Object.assign(o,{peso:+f.peso_g,pct:+f.pct,quim:f.quimica});
       return o;}}
 };
@@ -1134,8 +1152,30 @@ async function saveCfg(){
 }
 
 /* ---------- mis productos ---------- */
+/* Una etiqueta real nunca da dosis absurdas. Si el numero canta, hay que avisar. */
+function dosisRara(amt,unit,per){
+  if(!(per>=1)||per>1000)
+    return 'Las etiquetas dan la dosis por 10, 20, 50, 100 o 1000 m³. Un "por cada '+nf(per)+' m³" casi seguro es una errata.';
+  const porM3=amt/per;
+  const L = unit==='L'?porM3 : unit==='mL'?porM3/1000 : null;
+  const K = unit==='kg'?porM3 : unit==='g'?porM3/1000 : null;
+  if(L!=null&&L>0.1)
+    return 'Eso son '+fnum(L*1000,0)+' mL por cada m³ de agua. Es muchísimo: en tu piscina saldrían '+
+           fnum(L*cfg().vol,1)+' litros de producto. Revisa la etiqueta.';
+  if(K!=null&&K>0.2)
+    return 'Eso son '+fnum(K*1000,0)+' g por cada m³ de agua. Es muchísimo: en tu piscina saldrían '+
+           fnum(K*cfg().vol,1)+' kg de producto. Revisa la etiqueta.';
+  return '';
+}
+const mant=pr=>pr.amtM!=null?pr.amtM:pr.amt;         // productos guardados antes solo tenian una
+function doseVal(amt,unit,per){
+  const v=amt*cfg().vol/per;
+  if(unit==='L'||unit==='kg'){const sub=unit==='L'?'mL':'g';
+    return v<1?fnum(v*1000,0)+' '+sub:fnum(v,2)+' '+unit;}
+  return fnum(v,0)+' '+unit;
+}
 function doseFor(pr){
-  const v=pr.amt*cfg().vol/pr.per, u=pr.unit;
+  const v=mant(pr)*cfg().vol/pr.per, u=pr.unit;
   if(u==='L'||u==='kg'){const sub=u==='L'?'mL':'g';
     return v<1?fnum(v*1000,0)+' '+sub:fnum(v,2)+' '+u;}
   return fnum(v,0)+' '+u;
@@ -1156,9 +1196,10 @@ function renderProds(){
         '<div class="pv">'+fnum(g*1000/volL(),1)+' ppm</div>'+
         '<button class="pdel" aria-label="Borrar">×</button></div>';
     }
+    const dosR=pr.amtR!=null?' · choque '+nf(pr.amtR)+' '+pr.unit:'';
     return '<div class="prod" data-id="'+pr.id+'">'+
-      '<div class="pn">'+esc(pr.n)+'<small>etiqueta: '+nf(pr.amt)+' '+pr.unit+' por '+nf(pr.per)+' m³ · apuntado el '+fdate(pr.t)+'</small></div>'+
-      '<div class="pv">'+doseFor(pr)+'</div>'+
+      '<div class="pn">'+esc(pr.n)+'<small>etiqueta: '+nf(mant(pr))+' '+pr.unit+dosR+' por '+nf(pr.per)+' m³ · apuntado el '+fdate(pr.t)+'</small></div>'+
+      '<div class="pv">'+doseFor(pr)+(pr.amtR!=null?'<br>'+doseVal(pr.amtR,pr.unit,pr.per):'')+'</div>'+
       '<button class="pdel" aria-label="Borrar">×</button></div>';
   }).join('')+'<p class="note">Toca un líquido para cargarlo abajo. Toca una pastilla para marcarla como la que usas. '+
     'Si compras el mismo producto con otra concentración, vuelve a apuntarlo: la fecha te dice cuándo lo miraste.</p>';
@@ -1171,7 +1212,7 @@ function renderProds(){
         await save();renderProds();renderCya();renderStatus();renderCfg();
         toast(state.tabletId?'Marcada como la que usas':'Desmarcada');
       }else{
-        loadProd(pr.id);
+        loadProd(pr.id,'M');
         $('calcOut').scrollIntoView({block:'center'});
         toast('Cargado: '+pr.n);
       }
@@ -1185,24 +1226,39 @@ function renderProds(){
     };
   });
 }
+let addArmado=false;
 async function addProd(){
   const n=$('pName').value.trim();
   if(!n){toast('Ponle un nombre');return;}
   const kind=$('pKind').value;
   let pr={id:'p'+Date.now(),n:n,kind:kind,t:Date.now()};
+  let aviso='';
+  if((state.products||[]).some(x=>x.n.toLowerCase()===n.toLowerCase()))
+    aviso='Ya tienes uno que se llama igual. Si es el mismo bote con otra concentración, borra el viejo.';
   if(kind==='dosis'){
     const a=parseFloat($('pAmt').value), pe=parseFloat($('pPer').value);
-    if(!(a>0)||!(pe>0)){toast('Copia la cantidad y los m³ de la etiqueta');return;}
-    Object.assign(pr,{amt:a,unit:$('pUnit').value,per:pe});
+    const r=$('pAmt2').value===''?null:parseFloat($('pAmt2').value);
+    if(!(a>0)||!(pe>0)){toast('Copia la dosis y los m³ de la etiqueta');return;}
+    if(r!=null&&!(r>0)){toast('La dosis de choque no vale');return;}
+    const u=$('pUnit').value;
+    aviso = dosisRara(a,u,pe) || (r!=null?dosisRara(r,u,pe):'') || aviso;
+    Object.assign(pr,{amtM:a,amtR:r,unit:u,per:pe,nota:$('pNota').value.trim()||null});
   }else{
     const w=parseFloat($('pPeso').value), pc=parseFloat($('pPct').value);
     if(!(w>0)||!(pc>=0)||pc>100){toast('Revisa el peso y el porcentaje');return;}
     Object.assign(pr,{peso:w,pct:pc,quim:$('pQuim').value});
   }
+  if(aviso&&!addArmado){
+    addArmado=true;
+    $('pAviso').innerHTML='<p class="aviso">'+aviso+'</p>';
+    $('pAdd').textContent='Guardarlo de todas formas';
+    return;
+  }
+  addArmado=false;$('pAviso').innerHTML='';$('pAdd').textContent='Guardar producto';
   state.products=(state.products||[]).concat([pr]);
   if(kind==='pastilla'&&!state.tabletId)state.tabletId=pr.id;
   if(!await save())return;
-  $('pName').value='';$('pAmt').value='';$('pForm').open=false;
+  ['pName','pAmt','pAmt2','pNota'].forEach(i=>$(i).value='');$('pForm').open=false;
   renderProds();renderCya();renderStatus();renderCfg();
   toast('Guardado');
 }
@@ -1219,17 +1275,32 @@ function fillProdSelect(){
     ? 'Elige uno de los tuyos, o "escribir a mano" para copiar una etiqueta nueva.'
     : 'Copia lo que ponga la etiqueta. Si lo guardas arriba, la próxima vez lo eliges de una lista.';
 }
-function loadProd(id){
+function loadProd(id,cual){
   const pr=(state.products||[]).find(x=>x.id===id&&x.kind==='dosis');
   if(!pr){calc();return;}
   $('dProd').value=id;
-  $('dAmt').value=pr.amt;$('dUnit').value=pr.unit;$('dPer').value=pr.per;
-  calc();
+  $('dAmt').value = (cual==='R'&&pr.amtR!=null)?pr.amtR:mant(pr);
+  $('dUnit').value=pr.unit;$('dPer').value=pr.per;
+  calc(cual||'M');
 }
-function calc(){
+function renderExtra(pr,cual){
+  const box=$('dExtra');
+  if(!pr){box.innerHTML='';return;}
+  let h='<div class="dosechip">'+
+    '<button type="button" data-c="M" aria-pressed="'+(cual!=='R')+'"><span class="dk">Mantenimiento</span>'+
+    '<span class="dv">'+doseVal(mant(pr),pr.unit,pr.per)+'</span></button>';
+  if(pr.amtR!=null)h+='<button type="button" data-c="R" aria-pressed="'+(cual==='R')+'"><span class="dk">Choque</span>'+
+    '<span class="dv">'+doseVal(pr.amtR,pr.unit,pr.per)+'</span></button>';
+  h+='</div>';
+  if(pr.nota)h+='<p class="note"><b>Cómo se usa:</b> '+esc(pr.nota)+'</p>';
+  box.innerHTML=h;
+  box.querySelectorAll('button').forEach(b=>b.onclick=()=>loadProd(pr.id,b.dataset.c));
+}
+function calc(cual){
   const amt=parseFloat($('dAmt').value), per=parseFloat($('dPer').value), u=$('dUnit').value;
   const pid=$('dProd').value;
   const pr=pid?(state.products||[]).find(x=>x.id===pid):null;
+  renderExtra(pr,cual);
   if(!(amt>0)||!(per>0)){$('calcOut').innerHTML='—<small>Rellena la cantidad y los m³ que ponga el bote.</small>';return;}
   const v=amt*cfg().vol/per;
   let main='',extra='';
@@ -1244,7 +1315,8 @@ function calc(){
   }
   $('calcOut').innerHTML=main+'<small>'+(pr?'de <b>'+esc(pr.n)+'</b> ':'')+'para tus '+nf(cfg().vol)+' m³'+
     (extra?'. '+extra:'')+(pr?'. Etiqueta apuntada el '+fdate(pr.t)+'':'')+
-    '. Echa la mitad, deja circular 3-4 h y vuelve a medir antes de completar.</small>';
+    '. Echa la mitad, deja circular 3-4 h y vuelve a medir antes de completar.</small>'+
+    (dosisRara(amt,u,per)?'<p class="aviso">'+dosisRara(amt,u,per)+'</p>':'');
 }
 
 /* ---------- copia ---------- */
@@ -1298,7 +1370,7 @@ let resetArmed=false,resetTimer=null;
   const manual=()=>{$('dProd').value='';calc();};
   ['dAmt','dPer'].forEach(i=>$(i).oninput=manual);
   $('dUnit').onchange=manual;
-  $('dProd').onchange=()=>{const v=$('dProd').value; if(v)loadProd(v); else calc();};
+  $('dProd').onchange=()=>{const v=$('dProd').value; if(v)loadProd(v,'M'); else {renderExtra(null);calc();}};
   $('cSave').onclick=saveCfg;
   $('pAdd').onclick=addProd;
   const conBoton=async(id,fn,txtOcupado)=>{const b=$(id);const orig=b.textContent;
