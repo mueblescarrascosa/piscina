@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Control de la piscina</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMWIzYTRiIi8+PHBhdGggZD0iTTE1IDMzSDg1Vjg0TDU2IDcyVjY0SDQ2VjU0SDM2VjQ0SDE1WiIgZmlsbD0iIzdlYzVkZSIvPjxwYXRoIGQ9Ik0xNSAzM0g4NSIgc3Ryb2tlPSIjZDZlYmYyIiBzdHJva2Utd2lkdGg9IjMuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+">
-<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAD0UlEQVR4nO3bLVYbURzG4YTTXbATfBWiuroaySoqq9GtrUDVs4h6XPdABYccPibJfNy5c+ed51kAE/Hj5Q8k+10DLq+un5Z+DUz3+HC/X/o1LPICBLwNSwRe7YEi3rZacc/6EBHTZc64Z/nCQqaPOcK+KP0FxUxfc7RS7DtEyExRaq2LLLSYmapUQ5O+K4TMHKas9eiFFjNzmdLWqKDFzNzGNjY4aDFTy5jWBgUtZmob2lzvoMXMUoa01ytoMbO0vg2eDVrMtKJPi8X/9Q1LOhm0daY155o8GrSYadWpNp0cROkM2jrTumONfghazKxFV6tODqK8Cdo6szbvm7XQRBE0UQ5BOzdYq9ftWmiiCJooF7udc4P1e2nYQhNF0EQRNFH27meSWGiiCJoogiaKoIkiaKIImiiCJoqgiSJoogiaKIImiqCJImiiCJoogiaKoIkiaKIImiiCJoqgiSJoogiaKIImyqeaD/vz+2fNx9GQz1++VnmOhSaKoIkiaKIImiiCJkrVv3L8+vuv5uPYIAtNFEETRdBEETRRBE0UQRNF0EQRNFEETRRBE0XQRBE0UQRNFEETRdBEETRRqr7B/+72pubjevn2/cfSL4GCLDRRBE0UQRNF0EQRNFEETRRBE0XQRBE0UQRNFEETRdBEETRRBE0UQRNF0EQRNFGqfmKlRaU+ReOTL22w0EQRNFEETRRBE0XQRBE0UQRNFEETRdBEETRRBE0UQRNF0EQRNFEETRRBE0XQRNn8J1ZK8cmXNlhoogiaKIImiqCJImiiCJoogiaKoIkiaKIImiiCJoqgiSJoogi6MXe3N8XeubdF3j7aqNdRe0tpfxZ6Bax2fxZ6Raz2eRZ6pax2N0GvnLDfcnKEcI48s9CBtrzaFjrYFlfbQm/EVlbbQm9M+mpb6A1LXG1BExW2k4ODhHPEQtNprattoTlpbattoeltDat98fhwv1/6RbAurYb9+HC/d3IwWovniJODIlpZbQtNUUuv9sVu93x7VH8y8Wqu9kvDh5Avr66fqjwZZvAStBuaKIegnR2s1et2LTRRBE2UN0E7O1ib981aaKJ8CNpKsxZdrXYutKhp3bFGnRxEORq0laZVp9o8udCipjXnmnRyEOVs0FaaVvRpsddCi5ql9W2w98khapYypL1BN7SoqW1oc4N/KRQ1tYxpbdRfOUTN3MY2NvrPdqJmLlPaKhKlzyNSQomRLPKPFWvNVKUaKh6itWaI0mNY/F/f1pq+5mhl1visNV3mHL1qayrubav1k3uR80Dc27DE+dnEvSvwDC38/vQf3nEQOm2rwLIAAAAASUVORK5CYII=">
-<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkNvbnRyb2wgZGUgbGEgcGlzY2luYSIsICJzaG9ydF9uYW1lIjogIlBpc2NpbmEiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiI2VjZWZmMCIsICJ0aGVtZV9jb2xvciI6ICIjMWIzYTRiIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBTUFBQUFEQUNBWUFBQUJTM0d3SEFBQUVLRWxFUVZSNG5PM2NLMWJkVUJpRzRSeFdaOEZNOEZXSTZ1cHFKS09vckVhM3RnSlZ6eURxY1owREZTek80bkl1dWV6c1pPZDduZ0dRaVAvTm53VENybHVaeTZ2cnA2WFBnZms4UHR6dmxqNkgxeFk5R2NOTzF5MGJSZlVERzNwT3FSMUR0WU1aZklhb0ZjTHNCekg0VERGM0NMUDljSU5QU1hPRlVQeUhHbnptVkRxRWk1SS96UEF6dDlJelZxUW1nODhTU215RHlSdkE4TE9VRXJNM0tRRER6OUttenVEb0FBdy9hekZsRmtjRllQaFptN0V6T1RnQXc4OWFqWm5OUVFFWWZ0WnU2SXoyRHNEdzA0b2hzOW9yQU1OUGEvck83TmtBREQrdDZqTzdSZjhVQWxwek1nQlhmMXAzYm9hUEJtRDQyWXBUcyt3V2lHZ0hBM0QxWjJ1T3piUU5RTFFQQWJqNnMxV0hadHNHSU5xYkFGejkyYnIzTTI0REVHMGZnS3MvS1Y3UHVnMUFOQUVRN2FMcjNQNlE1MlhtYlFDaUNZQm9BaUNhQUlpMjh3Qk1NaHVBYUFJZ21nQ0lKZ0NpQ1lCb0FpQ2FBSWdtQUtJSmdHZ0NJSm9BaUNZQW9nbUFhQUlnbWdDSUpnQ2lDWUJvQWlDYUFJZ21BS0lKZ0dnQ0lKb0FpQ1lBb24ycWZjQS92My9XUGlRTitmemxhOVhqMlFCRUV3RFJCRUEwQVJCTkFFU3IvaGJvMTk5L3RROEpSOWtBUkJNQTBRUkFOQUVRVFFCRUV3RFJCRUEwQVJCTkFFUVRBTkVFUURRQkVFMEFSQk1BMFFSQU5BRVFUUUJFcS81RjJOM3RUZTFERHZidCs0K2xUNEZLYkFDaUNZQm9BaUNhQUlnbUFLSUpnR2dDSUpvQWlDWUFvZ21BYUFJZ21nQ0lKZ0NpQ1lCb0FpQ2FBSWdtQUtJSmdHalZQNGxzUWNuUE5uMWV1VzQyQU5FRVFEUUJFRTBBUkJNQTBRUkFOQUVRVFFCRUV3RFJCRUEwQVJCTkFFUVRBTkVFUURRQkVFMEFSQk1BMFFSQU5KOUV6c3pubGV0bUF4Qk5BRVFUQU5FRVFEUUJFRTBBUkJNQTBRUkFOQUVRVFFCRUV3RFJCRUEwQVJCTkFFUVRBTkVFMEpDNzI1dWkzeGZnZzVnbXZZN0FSekxUMkFDTnN4V21zUUUyd2xZWXh3YllJRnVoUHh0Z3cyeUY4MnlBRUxiQ1lRSUlJNFMzM0FLRmNudjB6QVlnZWl2WUFPd2xiZ1ViZ0lOU3RvSU53RWxiM3dvMkFMMXRjU3ZZQUF5MnBhMWdBekJKNjF0QkFCVFJhZ2k3cnV1Nnk2dnJwNlZQaE8wWmMzdFVNNkxIaC91ZERjQnNXdGdLSG9LWjNab2ZtbTBBcWxyYlZyQUJXTVJhdHNKRjF6MC9EQ3gyQnNSYllpdTh6UHgrOEwwSklzbExBSjRCaUxZUHdHMFFLVjdQdWcxQXREY0IyQUpzM2ZzWnR3R0k5aUVBVzRDdE9qVGJOZ0RSRGdaZ0M3QTF4MmJhQmlEYTBRQnNBYmJpMUN5ZjNBQWlvSFhuWnRndEVOSE9CbUFMMEtvK3M5dHJBNGlBMXZTZDJkNjNRQ0tnRlVObWRkQXpnQWhZdTZFek92Z2hXQVNzMVpqWkhQVVdTQVNzemRpWkhQMGFWQVNzeFpSWm5QUjdBQkd3dEtrek9Qa1hZU0pnS1NWbXIrancrczhTMUZEeW9sdjBUeUZzQStaV2VzWm1HMWpiZ0pMbXVyak9mc1VXQWxQTWZWZFI3WlpGQ0F4UjYzYTYrajI3RURpbDluUGtvZyt0WXFEcmxuMTVzcnEzTnFMWXRyVzlLZndQekdJaWpUaVNMMElBQUFBQVNVVk9SSzVDWUlJPSIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIiwgInB1cnBvc2UiOiAiYW55In0sIHsic3JjIjogImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBZ0FBQUFJQUNBWUFBQUQwZU5UNkFBQU5oRWxFUVZSNG5PM2NMWm9iU1JhRzBTdy90UXZ2eEh5UVFlUEJ4Z1c5Q2tQandqMTBnRkZ6TDJLNDJlekJBMnJrbG0yVmZsS1JHVGZpTzJjRnFSQzRyMjVrMWNOQ1NXL2Z2Zi9lK3hrQVd2ajI5Y3RENzJmZ2Q3NlVUZ3g0Z0JjQ29RK0h2Z1BESHVBMm9tQjdEbmdEQmo1QVc0S2dQUWZhZ0lFUHNDOUJjRDhIdUpLaEQxQ0RHRmpIb2QzQTBBZW9UUXhjejBGZFlPZ0RqRWtNbk9kd1htSHdBOHhCQ0p6bVVJNFkrZ0J6RXdOL2N4Q0x3UStRUmdpRUI0REJENUF0T1FRaVA3akJEOEN4eEJDSStzQUdQd0RuSklWQXhBYzErQUc0UlVJSXZPbjlBRnN6L0FHNFZjTHNtTFp3RXI0OEFMWTM2elpndWc5bDhBT3doZGxDWUtvckFNTWZnSzNNTm1PbXFKblp2aFFBYXB0aEd6RDhCc0R3QjJCdk04eWVvUU5naGk4QWdER05Qb09HWEdHTWZ1Z0F6R1hFSzRIaE5nQ0dQd0RWakRpYmhncUFFUThZZ0F5anphZ2hWaGFqSFNvQTJVYTRFaWkvQVREOEFSak5DTE9yZEFDTWNJQUFjRXIxR1ZZMkFLb2ZIQUJjVW5tV2xReUF5Z2NHQUxlb090UEtCVURWZ3dLQXRTck90bElCVVBHQUFLQ0Zhak91VEFCVU94Z0FhSzNTckNzUkFKVU9CQUMyVkdYbWRRK0FLZ2NCQUh1cE1QdTZCa0NGQXdDQUhuclB3RzRCMFB1REEwQnZQV2RobHdBdy9BSGdSYStadUhzQUdQNEE4TE1lczNIWEFERDhBZUMwdldma2JnRmcrQVBBZVh2T3lsMEN3UEFIZ092c05UTzcveDhBQUdCL213ZUFYLzhBY0pzOVp1ZW1BV0Q0QThBNlc4L1F6UUxBOEFlQSsydzVTNzBEQUFDQk5na0F2LzRCb0kydFptcnpBREQ4QWFDdExXWnIwd0F3L0FGZ0c2MW5ySGNBQUNCUXN3RHc2eDhBdHRWeTFqWUpBTU1mQVBiUmF1YTZBZ0NBUUhjSGdGLy9BTEN2RnJQWEJnQUFBdDBWQUg3OUEwQWY5ODdnMVFGZytBTkFYL2ZNWWxjQUFCQm9WUUQ0OVE4QU5heWR5VFlBQUJEbzVnRHc2eDhBYWxrem0yMEFBQ0RRVFFIZzF6OEExSFRyakxZQkFJQkFWd2VBWC84QVVOc3RzOW9HQUFBQ1hSVUFmdjBEd0JpdW5kazJBQUFRU0FBQVFLQ0xBV0Q5RHdCanVXWjIyd0FBUUtDekFlRFhQd0NNNmRJTXR3RUFnRUFDQUFBQ3ZSb0ExdjhBTUxaenM5d0dBQUFDQ1FBQUNIUXlBS3ovQVdBT3I4MTBHd0FBQ0NRQUFDRFFid0ZnL1E4QWN6azEyMjBBQUNDUUFBQ0FRQUlBQUFMOUZBRHUvd0ZnVHIvT2VCc0FBQWdrQUFBZ2tBQUFnRUEvQXNEOVB3RE03WGpXMndBQVFDQUJBQUNCQkFBQUJCSUFBQkRvemJKNEFSQUFVaHhtdmcwQUFBUVNBQUFRU0FBQVFDQUJBQUNCQkFBQUJCSUFBQkJJQUFCQW9BZi9Bd0FBOHRnQUFFQWdBUUFBZ1FRQUFBUVNBQUFRU0FBQVFDQUJBQUNCQkFBQUJCSUFBQkJJQUFCQUlBRUFBSUVFQUFBRUVnQUFFRWdBQUVBZ0FRQUFnUVFBQUFRU0FBQVFTQUFBUUNBQkFBQ0JCQUFBQkJJQUFCQklBQUJBSUFFQUFJRUVBQUFFRWdBQUVFZ0FBRUFnQVFBQWdRUUFBQVFTQUFBUVNBQUFRQ0FCQUFDQkJBQUFCQklBQUJCSUFBQkFJQUVBQUlFRUFBQUVFZ0FBRUVnQUFFQWdBUUFBZ1FRQUFBUVNBQUFRU0FBQVFDQUJBQUNCQkFBQUJCSUFBQkJJQUFCQUlBRUFBSUVFQUFBRUVnQUFFRWdBQUVBZ0FRQUFnUVFBQUFRU0FBQVFTQUFBUUNBQkFBQ0JCQUFBQkJJQUFCQklBQUJBb01mZUR6Q2F2Lzc5Wis5SEFPQ0VmL3p4ejk2UE1CUWJBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FBQWozMmZvRFIvT3MvLyszOUNBQndOeHNBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FBQWdrQUFBZ2tBQUFna0FBQWdFQUNBQUFDQ1FBQUNDUUFBQ0NRQUFDQVFBSUFBQUlKQUFBSUpBQUFJSkFBQUlCQUFnQUFBZ2tBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFqMzJmb0RSUEg5ODZ2MEkzT0REcDgrOUh3R2dKQnNBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FBQWdrQUFBZ2tBQUFna0FBQWdFQUNBQUFDQ1FBQUNDUUFBQ0NRQUFDQVFBSUFBQUlKQUFBSUpBQUFJSkFBQUlCQUFnQUFBZ2tBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZzBHUHZCNEF0UFg5ODZ2MEl6WHo0OUxuM0l3QVRzUUVBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FBQWdrQUFBZ2tBQUFna0FBQWdFQUNBQUFDQ1FBQUNDUUFBQ0NRQUFDQVFBSUFBQUlKQUFBSUpBQUFJSkFBQUlCQUFnQUFBZ2tBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ1BmWitBT0E2engrZmVqOUNNeDgrZmU3OUNCRFBCZ0FBQWdrQUFBZ2tBQUFna0FBQWdFQUNBQUFDQ1FBQUNDUUFBQ0NRQUFDQVFBSUFBQUlKQUFBSUpBQUFJSkFBQUlCQUFnQUFBZ2tBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FBQWdrQUFBZ2tBQUFna0FBQWdFQUNBTmpkODhlbjVmbmpVKy9IZ0dpUHZSOEF5SFVjQVI4K2ZlNzRKSkRIQmdBb3dWWUE5bVVEQUpSaUt3RDdzQUVBeXJJVmdPMElBS0E4SVFEdHVRSUFodUY2QU5xeEFRQ0daQ3NBOTdFQkFJWm1Ld0RyMkFBQTA3QVZnT3NKQUdBNlFnQXVjd1VBVE12MUFMek9CZ0NJWUNzQVA3TUJBS0xZQ3NBTEd3QWdscTBBeVFRQUVFOElrTWdWQU1EL3VSNGdpUTBBd0FtMkFzek9CZ0RnREZzQlptVURBSEFsV3dGbUlnQUFiaVFFbUlFckFJQ1ZYQTh3TWhzQWdBWnNCUmlORFFCQVE3WUNqTUlHQUdBanRnSlVKZ0FBTmlZRXFNZ1ZBTUJPWEE5UWlRMEFRQWUyQXZSbUF3RFFrYTBBdmRnQUFCUmhLOENlYkFBQWlyRVZZQTgyQUFDRjJRcXdGUUVBTUFBaFFHdXVBQUFHNG5xQVZtd0FBQVpsSzhBOWJBQUFCbWNyd0JvMkFBQVRzUlhnV2dJQVlFSkNnRXRjQVFCTXpQVUFyN0VCQUFoaEs4QXhHd0NBTUxZQ0xNdXl2UG4yOWN0RDc0Y0FvQTliZ1V6ZnZuNTVjQVVBZ0JBSTVBb0FnQjljRCtTd0FRRGdKRnVCdWRrQUFIQ1dyY0NjYkFBQXVKcXR3RHdFQUFBM0V3TGpjd1VBd0dxdUI4YjFabGxlL2g2dzk0TUFNRFpiZ1RFY1pyNE5BQUJOMlFxTXdUc0FBR3pHVnFBdUFRREE1b1JBUGE0QUFOaU42NEU2Zm13QXZBZ0l3SjVzQmZaM1BPdHRBQURveWxhZ0QrOEFBRkNHcmNCK0JBQUE1UWlCN2YxMjcvLzIzZnZ2UFI0RUFNNjVkRDBnR003NzlWMC9Hd0FBaG1BcjBKYVhBQUVZaXBjRzI3QUJBR0JZdGdMcm5memJmKzhCQU1BOFR2MnZIeHNBQUFna0FBQWcwTWtBOEcrQkFXQU9yODEwR3dBQUNDUUFBQ0RRcXdIZ0dnQUF4blp1bHRzQUFFQWdBUUFBZ2M0R2dHc0FBQmpUcFJsdUF3QUFnUzRHZ0MwQUFJemxtdGx0QXdBQWdRUUFBQVM2S2dCY0F3REFHSzZkMlRZQUFCRG82Z0N3QlFDQTJtNloxVFlBQUJEb3BnQ3dCUUNBbW02ZDBUWUFBQkRvNWdDd0JRQ0FXdGJNWmhzQUFBaTBLZ0JzQVFDZ2hyVXoyUVlBQUFLdERnQmJBQURvNjU1WmZOY0dRQVFBUUIvM3ptQlhBQUFRNk80QXNBVUFnSDIxbUwwMkFBQVFxRWtBMkFJQXdENWF6ZHhtR3dBUkFBRGJhamxyWFFFQVFLQ21BV0FMQUFEYmFEMWptMjhBUkFBQXRMWEZiTjNrQ2tBRUFFQWJXODFVN3dBQVFLRE5Bc0FXQUFEdXMrVXMzWFFESUFJQVlKMnRaK2ptVndBaUFBQnVzOGZzOUE0QUFBVGFKUUJzQVFEZ09udk56TjAyQUNJQUFNN2JjMWJ1ZWdVZ0FnRGd0TDFuNU83dkFJZ0FBUGhaajluWTVTVkFFUUFBTDNyTnhHNS9CU0FDQUVqWGN4WjIvVE5BRVFCQXF0NHpzUHYvQWVoOUFBQ3d0d3F6cjNzQUxFdU5nd0NBUFZTWmVTVUNZRm5xSEFnQWJLWFNyQ3NUQU10UzYyQUFvS1ZxTTY1VUFDeEx2UU1DZ0h0Vm5HM2xBbUJaYWg0VUFLeFJkYWFWRElCbHFYdGdBSEN0eXJPc2JBQXNTKzJEQTRCenFzK3cwZ0d3TFBVUEVBQitOY0xzS3YrQXg5NitlLys5OXpNQXdHdEdHUHdINVRjQXgwWTZXQUN5akRhamhncUFaUm52Z0FHWTM0aXphYmdIUHVaS0FJQ2VSaHo4QjhOdEFJNk5mUEFBakczMEdUUjBBQ3pMK0Y4QUFPT1pZZllNL3dHT3VSSUFZRXN6RFA2RDRUY0F4MmI2WWdDb1piWVpNOVdIT1dZYkFFQUxzdzMrZ3lrLzFERWhBTUFhc3c3K2c2bXVBRTZaL1FzRW9MMkUyVEg5Qnp4bUd3REFPUW1EL3lEbWd4NFRBZ0FjU3hyOEIzRWYrSmdRQU1pV09QZ1BZai80TVNFQWtDVjU4Qi9FSDhBeElRQXdONFAvYnc3aUZXSUFZQTZHL21rTzVRSWhBREFtZy84OGgzTURNUUJRbTZGL1BRZTFraGdBcU1IUVg4ZWhOU0FHQVBabDZOL1BBVzVBRUFDMFplQzM1MEIzSUFnQWJtUGdiODhCZHlJS0FGNFk5bjA0OUtJRUFqQUxBNzZtL3dHQTE5MHd1cjAyVEFBQUFBQkpSVTVFcmtKZ2dnPT0iLCAic2l6ZXMiOiAiNTEyeDUxMiIsICJ0eXBlIjogImltYWdlL3BuZyIsICJwdXJwb3NlIjogImFueSJ9XX0=">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1b3a4b">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -80,7 +80,7 @@
   .row.tight{margin-top:10px}
   .field{flex:1}
   .field label{display:block;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-  input[type=text],input[type=number],select{width:100%;font-family:var(--mono);font-size:17px;padding:11px 12px;
+  input[type=text],input[type=password],input[type=number],select{width:100%;font-family:var(--mono);font-size:17px;padding:11px 12px;
     border:1px solid var(--line);border-radius:8px;background:#fbfcfc;color:var(--ink);-webkit-appearance:none;appearance:none}
   select{background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
     background-position:calc(100% - 17px) 50%,calc(100% - 12px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:32px}
@@ -156,6 +156,11 @@
   .cloud .led{width:9px;height:9px;border-radius:50%;background:var(--muted);flex:0 0 auto}
   .cloud .led.ok{background:var(--ok)} .cloud .led.pend{background:var(--amber)} .cloud .led.err{background:var(--warn)}
   .cloud .txt{flex:1;line-height:1.35}
+  .wxrow{display:flex;gap:8px}
+  .wxd{flex:1;background:#f4f7f7;border:1px solid var(--line);border-radius:8px;padding:9px 10px}
+  .wxd .k{font-size:9.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  .wxd .v{font-family:var(--mono);font-size:15px;font-weight:600;margin-top:3px}
+  .wxd .s{font-size:11.5px;color:var(--muted);margin-top:2px}
   .badge{display:inline-block;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.1em;
     text-transform:uppercase;color:var(--ok);border:1px solid var(--ok);border-radius:4px;padding:1px 5px;margin-left:7px}
   textarea{width:100%;height:130px;font-family:var(--mono);font-size:11px;padding:11px;
@@ -181,6 +186,7 @@
   .vcell.c{background:#fbeceb;border-color:#e8bdb8}
   .vcell.c .vs{color:var(--warn)}
   .vcell.x .vn{color:var(--muted)}
+  .vcell .vnt{font-size:11px;color:var(--ink);margin-top:3px;line-height:1.25;font-weight:600}
   .vcell.x .vs{color:var(--muted)}
 
   .plan{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px;overflow-x:auto}
@@ -223,6 +229,10 @@
     <section>
       <div class="shead"><h2>Cómo está el agua</h2><div class="rule"></div></div>
       <div class="card status" id="status"><p class="empty">Cargando…</p></div>
+    </section>
+    <section>
+      <div class="shead"><h2>El tiempo</h2><div class="rule"></div></div>
+      <div class="card" id="wxBox"><p class="empty">Consultando el tiempo…</p></div>
     </section>
     <section>
       <div class="shead"><h2>Apuntar medición</h2><div class="rule"></div></div>
@@ -396,6 +406,11 @@
           <div class="field"><label for="cCau">Caudal bomba (m&sup3;/h)</label>
             <input type="number" id="cCau" step="0.5" min="1" max="100" inputmode="decimal"></div>
         </div>
+        <div class="row tight" style="align-items:flex-end">
+          <div class="field"><label>Lugar para el tiempo</label>
+            <div id="cLugar" style="font-size:14.5px;font-weight:600;padding:6px 0">—</div></div>
+          <button type="button" class="btn ghost" id="cGeo" style="width:auto;margin:0;padding:10px 14px;font-size:13px">Usar mi ubicación</button>
+        </div>
         <button class="btn" id="cSave">Guardar</button>
         <p class="note" id="cDerived"></p>
       </div>
@@ -452,7 +467,7 @@
 const KEY='piscina-registro';
 const CYA_G_TAB=89;                       // supuesto por defecto: pastilla de 200 g al 80% de tricloro
 const CYA_FACTOR={tri:0.555, di:0.50, no:0};   // fraccion de acido cianurico de cada compuesto
-const DEF={vol:24,sup:21,barLimpio:1.0,caudal:12};
+const DEF={vol:24,sup:21,barLimpio:1.0,caudal:12,lat:38.17,lon:-3.01,lugar:'Villanueva del Arzobispo'};
 
 const PH=[{v:6.8,c:'#f2df6e'},{v:7.0,c:'#f3c85f'},{v:7.2,c:'#efa85c'},{v:7.4,c:'#e8815f'},
           {v:7.6,c:'#d95f68'},{v:7.8,c:'#c04a6d'},{v:8.0,c:'#a13a68'},{v:8.2,c:'#7f2f5c'}];
@@ -461,7 +476,7 @@ const CL=[{v:0,c:'#fbfbf0'},{v:0.5,c:'#fbf3c2'},{v:1,c:'#f9e58a'},{v:1.5,c:'#f7d
 const PH_OK=[7.2,7.6], CL_OK=[1,2], TA_OK=[100,150];
 
 const TASKS=[
-  {id:'lavado',   n:'Lavado del filtro',          s:'con la llave CALLE abierta',       d:14},
+  {id:'lavado',   n:'Lavado del filtro',          s:'CALLE abierta solo con la bomba en marcha', d:14},
   {id:'prefiltro',n:'Cesto del prefiltro',        s:'se vacia por VACIADO y CALLE',      d:7},
   {id:'cepillar', n:'Cepillar playa y escalones', s:'es donde empieza el verdín',       d:7},
   {id:'fondo',    n:'Pasar el limpiafondos',      s:'',                                 d:7},
@@ -508,30 +523,37 @@ const ACTIONS=[
          'Abre LIMPIAFONDOS. Purga la manguera de aire antes de conectarla.','Arranca y pasa el fondo despacio.',
          'Al terminar, vuelve a dejarlo en Filtración.'],
   warn:'Con CORTE FONDO cerrada, el SUMIDERO queda aislado: da igual cómo esté.'},
- {id:'lavado',n:'Lavado',sel:'LAVADO',bomba:'1-3 min',
+ {id:'lavado',n:'Lavado',sel:'LAVADO',bomba:'1-2 min',
   v:{impulsion:1,skimmer:1,limpiafondos:0,sumidero:1,cortefondo:1,vaciado:0,calle:1,cochera:0},
+  vnote:{calle:'solo con la bomba en marcha'},
   flow:['skim','t1a','sum','cf','t1b','bom','filt','des','t3r','t4','calle'],
-  steps:['Bomba parada.','Aspiración normal: SKIMMER, SUMIDERO y CORTE FONDO abiertas.','Abre CALLE.',
-         'Selectora en LAVADO. Arranca 1-3 min, hasta que el visor salga limpio.','Para y pasa a Enjuague.'],
-  warn:'Nunca arranques en LAVADO con CALLE cerrada.'},
- {id:'enjuague',n:'Enjuague',sel:'ENJUAGUE',bomba:'20-40 s',
+  steps:['Bomba parada. Aspiración normal: SKIMMER, SUMIDERO y CORTE FONDO abiertas.',
+         'Con CALLE todavía cerrada, pon la selectora en LAVADO.',
+         'Abre CALLE y arranca enseguida. 1-2 minutos, hasta que el agua del visor salga clara. No hace falta esperar a que salga cristalina.',
+         'Para la bomba y cierra CALLE en el momento. Pasa a Enjuague.'],
+  warn:'Nunca arranques en LAVADO con CALLE cerrada. Y no la dejes abierta con la bomba parada: como el cuarto está por debajo del nivel del agua, la piscina se va sola por la calle.'},
+ {id:'enjuague',n:'Enjuague',sel:'ENJUAGUE',bomba:'20-30 s',
   v:{impulsion:1,skimmer:1,limpiafondos:0,sumidero:1,cortefondo:1,vaciado:0,calle:1,cochera:0},
+  vnote:{calle:'solo con la bomba en marcha'},
   flow:['skim','t1a','sum','cf','t1b','bom','filt','des','t3r','t4','calle'],
-  steps:['Va siempre justo detrás del lavado. Las llaves no se tocan.','Bomba parada. Selectora en ENJUAGUE.',
-         'Arranca 20-40 s: asienta la arena y evita que se cuele al vaso.',
-         'Para, selectora en FILTRACIÓN y cierra CALLE.','Repón el nivel: se han ido 2-3 cm.'],warn:''},
- {id:'prefiltro',n:'Prefiltro',sel:'dejala en FILTRACION',bomba:'parada y sin corriente',
+  steps:['Va justo detrás del lavado. Bomba parada y CALLE cerrada.',
+         'Selectora en ENJUAGUE.',
+         'Abre CALLE y arranca 20-30 s: asienta la arena y evita que se cuele al vaso.',
+         'Para la bomba y cierra CALLE.',
+         'Selectora en FILTRACIÓN y arranca. Repón el nivel: un lavado completo se lleva unos {lav} cm.'],
+  warn:''},
+ {id:'prefiltro',n:'Prefiltro',sel:'déjala en FILTRACIÓN',bomba:'parada y sin corriente',
   v:{impulsion:0,skimmer:0,limpiafondos:0,sumidero:0,cortefondo:1,vaciado:1,calle:1,cochera:0},
   flow:['t1b','cf','vac','t3l','t4','calle'],
   steps:['Bomba parada y corriente cortada en el cuadro.',
-         'Cierra las cuatro que dan a la piscina: SKIMMER, LIMPIAFONDOS, SUMIDERO e IMPULSION. La que aisla la piscina es SUMIDERO.',
-         'CORTE FONDO se queda ABIERTA: es por donde va a caer el agua de la bomba al desague.',
+         'Cierra las cuatro que dan a la piscina: SKIMMER, LIMPIAFONDOS, SUMIDERO e IMPULSIÓN. La que aísla la piscina es SUMIDERO.',
+         'CORTE FONDO se queda ABIERTA: es por donde va a caer el agua de la bomba al desagüe.',
          'Afloja la tapa del prefiltro media vuelta. Si sale chorro, una llave sigue abierta: para y revisa antes de seguir.',
          'Con la tapa floja para que entre aire, abre VACIADO y CALLE. El vaso baja solo hasta la altura del tubo.',
          'CIERRA VACIADO y CALLE antes de quitar la tapa del todo.',
-         'Saca el cesto, vacialo y enjuagalo. Grasa de silicona en la junta si esta reseca.',
+         'Saca el cesto, vacíalo y enjuágalo. Grasa de silicona en la junta si está reseca.',
          'Cesto dentro y tapa a mano. No hace falta llenar el vaso: al estar la bomba por debajo del nivel del agua se llena sola.',
-         'Reabre en orden: IMPULSION, SKIMMER, SUMIDERO. Da corriente y comprueba que ceba.'],
+         'Reabre en orden: IMPULSIÓN, SKIMMER, SUMIDERO. Da corriente y comprueba que ceba.'],
   warn:'El paso 6 no es opcional. Con la tapa fuera y VACIADO abierta, si alguien toca SUMIDERO se te va la piscina por la calle.'},
 
  {id:'vcalle',n:'Vaciar a la calle',sel:'da igual: no pasa por ella',bomba:'parada · por gravedad',
@@ -546,7 +568,7 @@ const ACTIONS=[
   steps:['Igual que vaciar a la calle, pero el destino es el atomizador.','Bomba parada.',
          'Cierra SKIMMER, IMPULSIÓN y CORTE FONDO.','Abre SUMIDERO, VACIADO y COCHERA. CALLE cerrada.',
          'Al terminar: cierra VACIADO y COCHERA.'],
-  warn:'No mandes a la cochera agua recién clorada de choque si vas a regar con ella.'},
+  warn:'Para el atomizador, mejor agua con el cloro normal: no la saques recién tratada de choque.'},
 
  {id:'invierno',n:'Invierno',g:'temp',sel:'FILTRACIÓN',bomba:'1-3 h al día',dyn:'invierno',
   v:{impulsion:1,skimmer:1,limpiafondos:0,sumidero:1,cortefondo:1,vaciado:0,calle:0,cochera:0},
@@ -576,8 +598,9 @@ const ACTIONS=[
   v:{impulsion:1,skimmer:1,limpiafondos:0,sumidero:1,cortefondo:1,vaciado:0,calle:0,cochera:0},
   flow:['skim','t1a','sum','cf','t1b','bom','filt','imp'],
   steps:['Sube el nivel hasta los 2/3 de la boca del skimmer.',
-         'Cesto del prefiltro dentro, junta engrasada, tapa a mano. Llena el vaso de agua antes de arrancar.',
-         'Abre en orden: IMPULSIÓN, SKIMMER, CORTE FONDO. Da corriente y comprueba que ceba.',
+         'Si la invernaste del todo: pon los tapones de purga de la bomba y del filtro antes de abrir ninguna llave.',
+         'Cesto del prefiltro dentro, junta engrasada, tapa a mano.',
+         'Abre en orden: IMPULSIÓN, SKIMMER, SUMIDERO y CORTE FONDO. La bomba se llena sola por gravedad. Da corriente y comprueba que ceba.',
          'Lava y enjuaga el filtro antes de nada: la arena lleva meses parada y suelta lo que quedó dentro.',
          'Filtra seguido 24-48 h. Anota la presión con el filtro ya limpio y actualízala en Datos.',
          'Ajusta el pH primero. Luego cloración de choque, y al día siguiente el alguicida.',
@@ -590,7 +613,8 @@ let sel={ph:null,cl:null}, cmVal=3, paVal=2, curAct='filtracion';
 let backend='mem', mode='ok', readConfirmed=false, diag='';
 
 const $=id=>document.getElementById(id);
-const days=ts=>Math.floor((Date.now()-ts)/86400000);
+const dayNum=ts=>{const d=new Date(ts);return Math.round(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000);};
+const days=ts=>dayNum(Date.now())-dayNum(ts);   // días de calendario: "ayer" es ayer aunque hayan pasado 10 h
 const nf=v=>String(v).replace('.',',');
 const cfg=()=>Object.assign({},DEF,state.cfg||{});
 const volL=()=>cfg().vol*1000;
@@ -609,7 +633,7 @@ function lastTemp(maxDias){
   return r.temp;
 }
 function cmPorLavado(){ return (cfg().caudal*(2.5/60)*1000)/litPerCm(); }  // 2 min lavado + 30 s enjuague
-function tok(x){ return String(x).replace(/\{vol\}/g,nf(cfg().vol)).replace(/\{vuelta\}/g,fnum(vueltaH(),1)); }
+function tok(x){ return String(x).replace(/\{vol\}/g,nf(cfg().vol)).replace(/\{vuelta\}/g,fnum(vueltaH(),1)).replace(/\{lav\}/g,fnum(cmPorLavado(),1)); }
 function horasFiltrado(t){
   if(t<10)return '1-2 h'; if(t<15)return '2-3 h'; if(t<18)return '3-4 h';
   if(t<23)return '4-5 h'; if(t<27)return '6-8 h'; if(t<31)return '8-12 h'; return '12-14 h';
@@ -623,6 +647,69 @@ function toast(msg,actionLabel,action){
     b.onclick=()=>{action();t.classList.remove('on')};t.appendChild(b);}
   t.classList.add('on');clearTimeout(toastTimer);
   toastTimer=setTimeout(()=>t.classList.remove('on'),actionLabel?5200:2300);
+}
+
+/* ================= EL TIEMPO (Open-Meteo) =================
+   Gratis y sin clave. Da previsión y también los días pasados,
+   que es lo que permite saber cuánto se tenía que evaporar. */
+const WX_KEY='piscina-tiempo';
+let wx=null, wxErr='';
+const isoDia=ts=>{const d=new Date(ts);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+async function wxLoad(force){
+  const c=cfg();
+  if(!wx){try{const v=window.localStorage.getItem(WX_KEY);if(v)wx=JSON.parse(v);}catch(e){}}
+  if(wx&&(wx.lat!==c.lat||wx.lon!==c.lon))wx=null;
+  if(!force&&wx&&Date.now()-wx.t<3*3600000)return;
+  const u='https://api.open-meteo.com/v1/forecast?latitude='+c.lat+'&longitude='+c.lon+
+    '&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,et0_fao_evapotranspiration,wind_speed_10m_max'+
+    '&timezone=auto&past_days=45&forecast_days=7';
+  try{
+    const r=await fetch(u); if(!r.ok)throw new Error('HTTP '+r.status);
+    const d=(await r.json()).daily;
+    wx={t:Date.now(),lat:c.lat,lon:c.lon,time:d.time,tmax:d.temperature_2m_max,tmin:d.temperature_2m_min,
+        rain:d.precipitation_sum,et0:d.et0_fao_evapotranspiration,wind:d.wind_speed_10m_max};
+    wxErr='';
+    try{window.localStorage.setItem(WX_KEY,JSON.stringify(wx));}catch(e){}
+  }catch(e){wxErr='No se ha podido consultar el tiempo desde aquí'+(wx?': enseño lo último que bajé.':'. Abierta en Chrome o publicada en GitHub, sí funciona.');}
+}
+/* evaporación de lámina libre, del orden de la evapotranspiración de referencia */
+function evapEsperada(t0,t1){
+  if(!wx)return null;
+  const a=isoDia(t0), b=isoDia(t1);
+  let mm=0,lluvia=0,n=0;
+  wx.time.forEach((d,i)=>{ if(d>=a&&d<b&&wx.et0[i]!=null){mm+=wx.et0[i];lluvia+=(wx.rain[i]||0);n++;} });
+  const dias=dayNum(t1)-dayNum(t0);
+  if(!dias||n<dias*0.8)return null;                 // el tiempo no cubre el periodo
+  return {cmDia:Math.max(0,(mm-lluvia)/10/dias), lluviaCm:lluvia/10};
+}
+const DIAS=['dom','lun','mar','mié','jue','vie','sáb'];
+function renderWx(){
+  const box=$('wxBox');
+  if(!wx){box.innerHTML='<p class="empty">'+(wxErr||'Consultando el tiempo…')+'</p>';return;}
+  const hoy=isoDia(Date.now()), i0=wx.time.indexOf(hoy);
+  if(i0<0){box.innerHTML='<p class="empty">El tiempo guardado está viejo. '+(wxErr||'')+'</p>';return;}
+  const idx=[i0,i0+1,i0+2].filter(i=>i<wx.time.length);
+  const nom=i=>i===i0?'hoy':i===i0+1?'mañana':DIAS[new Date(wx.time[i]+'T12:00').getDay()];
+  let h='<div class="wxrow">'+idx.map(i=>'<div class="wxd"><div class="k">'+nom(i)+'</div>'+
+    '<div class="v">'+Math.round(wx.tmin[i])+'° / '+Math.round(wx.tmax[i])+'°</div>'+
+    '<div class="s">'+(wx.rain[i]>=1?fnum(wx.rain[i],0)+' mm de lluvia':'sin lluvia')+'</div></div>').join('')+'</div>';
+  const al=[];
+  const hel=idx.filter(i=>wx.tmin[i]<=1);
+  if(hel.length)al.push(['<b>Helada '+nom(hel[0])+'</b> ('+Math.round(wx.tmin[hel[0]])+' °C). Deja la bomba en marcha de madrugada: '+
+    'el agua que se mueve no se congela, y parada te puede reventar una tubería o la bomba.','']);
+  const llu=idx.filter(i=>wx.rain[i]>=10);
+  if(llu.length)al.push(['<b>Lluvia fuerte '+nom(llu[0])+'</b> ('+fnum(wx.rain[llu[0]],0)+' mm, sube el nivel unos '+fnum(wx.rain[llu[0]]/10,1)+' cm). '+
+    'Después mide pH y cloro: la lluvia los baja. Si el agua tapa la boca del skimmer, baja el nivel por CALLE.','info']);
+  const cal=idx.filter(i=>wx.tmax[i]>=35);
+  if(cal.length)al.push(['<b>Calor fuerte '+nom(cal[0])+'</b> ('+Math.round(wx.tmax[cal[0]])+' °C). Sube las horas de filtración, '+
+    'mira el cloro a diario y el nivel en la boca del skimmer: se evapora rápido.','info']);
+  const vie=idx.filter(i=>wx.wind[i]>=40);
+  if(vie.length)al.push(['<b>Viento fuerte '+nom(vie[0])+'</b> ('+Math.round(wx.wind[vie[0]])+' km/h). Al día siguiente vacía los cestos de los skimmers.','info']);
+  const sem=wx.et0.slice(i0,i0+7).reduce((a,v)=>a+(v||0),0)-wx.rain.slice(i0,i0+7).reduce((a,v)=>a+(v||0),0);
+  if(sem>1)al.push(['Esta semana se evaporarán del orden de <b>'+fnum(sem/10,1)+' cm</b> ('+Math.round(sem/10*litPerCm())+' litros).','good']);
+  if(al.length)h+='<ul class="todo">'+al.map(a=>'<li class="'+a[1]+'"><span class="dot"></span><span>'+a[0]+'</span></li>').join('')+'</ul>';
+  h+='<p class="note">'+esc(cfg().lugar||'Tu ubicación')+' · Open-Meteo'+(wxErr?' · '+wxErr:'')+'</p>';
+  box.innerHTML=h;
 }
 
 /* ================= NUBE (Supabase) =================
@@ -709,14 +796,25 @@ const MAP={
 const CLAVE={mediciones:'t',reposiciones:'t',pastillas:'t',tareas:'t',productos:'id'};
 const DESTINO={mediciones:'readings',reposiciones:'refills',pastillas:'tablets',tareas:'taskLog',productos:'products'};
 
+const keyOf=(tabla,x)=>String(x[CLAVE[tabla]]);
+function baseDe(tabla){return new Set(((state._sync||{})[tabla])||[]);}
+function fijaBase(){
+  state._sync={};
+  for(const tabla in MAP)state._sync[tabla]=(state[DESTINO[tabla]]||[]).map(x=>keyOf(tabla,x));
+}
 async function nubeBajar(){
   for(const tabla in MAP){
-    const filas=await rest('GET',tabla+'?select=*',undefined)||[];
-    const remotas=filas.map(MAP[tabla].lee);
-    const campo=DESTINO[tabla], clave=CLAVE[tabla];
-    const vistos=new Set((state[campo]||[]).map(x=>String(x[clave])));
-    const nuevas=remotas.filter(x=>!vistos.has(String(x[clave])));   // union: no se pisa nada
-    state[campo]=(state[campo]||[]).concat(nuevas);
+    const campo=DESTINO[tabla];
+    const remotas=(await rest('GET',tabla+'?select=*',undefined)||[]).map(MAP[tabla].lee);
+    const R=new Set(remotas.map(x=>keyOf(tabla,x)));
+    const B=baseDe(tabla);
+    const local=state[campo]||[];
+    const L=new Set(local.map(x=>keyOf(tabla,x)));
+    // borrado en otro sitio: estaba en la base, sigue aquí, ya no está en la nube
+    const quedan=local.filter(x=>!(B.has(keyOf(tabla,x))&&!R.has(keyOf(tabla,x))));
+    // nuevo en otro sitio: está en la nube, no aquí, y no lo borré yo
+    const nuevas=remotas.filter(x=>!L.has(keyOf(tabla,x))&&!B.has(keyOf(tabla,x)));
+    state[campo]=quedan.concat(nuevas);
   }
   state.readings.sort((a,b)=>b.t-a.t);
   state.refills.sort((a,b)=>a.t-b.t);
@@ -729,7 +827,7 @@ async function nubeBajar(){
   if(aj){
     const remotoNuevo=!state.cfgTS||new Date(aj.actualizado).getTime()>state.cfgTS;
     if(remotoNuevo){
-      state.cfg={vol:+aj.volumen_m3,sup:+aj.superficie_m2,barLimpio:+aj.presion_limpia_bar,caudal:+aj.caudal_m3h};
+      state.cfg=Object.assign({},state.cfg,{vol:+aj.volumen_m3,sup:+aj.superficie_m2,barLimpio:+aj.presion_limpia_bar,caudal:+aj.caudal_m3h});
       state.tabletId=aj.pastilla_en_uso||null;
       if(aj.estab_medido_ppm!=null)state.cyaBase={t:new Date(aj.estab_medido_en).getTime(),v:+aj.estab_medido_ppm};
       state.cfgTS=new Date(aj.actualizado).getTime();
@@ -740,26 +838,40 @@ async function nubeSubir(){
   for(const tabla in MAP){
     const filas=MAP[tabla].filas();
     if(filas.length)await rest('POST',tabla+'?on_conflict=usuario,id',filas,'resolution=merge-duplicates,return=minimal');
-    const ids=filas.map(f=>typeof f.id==='string'?'"'+f.id+'"':f.id);
-    await rest('DELETE',tabla+(ids.length?'?id=not.in.('+ids.join(',')+')':''),undefined,'return=minimal');
+    // solo se borra en la nube lo que se ha borrado aquí desde la última vez
+    const L=new Set(filas.map(f=>String(f.id)));
+    const borrar=[...baseDe(tabla)].filter(k=>!L.has(k));
+    if(borrar.length){
+      const lista=borrar.map(k=>tabla==='productos'?'"'+k.replace(/"/g,'')+'"':k).join(',');
+      await rest('DELETE',tabla+'?id=in.('+lista+')',undefined,'return=minimal');
+    }
   }
-  const c=cfg();
+  const c=cfg(), ts=new Date();
   await rest('POST','ajustes?on_conflict=usuario',[{usuario:ses.uid,volumen_m3:c.vol,superficie_m2:c.sup,
     presion_limpia_bar:c.barLimpio,caudal_m3h:c.caudal,pastilla_en_uso:state.tabletId||null,
     estab_medido_ppm:state.cyaBase?state.cyaBase.v:null,
     estab_medido_en:state.cyaBase?new Date(state.cyaBase.t).toISOString():null,
-    actualizado:new Date().toISOString()}],'resolution=merge-duplicates,return=minimal');
+    actualizado:ts.toISOString()}],'resolution=merge-duplicates,return=minimal');
+  state.cfgTS=ts.getTime();
+  fijaBase();
 }
+let syncEnCurso=false, syncOtraVez=false;
 async function nubeSync(bajar){
   if(!ses){cloud={estado:'sin_sesion',nota:''};renderCloud();return false;}
+  if(syncEnCurso){syncOtraVez=true;return false;}
+  syncEnCurso=true;
   try{
     if(bajar)await nubeBajar();
     await nubeSubir();
+    await guardaLocal();                       // la base nueva también se guarda en el teléfono
     cloud={estado:'ok',nota:'Última vez: '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'})};
     renderCloud();return true;
   }catch(e){
     cloud={estado:/sesi|401/.test(e.message)?'sin_sesion':'pendiente',nota:String(e.message).slice(0,120)};
     renderCloud();return false;
+  }finally{
+    syncEnCurso=false;
+    if(syncOtraVez){syncOtraVez=false;nubeMasTarde();}
   }
 }
 function nubeMasTarde(){ clearTimeout(pushTimer); pushTimer=setTimeout(()=>nubeSync(false),1200); }
@@ -813,6 +925,13 @@ async function load(){
   }
   mode='unknown';readConfirmed=false;diag='sin comprobar';
 }
+async function guardaLocal(){
+  try{
+    if(backend==='local')window.localStorage.setItem(KEY,JSON.stringify(state));
+    else if(backend==='claude'&&mode==='ok')await rawSet(JSON.stringify(state));
+  }catch(e){}
+  refreshBackup();
+}
 async function save(){
   if(backend==='mem'){refreshBackup();nubeMasTarde();return true;}
   if(mode==='blocked'){toast('No se guarda hasta poder leer lo guardado');return false;}
@@ -848,6 +967,7 @@ function renderAlarm(){
   }
   if(backend==='mem'){a.innerHTML='<div class="alarm soft"><b>Aquí no puede guardar nada</b>Este navegador no deja guardar datos. '+
     'Puedes usarla igual, pero al cerrar se pierde. Copia el texto de la pestaña Datos.'+tag+'</div>';return;}
+  if(fragile()&&ses){a.innerHTML='';return;}      // con la nube activa están a salvo en Supabase
   if(fragile()){a.innerHTML='<div class="alarm soft"><b>Guarda, pero no te fíes del todo</b>Al abrir el archivo descargado, '+
     'Chrome guarda los datos aparte y puede tirarlos al limpiar. Cada pocas semanas cópiate el texto de la pestaña Datos.'+tag+'</div>';return;}
   if(mode==='unknown'){a.innerHTML='<div class="alarm soft"><b>Úsala con normalidad</b>No he podido comprobar si ya tenías algo guardado. '+
@@ -917,14 +1037,15 @@ function renderPlan(){
       bT=horasFiltrado(t)+' al día';
       bS='agua a '+nf(t)+' °C · una vuelta al agua = '+fnum(vueltaH(),1)+' h';
     }else if(A.dyn==='invierno'){ bS='con el agua entre 5 y 15 °C · una vuelta = '+fnum(vueltaH(),1)+' h'; }
-    else { bT='temperatura ÷ 2'; bS='apunta la temperatura del agua y sale sola'; }
+    else { bT='según la temperatura'; bS='apunta la temperatura del agua y sale el número de horas'; }
   }
   $('mBomba').textContent=bT;
   $('mBombaSub').textContent=bS;
   $('vgrid').innerHTML=VALVES.map(v=>{
     const st=A.v[v.id], cls=st===1?'a':st===0?'c':'x';
     const txt=st===1?'ABRIR':st===0?'CERRAR':'no se toca';
-    return '<div class="vcell '+cls+'"><div class="vn">'+v.n+'</div><div class="vs">'+txt+'</div></div>';
+    const nota=(A.vnote&&A.vnote[v.id])?'<div class="vnt">'+A.vnote[v.id]+'</div>':'';
+    return '<div class="vcell '+cls+'"><div class="vn">'+v.n+'</div><div class="vs">'+txt+'</div>'+nota+'</div>';
   }).join('');
   $('stepsBox').innerHTML='<ol class="steps">'+A.steps.map(t=>'<li>'+tok(t)+'</li>').join('')+'</ol>'+
     (A.warn?'<p class="warnline">'+tok(A.warn)+'</p>':'');
@@ -986,43 +1107,61 @@ function renderCya(){
     'y apúntalo arriba: a partir de ahí cuenta desde tu medida.</p>';
 }
 
-/* ---------- consumo ---------- */
+/* ---------- consumo ----------
+   Cada reposición devuelve el nivel a la misma marca, así que lo que se pierde
+   entre la primera y la última es lo que se repone DESPUÉS de la primera. */
 function renderLoss(){
-  const box=$('lossBox'),win=30*86400000,now=Date.now();
-  const refs=state.refills.filter(r=>now-r.t<=win);
-  if(refs.length<2){box.innerHTML='<p class="empty">Apunta los centímetros que repones y aquí te dirá si pierdes más agua de la cuenta.</p>';return;}
-  const totalCm=refs.reduce((a,r)=>a+r.cm,0);
-  const first=Math.min(...refs.map(r=>r.t));
-  const span=Math.max(1,Math.round((now-first)/86400000));
-  const lavados=state.taskLog.filter(l=>l.id==='lavado'&&now-l.t<=win&&l.t>=first).length;
+  const box=$('lossBox'),win=45*86400000,now=Date.now();
+  const refs=state.refills.filter(r=>now-r.t<=win).sort((a,b)=>a.t-b.t);
+  if(refs.length<2){box.innerHTML='<p class="empty">Rellena siempre hasta la misma marca y apunta los centímetros que repones. '+
+    'Con dos o tres apuntes separados unos días ya sale el ritmo.</p>';return;}
+  const first=refs[0], last=refs[refs.length-1];
+  const span=days(first.t)-days(last.t);
+  if(span<2){box.innerHTML='<p class="empty">Hacen falta al menos dos días entre la primera y la última reposición para sacar el ritmo.</p>';return;}
+  const totalCm=refs.slice(1).reduce((a,r)=>a+r.cm,0);
+  const lavados=state.taskLog.filter(l=>l.id==='lavado'&&l.t>first.t&&l.t<=last.t).length;
   const cmLav=lavados*cmPorLavado();
   const rate=Math.max(0,totalCm-cmLav)/span;
-  const t=lastTemp(30), frio=t!=null&&t<16;
-  const lim=frio?1.0:2.0, aviso=frio?0.5:1.2;      // en invierno se evapora mucho menos
-  const alto=rate>lim;let txt;
-  if(alto)txt='<b>Estás perdiendo más agua de lo normal.</b> Antes de pensar en una fuga, comprueba que <b>VACIADO y CALLE están bien cerradas</b>: '+
+  const esp=evapEsperada(first.t,last.t);          // null si no hay datos del tiempo
+  const t=lastTemp(30), frio=esp?esp.cmDia<0.3:(t!=null&&t<16);
+  let alto,algo,ref;
+  if(esp){
+    const margen=frio?0.4:0.8;                     // chapoteo y salpicaduras
+    alto=rate>esp.cmDia+margen; algo=!alto&&rate>esp.cmDia+margen/2;
+    ref='Según el tiempo que ha hecho, se tenían que evaporar unos <b>'+fnum(esp.cmDia,1)+' cm al día</b>'+
+        (esp.lluviaCm>0.2?' (descontada la lluvia, que ha aportado '+fnum(esp.lluviaCm,1)+' cm)':'')+'.';
+  }else{
+    const lim=frio?1.0:2.0, aviso=frio?0.5:1.2;
+    alto=rate>lim; algo=!alto&&rate>aviso;
+    ref=frio?'Con el agua fría se evapora poco, del orden de 0,1 a 0,3 cm al día.':'En verano se evapora entre 0,5 y 1 cm al día.';
+  }
+  let txt;
+  if(alto)txt='<b>Estás perdiendo más agua de la que se lleva el tiempo.</b> Antes de pensar en una fuga, comprueba que <b>VACIADO y CALLE están bien cerradas</b>: '+
     'con el cuarto por debajo del nivel del agua, una llave medio abierta vacía la piscina sola y sin ruido. Si están bien, haz la prueba del cubo 48 h.';
-  else if(rate>aviso)txt='Algo por encima de lo típico'+(frio?' para el agua fría que tienes.':', pero puede ser calor fuerte y mucho baño.')+' Míralo otra vez la semana que viene.';
-  else txt=frio?'Dentro de lo normal. Con el agua fría se evapora muy poco, del orden de 0,1 a 0,3 cm al día.'
-               :'Dentro de lo normal. En verano se evapora entre 0,5 y 1 cm al día.'+(t!=null?' Con el agua a '+nf(t)+' °C, cuadra.':'');
-  box.innerHTML='<div class="big'+(alto?' off':'')+'">'+rate.toFixed(1).replace('.',',')+'<small>cm al día · '+Math.round(rate*litPerCm())+' L</small></div>'+
-    '<ul class="todo"><li class="'+(alto?'':'good')+'"><span class="dot"></span><span>'+txt+'</span></li></ul>'+
-    '<p class="note">'+totalCm+' cm repuestos en '+span+' días'+
+  else if(algo)txt='Algo por encima de lo que explica el tiempo. Puede ser mucho baño. Míralo otra vez la semana que viene.';
+  else txt='Dentro de lo normal.';
+  box.innerHTML='<div class="big'+(alto?' off':'')+'">'+fnum(rate,1)+'<small>cm al día · '+Math.round(rate*litPerCm())+' L</small></div>'+
+    '<ul class="todo"><li class="'+(alto?'':algo?'info':'good')+'"><span class="dot"></span><span>'+txt+' '+ref+'</span></li></ul>'+
+    '<p class="note">'+fnum(totalCm,1)+' cm repuestos en '+span+' días'+
     (lavados?', menos '+fnum(cmLav,1)+' cm que se llevaron '+lavados+' lavado'+(lavados>1?'s':'')+' de filtro':'')+'.</p>';
 }
 
 /* ---------- estado ---------- */
+const lastOf=f=>state.readings.find(x=>x[f]!=null)||null;
 function renderStatus(){
-  const box=$('status'),r=state.readings[0];
-  if(!r){box.className='card status';
+  const box=$('status');
+  const rP=lastOf('ph'), rC=lastOf('cl'), rB=lastOf('bar');
+  const rQ=[rP,rC].filter(Boolean).sort((a,b)=>b.t-a.t)[0]||null;   // última vez que se midió el agua
+  if(!state.readings.length){box.className='card status';
     box.innerHTML='<p class="empty">Todavía no hay ninguna medición. Haz el test del agua y marca el pH y el cloro aquí abajo.</p>';return;}
+  const r={ph:rP?rP.ph:null, cl:rC?rC.cl:null, bar:(rB&&days(rB.t)<=30)?rB.bar:null, temp:lastTemp(21), t:(rQ||state.readings[0]).t};
   const phOff=r.ph!=null&&(r.ph<PH_OK[0]||r.ph>PH_OK[1]);
   const clOff=r.cl!=null&&(r.cl<CL_OK[0]||r.cl>CL_OK[1]);
   const barOff=r.bar!=null&&r.bar>=barAlert();
   const m=(k,v,u,off)=>'<div class="metric"><div class="k">'+k+'</div><div class="v '+
     (v==null?'none':off?'off':'')+'">'+(v==null?'—':nf(v))+(v!=null&&u?'<span class="u">'+u+'</span>':'')+'</div></div>';
   let html='<div class="readout">'+m('pH',r.ph,'',phOff)+m('Cloro',r.cl,'ppm',clOff)+m('Presión',r.bar,'bar',barOff)+
-    '</div><div class="when">Medido '+agoTxt(r.t)+' · '+fdate(r.t)+'</div>';
+    '</div><div class="when">'+(rQ?'pH y cloro medidos '+agoTxt(rQ.t)+' · '+fdate(rQ.t):'Sin pH ni cloro apuntados todavía')+'</div>';
   const dPh=Math.round(cfg().vol*6.25/5)*5;
   const bicar=Math.round(16.8*cfg().vol/25)*25;      // g de bicarbonato por cada 10 ppm de alcalinidad
   const cy=cyaEstimate();
@@ -1047,7 +1186,9 @@ function renderStatus(){
     if(days(ta.t)>40)todo.push(['Hace '+days(ta.t)+' días de la última alcalinidad. Toca medirla.','info']);
   }else todo.push(['No has medido nunca la <b>alcalinidad</b>. Fuera de 100-150 ppm el pH no para quieto, por mucho pH- que eches.','info']);
   if(cy.v>75)todo.push(['<b>Estabilizante por las nubes</b> ('+cy.v+' ppm). Mira la pestaña Tareas: hay que renovar agua.','']);
-  if(days(r.t)>=4)todo.push(['Hace '+days(r.t)+' días de la última medición. En temporada, 2 o 3 veces por semana.','info']);
+  const frioAgua=r.temp!=null&&r.temp<15, cadaDias=frioAgua?14:4;
+  if(rQ&&days(rQ.t)>=cadaDias)todo.push(['Hace '+days(rQ.t)+' días que no mides pH y cloro. '+
+    (frioAgua?'Con el agua fría, cada 2 o 3 semanas basta.':'En temporada, 2 o 3 veces por semana.'),'info']);
   if(r.temp!=null)todo.push(['Con el agua a '+nf(r.temp)+' °C, filtra <b>'+horasFiltrado(r.temp)+'</b> al día'+
     (r.temp<15?'. Con el agua fría las algas casi no crecen: basta con que no se quede parada.'
               :', mejor entre las 11 y las 19.')+
@@ -1133,6 +1274,7 @@ function renderCfg(){
   const c=cfg();
   $('cVol').value=c.vol;$('cSup').value=c.sup;$('cBar').value=c.barLimpio;$('cCau').value=c.caudal;
   $('volTag').textContent=nf(c.vol)+' m³';
+  $('cLugar').textContent=c.lugar||(fnum(c.lat,2)+', '+fnum(c.lon,2));
   $('cmHint').textContent='1 cm = '+Math.round(litPerCm())+' litros';
   const tp=tabletProd();
   $('paHint').textContent=tp?tp.n+' · '+tp.peso+' g · '+fnum(cyaPerTab(),1)+' ppm cada una'
@@ -1146,7 +1288,7 @@ async function saveCfg(){
   const v=parseFloat($('cVol').value), s=parseFloat($('cSup').value),
         b=parseFloat($('cBar').value), q=parseFloat($('cCau').value);
   if(!(v>0)||!(s>0)||!(b>0)||!(q>0)){toast('Revisa los números');return;}
-  state.cfg={vol:v,sup:s,barLimpio:b,caudal:q};state.cfgTS=Date.now();
+  state.cfg=Object.assign({},state.cfg,{vol:v,sup:s,barLimpio:b,caudal:q});state.cfgTS=Date.now();
   if(!await save())return;
   renderCfg();renderAll();renderPlan();calc();toast('Guardado');
 }
@@ -1245,7 +1387,7 @@ async function addProd(){
     Object.assign(pr,{amtM:a,amtR:r,unit:u,per:pe,nota:$('pNota').value.trim()||null});
   }else{
     const w=parseFloat($('pPeso').value), pc=parseFloat($('pPct').value);
-    if(!(w>0)||!(pc>=0)||pc>100){toast('Revisa el peso y el porcentaje');return;}
+    if(!(w>0)||!(pc>0)||pc>100){toast('Revisa el peso y el porcentaje');return;}
     Object.assign(pr,{peso:w,pct:pc,quim:$('pQuim').value});
   }
   if(aviso&&!addArmado){
@@ -1336,7 +1478,7 @@ async function restoreBackup(){
   const bk=JSON.stringify(state);
   state={readings:d.readings||[],refills:d.refills||[],tablets:d.tablets||[],tasks:d.tasks||{},
          taskLog:d.taskLog||[],cyaBase:d.cyaBase||null,cfg:Object.assign({},DEF,d.cfg||{}),
-         products:d.products||[],tabletId:d.tabletId||null};
+         products:d.products||[],tabletId:d.tabletId||null,_sync:state._sync};
   readConfirmed=true;await save();renderCfg();renderAll();calc();
   toast('Restaurado','Deshacer',async()=>{state=JSON.parse(bk);await save();renderCfg();renderAll();calc();});
 }
@@ -1347,8 +1489,10 @@ async function saveReading(){
   const bar=num('bar'),temp=num('temp'),ta=num('ta'),cya=num('cya');
   if(sel.ph==null&&sel.cl==null&&bar==null&&temp==null&&ta==null&&cya==null){toast('Marca al menos un valor');return;}
   const now=Date.now();
-  state.readings.unshift({t:now,ph:sel.ph,cl:sel.cl,bar,temp,ta});
-  state.readings=state.readings.slice(0,300);
+  if(sel.ph!=null||sel.cl!=null||bar!=null||temp!=null||ta!=null){
+    state.readings.unshift({t:now,ph:sel.ph,cl:sel.cl,bar,temp,ta});
+    state.readings=state.readings.slice(0,300);
+  }
   if(cya!=null)state.cyaBase={t:now,v:cya};
   if(!await save())return;
   sel={ph:null,cl:null};
@@ -1373,6 +1517,17 @@ let resetArmed=false,resetTimer=null;
   $('dProd').onchange=()=>{const v=$('dProd').value; if(v)loadProd(v,'M'); else {renderExtra(null);calc();}};
   $('cSave').onclick=saveCfg;
   $('pAdd').onclick=addProd;
+  ['pName','pAmt','pAmt2','pPer','pUnit','pPeso','pPct','pQuim','pKind'].forEach(id=>{
+    const desarma=()=>{if(addArmado){addArmado=false;$('pAviso').innerHTML='';$('pAdd').textContent='Guardar producto';}};
+    $(id).addEventListener('input',desarma);$(id).addEventListener('change',desarma);});
+  $('cGeo').onclick=()=>{
+    if(!navigator.geolocation){toast('Este navegador no da la ubicación');return;}
+    navigator.geolocation.getCurrentPosition(async pos=>{
+      state.cfg=Object.assign({},state.cfg,{lat:Math.round(pos.coords.latitude*100)/100,
+        lon:Math.round(pos.coords.longitude*100)/100,lugar:'Tu ubicación'});
+      await save();renderCfg();await wxLoad(true);renderWx();renderLoss();toast('Ubicación guardada');
+    },()=>toast('No me ha dejado leer la ubicación'),{timeout:10000});
+  };
   const conBoton=async(id,fn,txtOcupado)=>{const b=$(id);const orig=b.textContent;
     b.disabled=true;b.textContent=txtOcupado;
     try{await fn();}catch(e){toast(String(e.message).slice(0,90));}
@@ -1419,16 +1574,21 @@ let resetArmed=false,resetTimer=null;
       clearTimeout(resetTimer);resetTimer=setTimeout(()=>{resetArmed=false;$('reset').textContent='Borrar todos los datos';},4000);return;}
     clearTimeout(resetTimer);resetArmed=false;$('reset').textContent='Borrar todos los datos';
     const bk=JSON.stringify(state);
-    state={readings:[],refills:[],tablets:[],tasks:{},taskLog:[],cyaBase:null,cfg:Object.assign({},DEF),products:[],tabletId:null};
+    state={readings:[],refills:[],tablets:[],tasks:{},taskLog:[],cyaBase:null,cfg:Object.assign({},DEF),products:[],tabletId:null,_sync:state._sync};
     await save();renderCfg();renderAll();calc();
     toast('Borrado','Deshacer',async()=>{state=JSON.parse(bk);await save();renderCfg();renderAll();calc();});};
 
   await load();
   if(!state.cfg)state.cfg=Object.assign({},DEF);
   if(!Array.isArray(state.products))state.products=[];
-  renderAlarm();renderCfg();renderActs();renderPlan();renderAll();fillProdSelect();calc();
-  sesLoad();renderCloud();
-  if(ses&&await nubeSync(true)){renderCfg();renderAll();renderPlan();calc();}
+  sesLoad();
+  // Publicada en GitHub Pages, un service worker la deja funcionando sin cobertura.
+  if('serviceWorker' in navigator&&location.protocol==='https:'&&!window.storage)
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  renderAlarm();renderCfg();renderActs();renderPlan();renderAll();fillProdSelect();calc();renderCloud();
+  wxLoad(false).then(()=>{renderWx();renderLoss();});
+  renderWx();
+  if(ses&&await nubeSync(true)){renderAlarm();renderCfg();renderAll();renderPlan();calc();}
 })();
 </script>
 </body>
