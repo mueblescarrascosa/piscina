@@ -2,7 +2,7 @@
 // La app se guarda en el teléfono para abrir sin cobertura.
 // Supabase y el tiempo siempre van por la red: nunca se sirven de la caché.
 // Al actualizarse solo borra sus cachés (piscina-*): en la misma web hay otras apps con las suyas.
-const CACHE='piscina-v2';
+const CACHE='piscina-v3';
 const APP=['./','index.html','manifest.webmanifest','icon-192.png','icon-512.png','apple-touch-icon.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(APP)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith('piscina-')&&k!==CACHE).map(k=>caches.delete(k))))

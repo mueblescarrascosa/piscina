@@ -281,6 +281,7 @@
         </div>
       </div>
     </section>
+    <section><div class="shead"><h2>Consumo de agua</h2><div class="rule"></div></div><div class="card" id="lossBox"></div></section>
   </div>
 
   <div class="panel" id="p-croquis" role="tabpanel">
@@ -316,6 +317,9 @@
 
   <div class="panel" id="p-tareas" role="tabpanel">
     <section><div class="shead"><h2>Tareas</h2><div class="rule"></div></div><div class="card" id="tasks"></div></section>
+  </div>
+
+  <div class="panel" id="p-productos" role="tabpanel">
     <section>
       <div class="shead"><h2>Mis productos</h2><div class="rule"></div></div>
       <div class="card">
@@ -387,7 +391,6 @@
       </div>
     </section>
     <section><div class="shead"><h2>Estabilizante</h2><div class="rule"></div></div><div class="card" id="cyaBox"></div></section>
-    <section><div class="shead"><h2>Consumo de agua</h2><div class="rule"></div></div><div class="card" id="lossBox"></div></section>
   </div>
 
   <div class="panel" id="p-datos" role="tabpanel">
@@ -454,10 +457,12 @@
 <nav class="tabs"><div class="inner">
   <button class="tab" id="t-agua" aria-selected="true" data-p="agua">
     <svg viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 10.5A6 6 0 0 1 6 13.5C6 9.5 12 3 12 3z"/></svg>Agua</button>
-  <button class="tab" id="t-croquis" aria-selected="false" data-p="croquis">
-    <svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8.5 6H14v12H8.5M15.5 12H14"/></svg>Croquis</button>
   <button class="tab" id="t-tareas" aria-selected="false" data-p="tareas">
     <svg viewBox="0 0 24 24"><path d="M4 7l2 2 3.5-3.5M4 17l2 2 3.5-3.5M13 7.5h7M13 17.5h7"/></svg>Tareas</button>
+  <button class="tab" id="t-productos" aria-selected="false" data-p="productos">
+    <svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3M7.5 14h9"/></svg>Productos</button>
+  <button class="tab" id="t-croquis" aria-selected="false" data-p="croquis">
+    <svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8.5 6H14v12H8.5M15.5 12H14"/></svg>Croquis</button>
   <button class="tab" id="t-datos" aria-selected="false" data-p="datos">
     <svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 19v-6M12.5 19V8M17 19v-9"/></svg>Datos</button>
 </div></nav>
@@ -1501,7 +1506,7 @@ async function saveReading(){
   renderStatus();renderHist();renderCya();renderPlan();toast('Medición guardada');
 }
 function renderAll(){renderStatus();renderTasks();renderHist();renderCya();renderLoss();renderProds();refreshBackup();}
-function showTab(n){['agua','croquis','tareas','datos'].forEach(x=>{
+function showTab(n){['agua','tareas','productos','croquis','datos'].forEach(x=>{
   $('p-'+x).classList.toggle('on',x===n);$('t-'+x).setAttribute('aria-selected',x===n?'true':'false');});
   window.scrollTo(0,0);}
 
