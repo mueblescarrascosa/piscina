@@ -217,6 +217,7 @@
   .toast.on{opacity:1;pointer-events:auto}
   .toast button{background:none;border:0;color:#8fd6ff;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;padding:0}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+details.bk{margin-top:10px}details.bk summary{cursor:pointer;font-size:13px;color:var(--muted);padding:6px 0}
 </style>
 </head>
 <body>
@@ -442,9 +443,10 @@
       <div class="shead"><h2>Copia de seguridad</h2><div class="rule"></div></div>
       <div class="card">
         <p class="note" style="margin-top:0" id="whereTxt"></p>
+        <button class="btn ghost" id="copy" style="margin-top:0">Copiar la copia</button>
+        <details class="bk"><summary>Ver o pegar el texto (para restaurar)</summary>
         <textarea id="backup" spellcheck="false" aria-label="Copia de seguridad"></textarea>
-        <button class="btn ghost" id="copy">Copiar la copia</button>
-        <button class="btn ghost" id="restore">Restaurar lo que haya en el cuadro</button>
+        <button class="btn ghost" id="restore">Restaurar lo que haya en el cuadro</button></details>
         <p class="note">Pega ese texto en una nota o mándatelo por WhatsApp. Con él se recupera todo.</p>
       </div>
     </section>
@@ -1254,14 +1256,17 @@ function renderHist(){
       '<div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin:2px 0 12px;display:flex;justify-content:space-between">'+
       '<span>'+fdate(t0)+'</span><span>franja verde = pH 7,2 - 7,6</span><span>'+fdate(t1)+'</span></div>';
   }
-  box.innerHTML=svg+'<ul class="hist">'+rs.slice(0,20).map(r=>{
+  const nV=window.histTodo?Math.min(rs.length,60):8;
+  box.innerHTML=svg+'<ul class="hist">'+rs.slice(0,nV).map(r=>{
     const off=r.ph!=null&&(r.ph<PH_OK[0]||r.ph>PH_OK[1]);
     const offc=r.cl!=null&&(r.cl<CL_OK[0]||r.cl>CL_OK[1]);
     return '<li data-t="'+r.t+'"><span class="d">'+fdate(r.t)+'</span>'+
       '<span class="val'+(off?' off':'')+'">pH '+(r.ph==null?'—':nf(r.ph))+'</span>'+
       '<span class="val'+(offc?' off':'')+'">Cl '+(r.cl==null?'—':nf(r.cl))+'</span>'+
       '<span class="val">'+(r.bar==null?'':nf(r.bar)+' bar')+'</span>'+
-      '<button class="del" aria-label="Borrar esta medición">×</button></li>';}).join('')+'</ul>';
+      '<button class="del" aria-label="Borrar esta medición">×</button></li>';}).join('')+'</ul>'+
+    (rs.length>8?'<button class="btn ghost" id="histMas" style="margin-top:8px">'+(window.histTodo?'Ver solo las 8 últimas':'Ver las '+Math.min(rs.length,60)+' últimas')+'</button>':'');
+  const hm=$('histMas');if(hm)hm.onclick=()=>{window.histTodo=!window.histTodo;renderHist();};
   box.querySelectorAll('.del').forEach(b=>{
     b.onclick=()=>{
       const li=b.closest('li'),ts=Number(li.dataset.t);b.remove();
